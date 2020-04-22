@@ -1,0 +1,180 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<!-- ================================================================ -->
+	<!-- ======================= Modele du POM ========================== -->
+	<!-- ================================================================ -->
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- ================================================================ -->
+	<!-- ================ Coordonnées du projet ========================= -->
+	<!-- ================================================================ -->
+	<groupId>com.intiformation.cours_spring</groupId>
+	<artifactId>TP_Spring_GestionEcole</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>TP_Spring_GestionEcole Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<!-- ================================================================ -->
+	<!-- =================== Propriétés du projet ======================= -->
+	<!-- ================================================================ -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- version de java -->
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<spring.version>5.2.0.RELEASE</spring.version>
+		<!-- version d'hibernate -->
+		<hibernate.version>5.2.11.Final</hibernate.version>
+		<!-- version du pilote JDBC de MySQL -->
+		<mysql.driver.version>5.1.47</mysql.driver.version>
+		<!-- version de l'api servlet -->
+		<servlet.version>3.1.0</servlet.version>
+		<!-- version de la taglib JSTL -->
+		<jstl.version>1.2.1</jstl.version>
+		<tld.version>1.1.2</tld.version>
+		<!-- version de JSP -->
+		<jsp.version>2.3.1</jsp.version>
+		<!-- version de spring security -->
+		<spring.security.version>5.0.2.RELEASE</spring.security.version>
+	</properties>
+
+	<!-- ================================================================ -->
+	<!-- =================== Dépendances du projet ====================== -->
+	<!-- ================================================================ -->
+	<dependencies>
+
+		<!-- 1. dépendances de Spring -->
+		<!-- ======================== -->
+
+		<!-- 1.1. spring core (IoC) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- 1.2. spring orm (intégration des ORM dans spring) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- 1.3. spring transaction (gestion des transactions ans spring) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- 1.4. spring web (developpement des app web) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- 2. dépendances d'Hibernate -->
+		<!-- ========================== -->
+
+		<!-- 2.1. hibernate core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- 3. dépendances du pilote JDBC de MySQL -->
+		<!-- ====================================== -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.driver.version}</version>
+		</dependency>
+
+		<!-- 4. dépendances de l'API Servlet -->
+		<!-- =============================== -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+
+		<!-- 5. dépendances de JSTL -->
+		<!-- ====================== -->
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>${tld.version}</version>
+		</dependency>
+
+		<!-- 6. dépendances des JSP -->
+		<!-- ====================== -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>${jsp.version}</version>
+		</dependency>
+
+		<!-- 7. dépendances de Spring Security -->
+		<!-- ================================= -->
+
+		<!-- 7.1. core de spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- 7.2. spring security web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- 7.3. configuration de spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- 7.4. cryptographie de spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- 7.5. taglibs de spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- 7.6. data de spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-data</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+	</dependencies>
+
+	<!-- ===================================================================== -->
+	<!-- =================== Config des plugin de maven ====================== -->
+	<!-- ===================================================================== -->
+	<build>
+		<finalName>TP_Spring_GestionEcole</finalName>
+	</build>
+</project>
