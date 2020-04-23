@@ -1,19 +1,14 @@
 package com.intiformation.gestionecole.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -34,21 +29,16 @@ public class EtudiantCours implements Serializable {
 	@Column(name="motif")
 	private String motif;
 	
-	//association entre EtudiantCours et Etudiant
-//	@OneToMany(cascade=CascadeType.ALL, mappedBy = "etudiantC", fetch = FetchType.EAGER)
-//	List<Etudiant> etudiant = new ArrayList<Etudiant>();
-	
-	@OneToOne(mappedBy = "etudiantCours")
+	//association entre EtudiantCours(absences) et Etudiant
+	@ManyToOne
+	@JoinColumn(name="Etudiant_id", referencedColumnName="id_personne", updatable=true)
 	private Etudiant etudiant;
-	
-	
-	//association entre EtudiantCours et Cours
-//	@OneToMany(cascade=CascadeType.ALL, mappedBy = "eCours", fetch = FetchType.EAGER)
-//	List<Cours> cours = new ArrayList<Cours>();
-	
-	@OneToOne(mappedBy = "etudiantCours")
-	private Cours cours;
 
+	
+	//association entre EtudiantCours(absences) et Cours
+	@ManyToOne
+	@JoinColumn(name="Cours_id", referencedColumnName="id_cours", updatable=true)
+	private Cours cours;
 	
 	
 //	Cours cours;

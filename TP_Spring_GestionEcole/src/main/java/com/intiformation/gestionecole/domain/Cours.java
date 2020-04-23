@@ -1,6 +1,7 @@
 package com.intiformation.gestionecole.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,10 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name="cours")
@@ -49,14 +48,10 @@ public class Cours implements Serializable{
 	@JoinColumn(name="matiere_id", referencedColumnName="libelle")
 	private Matiere matiere;
 	
-	//association entre Etudiant et EtudiantCours
-//	@ManyToOne
-//	@JoinColumn(name="etudiantCours_id", referencedColumnName="id_etudiantCours", updatable=true)
-//	private EtudiantCours etudiantCours;
-	
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "etudiantCours_id", referencedColumnName = "id_etudiantCours") 
-	private EtudiantCours etudiantCours;
+	//association entre Etudiant et EtudiantCours	
+	@OneToMany(mappedBy="cours", cascade= CascadeType.ALL)
+	private List<EtudiantCours> etudiantCours;
+
 	
 
 	
@@ -134,14 +129,17 @@ public class Cours implements Serializable{
 	}
 
 
-	public EtudiantCours getEtudiantCours() {
+	public List<EtudiantCours> getEtudiantCours() {
 		return etudiantCours;
 	}
 
 
-	public void setEtudiantCours(EtudiantCours etudiantCours) {
+	public void setEtudiantCours(List<EtudiantCours> etudiantCours) {
 		this.etudiantCours = etudiantCours;
 	}
+
+
+
 
 	
 }

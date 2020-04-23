@@ -1,18 +1,14 @@
 package com.intiformation.gestionecole.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -33,16 +29,13 @@ public class Etudiant extends Personne implements Serializable{
 	//association entre Etudiant et Promotion
 	@ManyToOne
 	@JoinColumn(name="promotion_id", referencedColumnName="libelle")
-	private Promotion promotion;
+	private Promotion promotion;	
 	
-	//association entre Etudiant et EtudiantCours
-//	@ManyToOne
-//	@JoinColumn(name="etudiantCours_id", referencedColumnName="id_etudiantCours", updatable=true)
-//	private EtudiantCours etudiantCours;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "etudiantCours_id", referencedColumnName = "id_etudiantCours") 
-	private EtudiantCours etudiantCours;
+	//association entre Etudiant et EtudiantCours(absences)
+	@OneToMany(mappedBy = "etudiant", cascade= CascadeType.ALL)
+	private List<EtudiantCours> etudiantCours;
+
 	
 
 
@@ -106,13 +99,15 @@ public class Etudiant extends Personne implements Serializable{
 		this.promotion = promotion;
 	}
 
-	public EtudiantCours getEtudiantCours() {
+	public List<EtudiantCours> getEtudiantCours() {
 		return etudiantCours;
 	}
 
-	public void setEtudiantCours(EtudiantCours etudiantCours) {
+	public void setEtudiantCours(List<EtudiantCours> etudiantCours) {
 		this.etudiantCours = etudiantCours;
 	}
+
+
 	
 	
 }
