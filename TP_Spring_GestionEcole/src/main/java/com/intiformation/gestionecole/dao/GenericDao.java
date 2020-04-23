@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class GenericDao<T> implements IGenericDao<T>{
 
 	//props
@@ -27,12 +29,17 @@ public class GenericDao<T> implements IGenericDao<T>{
 	
 	
 	/*_________________ ctor ________________*/
+	
+	
 	public GenericDao(Class<T> entityClass) {
 		this.entityClass = entityClass;
 	}
 
 
-
+	/**
+	 * ctor vide pour l'injection spring
+	 */
+	public GenericDao() {}
 	/*_________________ méthodes ________________*/
 	@SuppressWarnings("unchecked")
 	@Override

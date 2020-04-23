@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.IAdminDao;
+import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.dao.IPersonneDao;
 import com.intiformation.gestionecole.domain.Administrateur;
 import com.intiformation.gestionecole.domain.Personne;
@@ -31,22 +32,14 @@ public class PersonneController {
 	
 	// Couche Dao
 	@Autowired
-	private IPersonneDao personneDao;
+	private IGenericDao<Personne> personneDao;
+
 	
-	@Autowired
-	private IAdminDao adminDao;
 	
-	@Autowired
-	public PersonneController(IAdminDao adminDao) {
-		this.adminDao = adminDao;
-	}
-	
-	@Autowired
-	public PersonneController(IPersonneDao personneDao) {
+	public void setPersonneDao(IGenericDao<Personne> personneDao) {
 		this.personneDao = personneDao;
 	}
 
-	
 	// Validateur
 	@Autowired 
 	private PersonneValidator personneValid;
@@ -54,13 +47,6 @@ public class PersonneController {
 	
 	// Setters pour injection Spring
 	
-	public void setPersonneDao(IPersonneDao personneDao) {
-		this.personneDao = personneDao;
-	}
-
-	public void setAdminDao(IAdminDao adminDao) {
-		this.adminDao = adminDao;
-	}
 
 	public void setPersonneValid(PersonneValidator personneValid) {
 		this.personneValid = personneValid;
@@ -106,70 +92,70 @@ public class PersonneController {
 	// Modification d'une personne
 	// Formulaire
 	
-	@RequestMapping(value="/personUpdate", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdatePersonne(@RequestParam("identifiant") int pIdPersonne) {
-		
-		Personne personneUpdate = personneDao.getById(pIdPersonne);
-		
-		return new ModelAndView("personUpdate", "personUpdateCommand", personneUpdate);
-		
-	}
+//	@RequestMapping(value="/personUpdate", method=RequestMethod.GET)
+//	public ModelAndView afficherFormulaireUpdatePersonne(@RequestParam("identifiant") int pIdPersonne) {
+//		
+//		Personne personneUpdate = personneDao.getById(pIdPersonne);
+//		
+//		return new ModelAndView("personUpdate", "personUpdateCommand", personneUpdate);
+//		
+//	}
 	
 	// Méthode Update (Administrateur)
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value="/personne/update", method=RequestMethod.POST)
-	public String updatePersonne(@ModelAttribute("personUpdateCommand") Administrateur pAdmin, ModelMap model) {
-		
-		adminDao.updateAdmin(pAdmin);
-		
-		model.addAttribute("attribut_listePersonnes", personneDao.getAll());
-		
-		return "personList";
-	
-	}//end update
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@RequestMapping(value="/personne/update", method=RequestMethod.POST)
+//	public String updatePersonne(@ModelAttribute("personUpdateCommand") Administrateur pAdmin, ModelMap model) {
+//		
+//		adminDao.updateAdmin(pAdmin);
+//		
+//		model.addAttribute("attribut_listePersonnes", personneDao.getAll());
+//		
+//		return "personList";
+//	
+//	}//end update
 	
 	
 	
 	// Ajout d'une nouvelle personne
 	// Formulaire
 	
-	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireAddPersonne() {
-		
-		Personne personne = new Personne();
-		
-		String objetCommandePersonne = "personAddCommand";
-		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandePersonne, personne);
-		
-		String viewName = "personAdd";
-		
-		return new ModelAndView(viewName, data);
-		
-	}
-	
+//	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
+//	public ModelAndView afficherFormulaireAddPersonne() {
+//		
+//		Personne personne = new Personne();
+//		
+//		String objetCommandePersonne = "personAddCommand";
+//		
+//		Map<String, Object> data = new HashMap<> ();
+//		data.put(objetCommandePersonne, personne);
+//		
+//		String viewName = "personAdd";
+//		
+//		return new ModelAndView(viewName, data);
+//		
+//	}
+//	
 	// Méthode Add (Administrateur)
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
-	public String addPersonne (@ModelAttribute("personAddCommand") @Validated Administrateur pAdmin, ModelMap model, BindingResult result) {
-		
-		personneValid.validate(pAdmin, result);
-		
-		if (result.hasErrors()) {
-			return "personAdd";
-			
-		}else {
-			adminDao.addAdmin(pAdmin);
-
-			model.addAttribute("attribut_listePersonnes", personneDao.getAll());
-			
-			return "personList";
-			
-		}//end if
-		
-	}//end add
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
+//	public String addPersonne (@ModelAttribute("personAddCommand") @Validated Administrateur pAdmin, ModelMap model, BindingResult result) {
+//		
+//		personneValid.validate(pAdmin, result);
+//		
+//		if (result.hasErrors()) {
+//			return "personAdd";
+//			
+//		}else {
+//			adminDao.addAdmin(pAdmin);
+//
+//			model.addAttribute("attribut_listePersonnes", personneDao.getAll());
+//			
+//			return "personList";
+//			
+//		}//end if
+//		
+//	}//end add
 
 }//end class
