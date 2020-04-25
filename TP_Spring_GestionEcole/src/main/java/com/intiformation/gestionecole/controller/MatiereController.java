@@ -18,21 +18,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.intiformation.gestionecole.dao.GenericDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.dao.IMatiereDao;
 import com.intiformation.gestionecole.dao.MatiereDao;
+import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.MatiereValidator;
 
-@Controller
+
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@Controller
 public class MatiereController {
 
 	
 	// Couche Dao
 	@Autowired
-	private IMatiereDao matDao = new MatiereDao();
+	private IGenericDao<Matiere> matDao = new GenericDao<Matiere>(Matiere.class);
 	
 	// Validateur
 	@Autowired
@@ -41,7 +44,7 @@ public class MatiereController {
 	
 	// Setters pour Injection Spring 
 
-	public void setMatDao(IMatiereDao matDao) {
+	public void setMatDao(IGenericDao<Matiere> matDao) {
 		this.matDao = matDao;
 	}
 
@@ -75,7 +78,7 @@ public class MatiereController {
 	@RequestMapping(value= {"/matiere/delete/{libelle}","/matiere/remove/{libelle}"}, method=RequestMethod.GET)
 	public String deleteMatiere(@PathVariable("libelle") String pLibelle, ModelMap model) {
 		
-		matDao.deleteMatiere(pLibelle);
+		matDao.delete(pLibelle);
 
 		List<Matiere> listeMatiere = matDao.getAll();
 		

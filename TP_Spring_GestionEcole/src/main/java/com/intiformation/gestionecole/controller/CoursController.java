@@ -24,8 +24,9 @@ import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.validator.CoursValidator;
 
-@Controller
+
 @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
+@Controller
 public class CoursController {
 
 	// Couche Dao

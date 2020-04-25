@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.intiformation.gestionecole.dao.GenericDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.dao.IPromotionDao;
 import com.intiformation.gestionecole.dao.PromotionDao;
+import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Personne;
 import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.PromotionValidator;
@@ -31,7 +33,7 @@ public class PromotionController {
 	
 	// Couche Dao
 	@Autowired
-	private IPromotionDao promoDao = new PromotionDao();
+	private IGenericDao<Promotion> promoDao = new GenericDao<Promotion>(Promotion.class);
 	
 	// Validateur
 	@Autowired 
@@ -40,7 +42,7 @@ public class PromotionController {
 	// Setters pour injection Spring
 
 	public void setPromoDao(IGenericDao<Promotion> promoDao) {
-		this.promoDao = (IPromotionDao) promoDao;
+		this.promoDao =  promoDao;
 	}
 
 	public void setPromoValid(PromotionValidator promoValid) {
@@ -73,7 +75,7 @@ public class PromotionController {
 	@RequestMapping(value= {"/promotion/delete/{libelle}","/personne/remove/{libelle}"}, method=RequestMethod.GET)
 	public String deletePromotion(@PathVariable("libelle") String pLibelle, ModelMap model) {
 		
-		promoDao.deletePromotion(pLibelle);
+		promoDao.delete(pLibelle);
 
 		List<Promotion> listePromotion = promoDao.getAll();
 		

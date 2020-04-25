@@ -1,6 +1,5 @@
 package com.intiformation.gestionecole.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -9,7 +8,7 @@ import org.springframework.validation.Validator;
 import com.intiformation.gestionecole.domain.Cours;
 
 @Component
-public abstract class CoursValidator implements Validator {
+public class CoursValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {

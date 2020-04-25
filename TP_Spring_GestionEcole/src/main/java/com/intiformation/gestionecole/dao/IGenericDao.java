@@ -36,4 +36,8 @@ public interface IGenericDao<T> {
 	 */
 	public void update(T entity);
 
+	public void delete(String pLibelle);
+
+	public T getByLibelle(String libelle);
+
 }
