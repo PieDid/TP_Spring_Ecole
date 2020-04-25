@@ -1,9 +1,12 @@
 package com.intiformation.gestionecole.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,13 +24,14 @@ import javax.persistence.Table;
  */
 @Entity(name="personne")
 @Table(name="personnes")
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE) // une seule table pour toutes les personnes
+@DiscriminatorColumn(name = "type_personne", discriminatorType = DiscriminatorType.STRING) // colonne discriminante
 public class Personne implements Serializable{
 
 	/*_________________ props ________________*/
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE) // auto-increment
+	@GeneratedValue(strategy=GenerationType.IDENTITY) // auto-increment
 	@Column(name="id_personne")
 	private int identifiant;
 	
@@ -43,10 +47,12 @@ public class Personne implements Serializable{
 	@Column(name="email")
 	private String email;
 	
+	@Column(name="role")
+	private String role;
+	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "adresse_id", referencedColumnName = "id_adresse") 
 	private Adresse adresse;
-	
 
 	/*_________________ ctors ________________*/
 	
@@ -91,14 +97,38 @@ public class Personne implements Serializable{
 		this.adresse = adresse;
 	}
 
+	public Personne(String motDePasse, String nom, String prenom, String email, String role, Adresse adresse) {
+		super();
+		this.motDePasse = motDePasse;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.role = role;
+		this.adresse = adresse;
+	}
+
+	public Personne(int identifiant, String motDePasse, String nom, String prenom, String email, String role,
+			Adresse adresse) {
+		super();
+		this.identifiant = identifiant;
+		this.motDePasse = motDePasse;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.role = role;
+		this.adresse = adresse;
+	}
+
 	/*_________________ meths ________________*/
 
 
+	
 	@Override
 	public String toString() {
 		return "Personne [identifiant=" + identifiant + ", motDePasse=" + motDePasse + ", nom=" + nom + ", prenom="
-				+ prenom + ", email=" + email + ", adresse=" + adresse + "]";
+				+ prenom + ", email=" + email + ", role=" + role + ", adresse=" + adresse + "]";
 	}
+	
 
 	/*__________________ G/S _________________*/
 	
@@ -108,12 +138,7 @@ public class Personne implements Serializable{
 	 */
 	public int getIdentifiant() {
 		return identifiant;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	
+	}	
 
 	/**
 	 * @param identifiant the identifiant to set
@@ -191,5 +216,15 @@ public class Personne implements Serializable{
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	
 	
 } // end class

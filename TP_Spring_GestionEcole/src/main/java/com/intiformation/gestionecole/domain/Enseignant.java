@@ -3,13 +3,14 @@ package com.intiformation.gestionecole.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity(name="enseignant")
-@Table(name="enseignants")
+@DiscriminatorValue("Enseignant")
 public class Enseignant extends Personne{
 
 	/* Propriétés */
@@ -41,9 +42,35 @@ public class Enseignant extends Personne{
 	public Enseignant(String motDePasse, String nom, String prenom, String email) {
 		super(motDePasse, nom, prenom, email);
 	}
+	
+	
 
+	
+
+	public Enseignant(String motDePasse, String nom, String prenom, String email, String role, Adresse adresse,
+			List<Enseigne> enseigne) {
+		super(motDePasse, nom, prenom, email, role, adresse);
+		this.enseigne = enseigne;
+	}
+
+
+	public Enseignant(int identifiant, String motDePasse, String nom, String prenom, String email, String role,
+			Adresse adresse, List<Enseigne> enseigne) {
+		super(identifiant, motDePasse, nom, prenom, email, role, adresse);
+		this.enseigne = enseigne;
+	}
+
+
+	
+	
 	/* Setter/Getters */
 	
+	@Override
+	public String toString() {
+		return "Enseignant [" + super.toString() + ",enseigne=" + enseigne + "]";
+	}
+
+
 	public List<Enseigne> getEnseigne() {
 		return enseigne;
 	}

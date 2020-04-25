@@ -1,5 +1,6 @@
 package com.intiformation.gestionecole.validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -16,7 +17,7 @@ public abstract class CoursValidator implements Validator {
 	}//end supports
 
 	@Override
-	public void validate(Object coursValid, Errors errors) {
+	public void validate( Object coursValid, Errors errors) {
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "libelle", "required.libelle", "Veuillez entrer un libellé.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "date", "required.date", "Veuillez entrer une date.");

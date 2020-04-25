@@ -32,11 +32,6 @@ public class CoursController {
 	@Autowired
 	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
 	
-	@Autowired
-	public CoursController(ICoursDao coursDao) {
-		this.coursDao = (IGenericDao<Cours>) coursDao;
-	}
-	
 	// Validateur
 	@Autowired
 	private CoursValidator coursValid;
@@ -119,7 +114,7 @@ public class CoursController {
 	// Ajout d'un nouveau cours
 	// Formulaire
 	
-	@RequestMapping(value="/coursAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/coursAdd-form", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddCours() {
 		
 		Cours cours = new Cours();
@@ -138,7 +133,7 @@ public class CoursController {
 	// Méthode Add 
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/coursAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/coursAdd-meth", method=RequestMethod.GET)
 	public String addCours (@ModelAttribute("coursAddCommand") @Validated Cours pCours, ModelMap model, BindingResult result) {
 		
 		coursValid.validate(pCours, result);

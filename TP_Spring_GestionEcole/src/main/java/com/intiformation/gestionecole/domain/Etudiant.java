@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 
 @Entity(name="etudiant")
-@Table(name="etudiants")
+@DiscriminatorValue("Etudiant")
 public class Etudiant extends Personne implements Serializable{
 
 	/*_________________ props ________________*/
@@ -45,31 +46,34 @@ public class Etudiant extends Personne implements Serializable{
 	 * ctor vide
 	 */
 	public Etudiant() {}
-
-	public Etudiant(int photo, String simpleDateFormat) {
-		super();
-		this.photo = photo;
-		this.dateDeNaissance = simpleDateFormat;
-	}
-
-	public Etudiant(int id, int photo, String dateDeNaissance) {
-		super();
-		setIdentifiant(id);
+	
+	public Etudiant(int identifiant, String motDePasse, String nom, String prenom, String email, String role,
+			Adresse adresse, int photo, String dateDeNaissance, Promotion promotion,
+			List<EtudiantCours> etudiantCours) {
+		super(identifiant, motDePasse, nom, prenom, email, role, adresse);
 		this.photo = photo;
 		this.dateDeNaissance = dateDeNaissance;
+		this.promotion = promotion;
+		this.etudiantCours = etudiantCours;
 	}
 
-	
-	
+	public Etudiant(String motDePasse, String nom, String prenom, String email, String role, Adresse adresse, int photo,
+			String dateDeNaissance, Promotion promotion, List<EtudiantCours> etudiantCours) {
+		super(motDePasse, nom, prenom, email, role, adresse);
+		this.photo = photo;
+		this.dateDeNaissance = dateDeNaissance;
+		this.promotion = promotion;
+		this.etudiantCours = etudiantCours;
+	}
 
 	/*_________________ meths ________________*/
+
 	
 	@Override
 	public String toString() {
-		return "Etudiant [identifiant=" + getIdentifiant() + ", photo=" + photo + ", dateDeNaissance=" + dateDeNaissance
-				+ "]";
+		return "Etudiant [" + super.toString() + ", photo=" + photo + ", dateDeNaissance=" + dateDeNaissance + ", promotion=" + promotion
+				+ ", etudiantCours=" + etudiantCours + "]";
 	}
-
 	
 	
 	

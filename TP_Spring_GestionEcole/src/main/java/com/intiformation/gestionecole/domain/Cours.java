@@ -48,7 +48,7 @@ public class Cours implements Serializable{
 	@JoinColumn(name="matiere_id", referencedColumnName="libelle")
 	private Matiere matiere;
 	
-	//association entre Etudiant et EtudiantCours	
+	//association entre Cours et EtudiantCours	
 	@OneToMany(mappedBy="cours", cascade= CascadeType.ALL)
 	private List<EtudiantCours> etudiantCours;
 

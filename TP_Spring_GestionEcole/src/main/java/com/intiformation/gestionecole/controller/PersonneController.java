@@ -38,18 +38,6 @@ public class PersonneController {
 	@Autowired
 	private IGenericDao<Etudiant> etuDao = new GenericDao<Etudiant>(Etudiant.class);
 	
-
-	
-	@Autowired
-	public PersonneController(IPersonneDao personneDao) {
-		this.personneDao = (IGenericDao<Personne>) personneDao;
-	}
-	
-	@Autowired
-	public PersonneController(IEtudiantDao etuDao) {
-		this.etuDao = (IGenericDao<Etudiant>) etuDao;
-	}
-	
 	
 	// Validateur
 	@Autowired 
@@ -149,7 +137,7 @@ public class PersonneController {
 	// Ajout d'une nouvelle personne
 	// Formulaire
 	
-	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/personAdd-form", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddPersonne() {
 		
 		Personne personne = new Personne();
@@ -168,7 +156,7 @@ public class PersonneController {
 	// Méthode Add 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/personAdd-meth", method=RequestMethod.GET)
 	public String addPersonne (@ModelAttribute("personAddCommand") @Validated Personne pPersonne, ModelMap model, BindingResult result) {
 		
 		personneValid.validate(pPersonne, result);

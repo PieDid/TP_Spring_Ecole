@@ -32,11 +32,6 @@ public class PromotionController {
 	// Couche Dao
 	@Autowired
 	private IPromotionDao promoDao = new PromotionDao();
-
-	@Autowired
-	public PromotionController(IPromotionDao promoDao) {
-		this.promoDao = (IPromotionDao) promoDao;
-	}
 	
 	// Validateur
 	@Autowired 
@@ -119,7 +114,7 @@ public class PromotionController {
 	// Ajout d'une nouvelle promotion
 	// Formulaire
 	
-	@RequestMapping(value="/promoAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/promoAdd-form", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddPromotion() {
 		
 		Promotion promotion = new Promotion();
@@ -138,7 +133,7 @@ public class PromotionController {
 	// Méthode Add 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/promoAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/promoAdd-meth", method=RequestMethod.GET)
 	public String addPromotion (@ModelAttribute("promotionAddCommand") @Validated Promotion pPromotion, ModelMap model, BindingResult result) {
 		
 		promoValid.validate(pPromotion, result);

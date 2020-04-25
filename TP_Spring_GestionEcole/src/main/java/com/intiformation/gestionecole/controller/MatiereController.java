@@ -34,11 +34,6 @@ public class MatiereController {
 	@Autowired
 	private IMatiereDao matDao = new MatiereDao();
 	
-	@Autowired
-	public MatiereController(IMatiereDao matDao) {
-		this.matDao = (IMatiereDao) matDao;	
-	}
-	
 	// Validateur
 	@Autowired
 	private MatiereValidator matValid;
@@ -121,7 +116,7 @@ public class MatiereController {
 	// Ajout d'une nouvelle matière
 	// Formulaire
 	
-	@RequestMapping(value="/matAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/matAdd-form", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddMatiere() {
 		
 		Matiere matiere = new Matiere();
@@ -140,7 +135,7 @@ public class MatiereController {
 	// Méthode Add 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/matAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/matAdd-meth", method=RequestMethod.GET)
 	public String addPromotion (@ModelAttribute("matiereAddCommand") @Validated Matiere pMatiere, ModelMap model, BindingResult result) {
 		
 		matValid.validate(pMatiere, result);
