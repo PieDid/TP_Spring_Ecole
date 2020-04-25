@@ -7,8 +7,10 @@ import org.hibernate.sql.ordering.antlr.GeneratedOrderByLexer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class GenericDao<T> implements IGenericDao<T>{
 
 	//props
@@ -46,7 +48,9 @@ public class GenericDao<T> implements IGenericDao<T>{
 	@Override
 	public List<T> getAll() {
 		String entityName = (entityClass).getSimpleName().substring(0).toLowerCase();
+		System.out.println("CONTROLL :: Nom de l'entité : " + entityName);
 		String clauseFROM = "FROM " + entityName + " e";
+		//String clauseFROM = "FROM cours e";
 		return sessionFactory.getCurrentSession().createQuery(clauseFROM).getResultList();
 	}
 
