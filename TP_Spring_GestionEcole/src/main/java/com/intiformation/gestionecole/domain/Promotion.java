@@ -33,12 +33,20 @@ public class Promotion  implements Serializable{
 
 	
 	/* Constructeurs */
+	
+	
+	
 	public Promotion(String libelle) {
 		super();
 		this.libelle = libelle;
 	}
 
 	
+	public Promotion() {
+		super();
+	}
+
+
 	public String getLibelle() {
 		return libelle;
 	}

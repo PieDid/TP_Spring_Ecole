@@ -21,7 +21,7 @@ public class PersonneValidator implements Validator {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nom", "required.nom", "Veuillez entrer votre nom.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "prenom", "required.prenom", "Veuillez entrer votre prénom.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "adresse", "required.nom", "Veuillez entrer votre adresse.");	
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "adresse", "required.adresse", "Veuillez entrer votre adresse.");	
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.email", "Veuillez entrer votre adresse mail.");
 	
 		Personne personne = (Personne) objetValid;
