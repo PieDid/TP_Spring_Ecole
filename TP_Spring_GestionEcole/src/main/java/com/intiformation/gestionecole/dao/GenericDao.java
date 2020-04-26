@@ -11,6 +11,7 @@ import com.intiformation.gestionecole.domain.Adresse;
 import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.domain.Enseigne;
+import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.EtudiantCours;
 import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Personne;
@@ -127,5 +128,6 @@ public class GenericDao<T> implements IGenericDao<T>{
 	public void update(T entity) {
 		sessionFactory.getCurrentSession().update(entity);
 	}
+	
 	
 }

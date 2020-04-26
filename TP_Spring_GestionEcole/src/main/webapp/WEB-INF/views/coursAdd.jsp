@@ -15,7 +15,7 @@
 
 	<div align="center">
 		
-		<form:form modelAttribute="coursAddCommand" method="POST" action="${pageContext.request.contextPath}/cours/add">
+		<form:form modelAttribute="coursAddCommand" method="POST" action="${pageContext.request.contextPath}/coursAdd-meth">
 		
 		<form:errors path="*" cssClass="error_validation" element="div" />
 		
@@ -24,6 +24,12 @@
 					<td> <form:label path="libelle">Libellé : </form:label> </td>
 					<td> <form:input path="libelle"/> </td>
 					<td> <form:errors path="libelle"/> </td>
+				</tr>
+				
+				<tr>
+					<td> <form:label path="date">Date : </form:label> </td>
+					<td> <form:input path="date"/> </td>
+					<td> <form:errors path="date"/> </td>
 				</tr>
 				
 				<tr>

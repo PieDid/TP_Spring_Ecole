@@ -44,10 +44,10 @@ public class CoursController {
 	
 	// Setters pour injection Spring
 
-//	public void setCoursDao(GenericDao<Cours> coursDao) {
+	public void setCoursDao(GenericDao<Cours> coursDao) {
 //	//public void setCoursDao(CoursDao coursDao) {
-//		this.coursDao = coursDao;
-//	}
+		this.coursDao = coursDao;
+	}
 
 	public void setCoursValid(CoursValidator coursValid) {
 		this.coursValid = coursValid;

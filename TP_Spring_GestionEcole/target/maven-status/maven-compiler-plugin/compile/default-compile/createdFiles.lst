@@ -1,6 +1,7 @@
 com\intiformation\gestionecole\dao\IMatiereDao.class
 com\intiformation\gestionecole\validator\CoursValidator.class
 com\intiformation\gestionecole\domain\Enseigne.class
+com\intiformation\gestionecole\dao\IAbsenceDao.class
 com\intiformation\gestionecole\domain\Aide.class
 com\intiformation\gestionecole\apptest\AppTestAide.class
 com\intiformation\gestionecole\dao\PromotionDao.class
@@ -12,10 +13,12 @@ com\intiformation\gestionecole\dao\IGeneralDao.class
 com\intiformation\gestionecole\dao\IGenericDao.class
 com\intiformation\gestionecole\domain\Adresse.class
 com\intiformation\gestionecole\dao\IEtudiantDao.class
+com\intiformation\gestionecole\dao\AbsenceDao.class
 com\intiformation\gestionecole\validator\AideValidator.class
 com\intiformation\gestionecole\validator\PersonneValidator.class
 com\intiformation\gestionecole\controller\PromotionController.class
 com\intiformation\gestionecole\dao\IEnseignantDao.class
+com\intiformation\gestionecole\controller\AbsenceController.class
 com\intiformation\gestionecole\dao\EnseignantDao.class
 com\intiformation\gestionecole\dao\EtudiantDao.class
 com\intiformation\gestionecole\domain\Etudiant.class
@@ -35,6 +38,7 @@ com\intiformation\gestionecole\dao\MatiereDao.class
 com\intiformation\gestionecole\domain\Matiere.class
 com\intiformation\gestionecole\domain\Personne.class
 com\intiformation\gestionecole\controller\CoursController.class
+com\intiformation\gestionecole\validator\AbsenceValidator.class
 com\intiformation\gestionecole\dao\IAdminDao.class
 com\intiformation\gestionecole\validator\PromotionValidator.class
 com\intiformation\gestionecole\dao\ICoursDao.class

@@ -1,11 +1,13 @@
 package com.intiformation.gestionecole.validator;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.intiformation.gestionecole.domain.EtudiantCours;
 
+@Component
 public class AbsenceValidator implements Validator {
 
 	@Override
