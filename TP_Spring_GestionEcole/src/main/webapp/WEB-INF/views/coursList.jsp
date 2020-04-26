@@ -15,7 +15,7 @@
 	<table>
 		<tr>
 			<th>Identifiant</th>
-			<th>Matière</th>
+<!-- 			<th>Matière</th> -->
 			<th>Libellé</th>
 			<th>Durée</th>
 			<th>Description</th>
@@ -26,7 +26,7 @@
 
 			<tr>
 				<td>${cours.idCours}</td>
-				<td>${cours.matiere}</td>
+<%-- 				<td>${cours.matiere}</td> --%>
 				<td>${cours.libelle}</td>
 				<td>${cours.date}</td>
 				<td>${cours.duree}</td>
@@ -49,9 +49,9 @@
 					avec pIdCours qui correspond à l'id du cours en question.
 				 -->
 
-				<td colspan="2"><a
-					href="etudiantByIdCours?coursId=${cours.idCours}">Liste des
-						étudiants du cours (redirection)</a></td>
+<!-- 				<td colspan="2"><a -->
+<%-- 					href="etudiantByIdCours?coursId=${cours.idCours}">Liste des --%>
+<!-- 						étudiants du cours (redirection)</a></td> -->
 
 				<!-- appelle vers la méthode afficherFormulaireUpdateCours du CoursController, 
 					redirigant vers le formulaire pour udpater le cours -->
@@ -59,14 +59,14 @@
 				</td>
 
 				<!-- appelle vers la méthode supprimerCours du CoursController -->
-				<td colspan="2"><a href="coursDelete?courId=${cours.idCours}">Supprimer</a>
+				<td colspan="2"><a href="delete?coursId=${cours.idCours}">Supprimer</a>
 				</td>
 			</tr>
 		</c:forEach>
 		<!-- appelle vers la méthode afficherFormulaireAddCours du CoursController, 
 					redirigant vers le formulaire pour ajouter le cours le cours -->
 		<tr>
-			<td colspan="10"><a href="coursAdd">Ajouter</a></td>
+			<td colspan="10"><a href="coursAdd-form">Ajouter</a></td>
 		</tr>
 	</table>
 	<hr />

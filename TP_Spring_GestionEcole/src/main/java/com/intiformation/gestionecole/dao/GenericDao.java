@@ -45,8 +45,10 @@ public class GenericDao<T> implements IGenericDao<T>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll() {
-		String entityName = (this.entityClass).getSimpleName().substring(0).toLowerCase();
+		String entityName = (entityClass).getSimpleName().substring(0).toLowerCase();
+		System.out.println("CONTROLL :: Nom de l'entité : " + entityName);
 		String clauseFROM = "FROM " + entityName + " e";
+		//String clauseFROM = "FROM cours e";
 		return sessionFactory.getCurrentSession().createQuery(clauseFROM).getResultList();
 	}
 
