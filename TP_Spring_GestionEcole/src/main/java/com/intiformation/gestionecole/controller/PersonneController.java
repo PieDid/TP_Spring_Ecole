@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.GenericDao;
-import com.intiformation.gestionecole.dao.IEtudiantDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
-import com.intiformation.gestionecole.dao.IPersonneDao;
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.Personne;
 import com.intiformation.gestionecole.validator.PersonneValidator;

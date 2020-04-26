@@ -2,6 +2,8 @@ package com.intiformation.gestionecole.dao;
 
 import java.util.List;
 
+import com.intiformation.gestionecole.domain.Etudiant;
+
 public interface IGenericDao<T> {
 
 	/**
@@ -39,5 +41,7 @@ public interface IGenericDao<T> {
 	public void delete(String pLibelle);
 
 	public T getByLibelle(String libelle);
+	
+	public List<T> getByEtudiant(Etudiant etudiant);
 
 }

@@ -31,13 +31,13 @@ public class EtudiantCours implements Serializable {
 	
 	//association entre EtudiantCours(absences) et Etudiant
 	@ManyToOne
-	@JoinColumn(name="Etudiant_id", referencedColumnName="id_personne", updatable=true)
+	@JoinColumn(name="etudiant_id", referencedColumnName="id_personne", updatable=true)
 	private Etudiant etudiant;
 
 	
 	//association entre EtudiantCours(absences) et Cours
 	@ManyToOne
-	@JoinColumn(name="Cours_id", referencedColumnName="id_cours", updatable=true)
+	@JoinColumn(name="cours_id", referencedColumnName="id_cours", updatable=true)
 	private Cours cours;
 	
 	
