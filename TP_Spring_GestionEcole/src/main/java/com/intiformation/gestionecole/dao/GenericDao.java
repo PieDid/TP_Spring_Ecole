@@ -3,12 +3,12 @@ package com.intiformation.gestionecole.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.sql.ordering.antlr.GeneratedOrderByLexer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class GenericDao<T> implements IGenericDao<T>{
 
 	//props
@@ -45,7 +45,7 @@ public class GenericDao<T> implements IGenericDao<T>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll() {
-		String entityName = (entityClass).getSimpleName().substring(0).toLowerCase();
+		String entityName = (this.entityClass).getSimpleName().substring(0).toLowerCase();
 		String clauseFROM = "FROM " + entityName + " e";
 		return sessionFactory.getCurrentSession().createQuery(clauseFROM).getResultList();
 	}

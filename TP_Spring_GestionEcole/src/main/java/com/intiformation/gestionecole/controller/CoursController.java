@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -18,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.intiformation.gestionecole.dao.CoursDao;
 import com.intiformation.gestionecole.dao.GenericDao;
 import com.intiformation.gestionecole.dao.ICoursDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.validator.CoursValidator;
-
 
 @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
 @Controller
@@ -31,7 +34,8 @@ public class CoursController {
 
 	// Couche Dao
 	@Autowired
-	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
+//	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
+	private ICoursDao coursDao = new CoursDao();
 	
 	// Validateur
 	@Autowired
@@ -40,7 +44,8 @@ public class CoursController {
 	
 	// Setters pour injection Spring
 
-	public void setCoursDao(IGenericDao<Cours> coursDao) {
+//	public void setCoursDao(GenericDao<Cours> coursDao) {
+	public void setCoursDao(CoursDao coursDao) {
 		this.coursDao = coursDao;
 	}
 
@@ -71,7 +76,7 @@ public class CoursController {
 	// Suppression d'un cours
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/cours/delete/{idCours}","/cours/remove/{idCours}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/coursDelete/{idCours}","/cours/remove/{idCours}"}, method=RequestMethod.GET)
 	public String deleteCours(@PathVariable("idCours") int pIdCours, ModelMap model) {
 		
 		coursDao.delete(pIdCours);
@@ -88,7 +93,7 @@ public class CoursController {
 	// Modification d'un cours
 	// Formulaire
 	
-	@RequestMapping(value="/coursUpdate", method=RequestMethod.GET)
+	@RequestMapping(value="/coursUpdate/{idCours}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateCours(@RequestParam("idCours") int pIdCours) {
 		
 		Cours coursUpdate = coursDao.getById(pIdCours);
@@ -100,10 +105,11 @@ public class CoursController {
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/cours/update", method=RequestMethod.POST)
+	@RequestMapping(value="coursUpdate-meth", method=RequestMethod.POST)
 	public String updateCours(@ModelAttribute("coursUpdateCommand") Cours pCours, ModelMap model) {
 		
-		coursDao.update(pCours);
+//		coursDao.update(pCours);
+		coursDao.updateCours(pCours);
 		
 		model.addAttribute("attribut_listeCours", coursDao.getAll());
 		
@@ -115,7 +121,7 @@ public class CoursController {
 	// Ajout d'un nouveau cours
 	// Formulaire
 	
-	@RequestMapping(value="/coursAdd-form", method=RequestMethod.GET)
+	@RequestMapping(value="/coursAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddCours() {
 		
 		Cours cours = new Cours();
@@ -132,9 +138,9 @@ public class CoursController {
 	}
 	
 	// Méthode Add 
-	
+	@org.springframework.transaction.annotation.Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/coursAdd-meth", method=RequestMethod.GET)
+	@RequestMapping(value="/coursAdd-meth", method=RequestMethod.POST)
 	public String addCours (@ModelAttribute("coursAddCommand") @Validated Cours pCours, ModelMap model, BindingResult result) {
 		
 		coursValid.validate(pCours, result);
@@ -143,7 +149,8 @@ public class CoursController {
 			return "coursAdd";
 			
 		}else {
-			coursDao.add(pCours);
+//			coursDao.add(pCours);
+			coursDao.addCours(pCours);
 
 			model.addAttribute("attribut_listeCours", coursDao.getAll());
 			

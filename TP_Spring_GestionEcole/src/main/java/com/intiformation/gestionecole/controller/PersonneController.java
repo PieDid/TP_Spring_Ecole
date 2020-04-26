@@ -109,7 +109,7 @@ public class PersonneController {
 	// Modification d'une personne
 	// Formulaire
 	
-	@RequestMapping(value="/personUpdate", method=RequestMethod.GET)
+	@RequestMapping(value="/personUpdate-form", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdatePersonne(@RequestParam("identifiant") int pIdPersonne) {
 		
 		Personne personneUpdate = personneDao.getById(pIdPersonne);
@@ -156,7 +156,7 @@ public class PersonneController {
 	// Méthode Add 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/personAdd-meth", method=RequestMethod.GET)
+	@RequestMapping(value="/personAdd-meth*", method=RequestMethod.GET)
 	public String addPersonne (@ModelAttribute("personAddCommand") @Validated Personne pPersonne, ModelMap model, BindingResult result) {
 		
 		personneValid.validate(pPersonne, result);

@@ -17,7 +17,7 @@
 
 	<div align="center">
 		
-		<form:form modelAttribute="personAddCommand" method="POST" action="${pageContext.request.contextPath}/personne/add">
+		<form:form modelAttribute="personAddCommand" method="POST" action="${pageContext.request.contextPath}/personAdd-meth">
 		
 		<form:errors path="*" cssClass="error_validation" element="div" />
 		

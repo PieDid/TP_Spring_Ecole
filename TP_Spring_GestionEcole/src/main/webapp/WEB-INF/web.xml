@@ -17,6 +17,7 @@
 						/WEB-INF/gestionecole-service.xml
 						/WEB-INF/gestionecole-servlet.xml
 						/WEB-INF/applicationContext.xml
+						/WEB-INF/gestionecole-security.xml
 		</param-value>
 	</context-param>
 

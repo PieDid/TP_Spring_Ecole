@@ -21,7 +21,9 @@ public class CoursValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "libelle", "required.libelle", "Veuillez entrer un libellé.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "date", "required.date", "Veuillez entrer une date.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "duree", "required.duree", "Veuillez entrer une durée.");	
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.description", "Veuillez entrer une description.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.description", "Veuillez entrer une description.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "matiere", "required.matiere", "Veuillez entrer une matiere.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "promotion", "required.promotion", "Veuillez entrer une promotion.");
 		
 		Cours cours = (Cours) coursValid;
 		
