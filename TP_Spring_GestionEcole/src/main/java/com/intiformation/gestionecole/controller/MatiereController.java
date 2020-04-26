@@ -105,7 +105,7 @@ public class MatiereController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/matiere/update", method=RequestMethod.POST)
-	public String updatePromotion(@ModelAttribute("matiereUpdateCommand") Matiere pMatiere, ModelMap model) {
+	public String updateMatiere(@ModelAttribute("matiereUpdateCommand") Matiere pMatiere, ModelMap model) {
 		
 		((IGenericDao<Matiere>) matDao).update(pMatiere);
 		
@@ -139,7 +139,7 @@ public class MatiereController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/matAdd-meth", method=RequestMethod.GET)
-	public String addPromotion (@ModelAttribute("matiereAddCommand") @Validated Matiere pMatiere, ModelMap model, BindingResult result) {
+	public String addMatiere (@ModelAttribute("matiereAddCommand") @Validated Matiere pMatiere, ModelMap model, BindingResult result) {
 		
 		matValid.validate(pMatiere, result);
 		
