@@ -12,6 +12,7 @@ com\intiformation\gestionecole\dao\IGeneralDao.class
 com\intiformation\gestionecole\dao\IGenericDao.class
 com\intiformation\gestionecole\domain\Adresse.class
 com\intiformation\gestionecole\dao\IEtudiantDao.class
+com\intiformation\gestionecole\validator\AideValidator.class
 com\intiformation\gestionecole\validator\PersonneValidator.class
 com\intiformation\gestionecole\controller\PromotionController.class
 com\intiformation\gestionecole\dao\IEnseignantDao.class
@@ -21,6 +22,7 @@ com\intiformation\gestionecole\domain\Etudiant.class
 com\intiformation\gestionecole\dao\GenericDao.class
 com\intiformation\gestionecole\domain\EtudiantCours.class
 com\intiformation\gestionecole\controller\MatiereController.class
+com\intiformation\gestionecole\controller\AideController.class
 com\intiformation\gestionecole\dao\AideDao.class
 com\intiformation\gestionecole\dao\IPersonneDao.class
 com\intiformation\gestionecole\validator\MatiereValidator.class
