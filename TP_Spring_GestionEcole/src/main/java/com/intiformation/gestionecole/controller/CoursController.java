@@ -33,9 +33,9 @@ import com.intiformation.gestionecole.validator.CoursValidator;
 public class CoursController {
 
 	// Couche Dao
-	@Autowired
-//	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
-	private ICoursDao coursDao = new CoursDao();
+	//@Autowired
+	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
+	//private ICoursDao coursDao = new CoursDao();
 	
 	// Validateur
 	@Autowired
@@ -45,9 +45,9 @@ public class CoursController {
 	// Setters pour injection Spring
 
 //	public void setCoursDao(GenericDao<Cours> coursDao) {
-	public void setCoursDao(CoursDao coursDao) {
-		this.coursDao = coursDao;
-	}
+//	//public void setCoursDao(CoursDao coursDao) {
+//		this.coursDao = coursDao;
+//	}
 
 	public void setCoursValid(CoursValidator coursValid) {
 		this.coursValid = coursValid;
@@ -108,8 +108,8 @@ public class CoursController {
 	@RequestMapping(value="coursUpdate-meth", method=RequestMethod.POST)
 	public String updateCours(@ModelAttribute("coursUpdateCommand") Cours pCours, ModelMap model) {
 		
-//		coursDao.update(pCours);
-		coursDao.updateCours(pCours);
+		coursDao.update(pCours);
+//		coursDao.updateCours(pCours);
 		
 		model.addAttribute("attribut_listeCours", coursDao.getAll());
 		
@@ -149,8 +149,8 @@ public class CoursController {
 			return "coursAdd";
 			
 		}else {
-//			coursDao.add(pCours);
-			coursDao.addCours(pCours);
+			coursDao.add(pCours);
+//			coursDao.addCours(pCours);
 
 			model.addAttribute("attribut_listeCours", coursDao.getAll());
 			

@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
-<%-- taglib de spring security --%>
-<%@taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,8 +8,6 @@
 <title>Page d'ajout d'un cours</title>
 </head>
 <body>
-	<%-- inclusion dynamique du fragment entete.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
 
 	<div align="center">
 		<h2>Ajout d'un cours</h2>
@@ -20,7 +15,7 @@
 
 	<div align="center">
 		
-		<form:form modelAttribute="coursAddCommand" method="POST" action="${pageContext.request.contextPath}/coursAdd-meth">
+		<form:form modelAttribute="coursAddCommand" method="POST" action="${pageContext.request.contextPath}/cours/add">
 		
 		<form:errors path="*" cssClass="error_validation" element="div" />
 		
@@ -38,12 +33,6 @@
 				</tr>
 				
 				<tr>
-					<td> <form:label path="date">Date : </form:label> </td>
-					<td> <form:input path="date"/> </td>
-					<td> <form:errors path="date"/> </td>
-				</tr>
-				
-				<tr>
 					<td> <form:label path="duree">Durée : </form:label> </td>
 					<td> <form:input path="duree"/> </td>
 					<td> <form:errors path="duree"/> </td>
@@ -57,11 +46,11 @@
 				
 				<tr>
 					<td> <form:label path="promotion">Promotion : </form:label> </td>
-					<td> <form:input path="promotion"/> </td> <!-- chercher pour avoir la liste des matiere -->
+					<td> <form:input path="promotion"/> </td> <!-- chercher pour avoir la liste des promotions -->
 					<td> <form:errors path="promotion"/> </td>
 				</tr>
 				
-<%-- 				<form:input type="hidden" path="etudiantCours" value="<%= %>" /><!-- recuperer les étudiants de la promotion ?? ou dans le validator de cours??  --> --%>
+<%-- 				<form:input type="hidden" path="etudiantCours" value="" /><!-- recuperer les étudiants de la promotion ?? ou dans le validator de cours??  --> --%>
 				
 				<tr>
 					<td colspan="2">
@@ -72,9 +61,6 @@
 			</table>
 		</form:form>
 	</div>
-	
-	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
 
 </body>
 </html>

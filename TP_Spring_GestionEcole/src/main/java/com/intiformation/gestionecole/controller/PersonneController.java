@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -46,8 +48,8 @@ public class PersonneController {
 	
 	// Setters pour injection Spring
 	
-	public void setPersonneDao(IPersonneDao personneDao) {
-		this.personneDao = (IGenericDao<Personne>) personneDao;
+	public void setPersonneDao(IGenericDao<Personne> personneDao) {
+		this.personneDao =  personneDao;
 	}
 
 	public void setPersonneValid(PersonneValidator personneValid) {
@@ -137,7 +139,7 @@ public class PersonneController {
 	// Ajout d'une nouvelle personne
 	// Formulaire
 	
-	@RequestMapping(value="/personAdd-form", method=RequestMethod.GET)
+	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddPersonne() {
 		
 		Personne personne = new Personne();
@@ -154,9 +156,9 @@ public class PersonneController {
 	}
 	
 	// Méthode Add 
-	
+	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/personAdd-meth*", method=RequestMethod.GET)
+	@RequestMapping(value="/personAdd-meth", method=RequestMethod.POST)
 	public String addPersonne (@ModelAttribute("personAddCommand") @Validated Personne pPersonne, ModelMap model, BindingResult result) {
 		
 		personneValid.validate(pPersonne, result);
