@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Page d'ajout d'une Aide</title>
+<title>Page d'ajout d'une promotion</title>
 </head>
 <body>
 
@@ -13,29 +13,22 @@
 	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
 
 	<div align="center">
-		<h2>Ajout d'une aide</h2>
+		<h2>Ajout d'une Promotion</h2>
 	</div>
 
 	<div align="center">
 
-		<form:form modelAttribute="aideAddCommand" method="POST"
-			action="${pageContext.request.contextPath}/aide/add-meth">
+		<form:form modelAttribute="promotionAddCommand" method="POST"
+			action="${pageContext.request.contextPath}/promotion/add">
 
 			<form:errors path="*" cssClass="error_validation" element="div" />
 
 			<table>
 				<tr>
-					<td><form:label path="page">Page : </form:label></td>
-					<td><form:input path="page" /></td>
-					<td><form:errors path="page" /></td>
+					<td><form:label path="libelle">Libellé : </form:label></td>
+					<td><form:input path="libelle" /></td>
+					<td><form:errors path="libelle" /></td>
 				</tr>
-
-				<tr>
-					<td><form:label path="contenu">Contenu : </form:label></td>
-					<td><form:input path="contenu" /></td>
-					<td><form:errors path="contenu" /></td>
-				</tr>
-
 
 				<tr>
 					<td colspan="2"><input type="submit" value="Ajouter">
@@ -48,7 +41,6 @@
 
 	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
 	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
-
 
 </body>
 </html>
