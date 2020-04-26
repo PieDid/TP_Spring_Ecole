@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.intiformation.gestionecole.domain.Etudiant;
 
-public interface IGenericDao<T> {
+public interface IGenericDaoDidier<T> {
 
 	/**
 	 * permet de récuperer la liste des objets  de la BDD
