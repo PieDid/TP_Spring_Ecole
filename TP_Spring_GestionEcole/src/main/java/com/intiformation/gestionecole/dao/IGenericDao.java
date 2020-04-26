@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.intiformation.gestionecole.domain.Etudiant;
 
-public interface IGenericDaoDidier<T> {
+public interface IGenericDao<T> {
 
 	/**
 	 * permet de récuperer la liste des objets  de la BDD
@@ -41,7 +41,6 @@ public interface IGenericDaoDidier<T> {
 	public void delete(String pLibelle);
 
 	public T getByLibelle(String libelle);
-	
-	public List<T> getByEtudiant(Etudiant etudiant);
+
 
 }
