@@ -1,6 +1,7 @@
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\ICoursDao.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\EtudiantDao.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\domain\Enseigne.java
+C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\controller\AideController.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\IAdminDao.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\domain\Personne.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\controller\MatiereController.java
@@ -38,3 +39,4 @@ C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Sp
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\validator\PersonneValidator.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\controller\PersonneController.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\IPersonneDao.java
+C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\validator\AideValidator.java
