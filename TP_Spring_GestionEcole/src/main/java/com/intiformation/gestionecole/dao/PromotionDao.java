@@ -4,9 +4,13 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Promotion;
 
+@Repository
+@Transactional
 public class PromotionDao implements IPromotionDao {
 	
 	@Autowired
@@ -60,5 +64,6 @@ public class PromotionDao implements IPromotionDao {
 		sessionFactory.getCurrentSession().remove(getByLibelle(libelle));
 	
 	}
+	
 		
 	}//end class

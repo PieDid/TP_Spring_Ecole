@@ -19,7 +19,7 @@
 	<div align="center">
 
 		<form:form modelAttribute="promotionAddCommand" method="POST"
-			action="${pageContext.request.contextPath}/promotion/add">
+			action="${pageContext.request.contextPath}/promotionAdd-meth">
 
 			<form:errors path="*" cssClass="error_validation" element="div" />
 

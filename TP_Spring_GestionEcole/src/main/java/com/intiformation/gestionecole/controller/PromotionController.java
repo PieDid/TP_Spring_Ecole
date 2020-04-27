@@ -33,7 +33,7 @@ public class PromotionController {
 	
 	// Couche Dao
 	@Autowired
-	private IGenericDao<Promotion> promoDao = new GenericDao<Promotion>(Promotion.class);
+	private IPromotionDao promoDao;
 	
 	// Validateur
 	@Autowired 
@@ -41,7 +41,7 @@ public class PromotionController {
 	
 	// Setters pour injection Spring
 
-	public void setPromoDao(IGenericDao<Promotion> promoDao) {
+	public void setPromoDao(PromotionDao promoDao) {
 		this.promoDao =  promoDao;
 	}
 
@@ -56,7 +56,7 @@ public class PromotionController {
 	// Récupération de la liste des promotions et affichage 
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/promoList*" , method = RequestMethod.GET)
+	@RequestMapping(value="/promotionList*" , method = RequestMethod.GET)
 	public String generatePromotionList(Model model) {
 		
 		List<Promotion> listePromotion = java.util.Collections.emptyList();
@@ -64,7 +64,7 @@ public class PromotionController {
 		
 		model.addAttribute("attribut_listePromotion", listePromotion);
 		
-		return "promoList";
+		return "promotionList";
 	
 	}//end ListPromo
 	
@@ -72,16 +72,16 @@ public class PromotionController {
 	// Suppression d'une promotion
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/promotion/delete/{libelle}","/personne/remove/{libelle}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/promotionDelete/{libelle}","/promotion/remove/{idAide}"}, method=RequestMethod.GET)
 	public String deletePromotion(@PathVariable("libelle") String pLibelle, ModelMap model) {
 		
-		promoDao.delete(pLibelle);
+		promoDao.deletePromotion(pLibelle);
 
 		List<Promotion> listePromotion = promoDao.getAll();
 		
 		model.addAttribute("attribut_listePromotion", listePromotion);
 		
-		return "promoList";
+		return "promotionList";
 		
 	}//end delete	
 	
@@ -89,26 +89,26 @@ public class PromotionController {
 	// Modification d'une promotion
 	// Formulaire
 	
-	@RequestMapping(value="/promoUpdate", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdatePromotion(@RequestParam("libelle") String pLibelle) {
+	@RequestMapping(value="/promotionUpdate/{libelle}", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireUpdatePromotion(@PathVariable("libelle") String pLibelle) {
 		
 		Promotion promoUpdate = promoDao.getByLibelle(pLibelle);
 		
-		return new ModelAndView("promoUpdate", "promotionUpdateCommand", promoUpdate);
+		return new ModelAndView("promotionUpdate", "promotionUpdateCommand", promoUpdate);
 		
 	}
 	
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/promotion/update", method=RequestMethod.POST)
+	@RequestMapping(value="/promotionUpdate-meth", method=RequestMethod.POST)
 	public String updatePromotion(@ModelAttribute("promotionUpdateCommand") Promotion pPromotion, ModelMap model) {
 		
-		((IGenericDao<Promotion>) promoDao).update(pPromotion);
+		promoDao.updatePromotion(pPromotion);
 		
 		model.addAttribute("attribut_listePromotion", promoDao.getAll());
 		
-		return "promoList";
+		return "promotionList";
 	
 	}//end update
 	
@@ -116,7 +116,7 @@ public class PromotionController {
 	// Ajout d'une nouvelle promotion
 	// Formulaire
 	
-	@RequestMapping(value="/promoAdd-form", method=RequestMethod.GET)
+	@RequestMapping(value="/promotionAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddPromotion() {
 		
 		Promotion promotion = new Promotion();
@@ -126,7 +126,7 @@ public class PromotionController {
 		Map<String, Object> data = new HashMap<> ();
 		data.put(objetCommandePromotion, promotion);
 		
-		String viewName = "promoAdd";
+		String viewName = "promotionAdd";
 		
 		return new ModelAndView(viewName, data);
 		
@@ -135,20 +135,20 @@ public class PromotionController {
 	// Méthode Add 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/promoAdd-meth", method=RequestMethod.GET)
+	@RequestMapping(value="/promotionAdd-meth", method=RequestMethod.POST)
 	public String addPromotion (@ModelAttribute("promotionAddCommand") @Validated Promotion pPromotion, ModelMap model, BindingResult result) {
 		
 		promoValid.validate(pPromotion, result);
 		
 		if (result.hasErrors()) {
-			return "promoAdd";
+			return "promotionAdd";
 			
 		}else {
-			((IGenericDao<Promotion>) promoDao).add(pPromotion);
+			promoDao.addPromotion(pPromotion);
 
 			model.addAttribute("attribut_listePromotion", promoDao.getAll());
 			
-			return "promoList";
+			return "promotionList";
 			
 		}//end if
 		
