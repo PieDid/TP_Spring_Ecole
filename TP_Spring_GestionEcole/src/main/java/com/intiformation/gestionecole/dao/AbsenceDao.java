@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.EtudiantCours;
 
+@Repository
+@Transactional
 public class AbsenceDao implements IAbsenceDao {
 	
 	
@@ -45,6 +49,16 @@ public class AbsenceDao implements IAbsenceDao {
 	@Override
 	public List<EtudiantCours> getByEtudiant(Etudiant etudiant) {
 		return sessionFactory.getCurrentSession().createQuery("FROM etudiantCours a WHERE a.etudiant_id = :etudiant").getResultList();
+	}
+	@Override
+	public void add(EtudiantCours pAbsence) {
+		sessionFactory.getCurrentSession().save(pAbsence);
+		
+	}
+	@Override
+	public void update(EtudiantCours pAbsence) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

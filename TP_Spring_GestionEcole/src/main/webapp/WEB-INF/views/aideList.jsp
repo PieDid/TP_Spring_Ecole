@@ -31,11 +31,11 @@
 
 				<!-- appelle vers la méthode afficherFormulaireUpdateCours du AideController, 
 					redirigant vers le formulaire pour udpater l'aide -->
-				<td colspan="2"><a href="aideUpdate?aideId=${aide.idAide}">Modifier</a>
+				<td colspan="2"><a href="aideUpdate/${aide.idAide}">Modifier</a>
 				</td>
 
 				<!-- appelle vers la méthode supprimerAide du AideController -->
-				<td colspan="2"><a href="delete?aideId=${aide.idAide}">Supprimer</a>
+				<td colspan="2"><a href="aideDelete/${aide.idAide}">Supprimer</a>
 				</td>
 			</tr>
 		</c:forEach>

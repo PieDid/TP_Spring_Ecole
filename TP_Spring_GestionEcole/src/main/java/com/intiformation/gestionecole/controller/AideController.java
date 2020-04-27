@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.intiformation.gestionecole.dao.AideDao;
 import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.validator.AideValidator;
@@ -31,14 +33,29 @@ import com.intiformation.gestionecole.validator.AideValidator;
 public class AideController {
 
 	// DAO
-	private IGenericDao<Aide> aideDao = new GenericDao<Aide>(Aide.class);
+	@Autowired
+	private IAideDao aideDao;
 	
 	// Validateur
 	@Autowired
 	private AideValidator aideValid;
 	
+	
+	// setters pr l'injection de Spring
+	
+	public void setAideDao(AideDao aideDao) {
+		this.aideDao = aideDao;
+	}
+
+
+	public void setAideValid(AideValidator aideValid) {
+		this.aideValid = aideValid;
+	}
+
+	/*----------- methodes ---------------*/
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
-	@RequestMapping(value="/aideList*" , method = RequestMethod.GET)
+	@RequestMapping(value="/aideList" , method = RequestMethod.GET)
 	public String generateAideList(Model model) {
 		
 		List<Aide> listeAide  = java.util.Collections.emptyList();
@@ -70,7 +87,7 @@ public class AideController {
 	// Modification d'une aide
 	// Formulaire
 	@RequestMapping(value="/aideUpdate/{idAide}", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateAide(@RequestParam("idAide") int pIdAide) {
+	public ModelAndView afficherFormulaireUpdateAide(@PathVariable("idAide") int pIdAide) {
 		
 		Aide aideUpdate = aideDao.getById(pIdAide);
 		
@@ -115,7 +132,7 @@ public class AideController {
 	// Méthode Add 
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value="/aide/Add-meth", method=RequestMethod.POST)
+	@RequestMapping(value="/aideAdd-meth", method=RequestMethod.POST)
 	public String addAide (@ModelAttribute("aideAddCommand") @Validated Aide pAide, ModelMap model, BindingResult result) {
 		
 		aideValid.validate(pAide, result);

@@ -19,7 +19,7 @@
 	<div align="center">
 
 		<form:form modelAttribute="aideAddCommand" method="POST"
-			action="${pageContext.request.contextPath}/aide/add-meth">
+			action="${pageContext.request.contextPath}/aideAdd-meth">
 
 			<form:errors path="*" cssClass="error_validation" element="div" />
 

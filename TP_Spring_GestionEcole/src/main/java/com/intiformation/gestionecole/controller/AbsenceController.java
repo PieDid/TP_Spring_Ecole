@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.AbsenceDao;
+import com.intiformation.gestionecole.dao.IAbsenceDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.EtudiantCours;
@@ -33,7 +34,7 @@ public class AbsenceController {
 
 	// Couche Dao
 	@Autowired
-	private IGenericDao<EtudiantCours> absDao = new GenericDao<EtudiantCours>(EtudiantCours.class);
+	private IAbsenceDao absDao;
 	
 	// Validateur
 	@Autowired
@@ -42,7 +43,7 @@ public class AbsenceController {
 	
 	// Setters pour Injection Spring
 	
-	public void setAbsDao(IGenericDao<EtudiantCours> absDao) {
+	public void setAbsDao(AbsenceDao absDao) {
 		this.absDao = absDao;
 	}
 
