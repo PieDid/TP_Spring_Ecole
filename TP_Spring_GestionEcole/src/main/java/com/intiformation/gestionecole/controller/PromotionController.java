@@ -56,7 +56,7 @@ public class PromotionController {
 	// Récupération de la liste des promotions et affichage 
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/promotionList*" , method = RequestMethod.GET)
+	@RequestMapping(value="/promotionList" , method = RequestMethod.GET)
 	public String generatePromotionList(Model model) {
 		
 		List<Promotion> listePromotion = java.util.Collections.emptyList();

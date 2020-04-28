@@ -29,19 +29,19 @@
 				<!-- appelle vers la méthode afficherFormulaireUpdatePromotion du PromotionController, 
 					redirigant vers le formulaire pour udpater l'aide -->
 					<!-- !!! NE MARCHE PAS POUR LINSTANT CAR LIBELLE EST LA PK !!!! -->
-				<td colspan="2"><a href="promotionUpdate/${promotion.libelle}">Modifier</a>
+				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionUpdate/${promotion.libelle}">Modifier</a>
 				</td>
 
 				<!-- appelle vers la méthode supprimerAide du AideController -->
 				<!-- !!! AJOUTE DEFINITIVEMENT "promotionDelete/", rendant le site inutilisable apres son passage !!!! -->
-				<td colspan="2"><a href="promotionDelete/${promotion.libelle}">Supprimer</a>
+				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionDelete/${promotion.libelle}">Supprimer</a>
 				</td>
 			</tr>
 		</c:forEach>
 		<!-- appelle vers la méthode afficherFormulaireAddPromotion du PromotionController, 
 					redirigant vers le formulaire pour ajouter l'aide -->
 		<tr>
-			<td colspan="3"><a href="promotionAdd">Ajouter</a></td>
+			<td colspan="3"><a href="${pageContext.request.contextPath}/promotionAdd">Ajouter</a></td>
 		</tr>
 	</table>
 	<hr />
