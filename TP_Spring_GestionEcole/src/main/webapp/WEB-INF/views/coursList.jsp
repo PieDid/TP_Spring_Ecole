@@ -68,7 +68,7 @@
 		<!-- appelle vers la méthode afficherFormulaireAddCours du CoursController, 
 					redirigant vers le formulaire pour ajouter le cours le cours -->
 		<tr>
-			<td colspan="10"><a href="coursAdd">Ajouter</a></td>
+			<td colspan="10"><a href="${pageContext.request.contextPath}/coursAdd">Ajouter</a></td>
 		</tr>
 	</table>
 	<hr />

@@ -33,9 +33,9 @@
 				</tr>
 				
 				<tr>
-					<td> <form:label path="matiere">Matière : </form:label> </td>
-					<td> <form:input path="matiere"/> </td> <!-- chercher pour avoir la liste des matiere -->
-					<td> <form:errors path="matiere"/> </td>
+					<td> <form:label path="matiere.libelle">Matière : </form:label> </td>
+					<td> <form:input path="matiere.libelle"/> </td> <!-- chercher pour avoir la liste des matiere -->
+					<td> <form:errors path="matiere.libelle"/> </td>
 				</tr>
 				
 				<tr>
@@ -51,9 +51,9 @@
 				</tr>
 				
 				<tr>
-					<td> <form:label path="promotion">Promotion : </form:label> </td>
-					<td> <form:input path="promotion"/> </td> <!-- chercher pour avoir la liste des promotions -->
-					<td> <form:errors path="promotion"/> </td>
+					<td> <form:label path="promotion.libelle">Promotion : </form:label> </td>
+					<td> <form:input path="promotion.libelle"/> </td> <!-- chercher pour avoir la liste des promotions -->
+					<td> <form:errors path="promotion.libelle"/> </td>
 				</tr>
 				
 <%-- 				<form:input type="hidden" path="etudiantCours" value="" /><!-- recuperer les étudiants de la promotion ?? ou dans le validator de cours??  --> --%>

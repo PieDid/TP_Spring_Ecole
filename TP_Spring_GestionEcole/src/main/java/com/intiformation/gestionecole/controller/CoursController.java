@@ -111,7 +111,7 @@ public class CoursController {
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="coursUpdate-meth", method=RequestMethod.POST)
+	@RequestMapping(value="/coursUpdate-meth", method=RequestMethod.POST)
 	public String updateCours(@ModelAttribute("coursUpdateCommand") Cours pCours, ModelMap model) {
 		
 //		coursDao.update(pCours);

@@ -300,21 +300,21 @@ public class PersonneController {
 		
 		model.addAttribute("attribut_listeEtudiant", etuDao.getAllEtudiant());
 		
-		return "ensList";
+		return "etuList";
 	
 	}//end update
 	
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/etudiant/update", method=RequestMethod.POST)
-	public String updateEnseigant(@ModelAttribute("ensUpdateCommand") Enseignant pEnseignant, ModelMap model) {
+	@RequestMapping(value="/enseignant/update", method=RequestMethod.POST)
+	public String updateEnseignant(@ModelAttribute("ensUpdateCommand") Enseignant pEnseignant, ModelMap model) {
 		
 		enseignantDao.updateEnseignant(pEnseignant);
 		
 		model.addAttribute("attribut_listeEnseignant", enseignantDao.getAllEnseignant());
 		
-		return "etuList";
+		return "ensList";
 	
 	}//end update
 	
