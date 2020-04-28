@@ -75,6 +75,28 @@ public class AdminDao implements IAdminDao {
 		
 	}//end update
 
+
+	
+	
+	
+	@Override
+	public void deleteAdmin(int pIdAdmin) {
+		sf.getCurrentSession().remove(getAdminById(pIdAdmin));
+		
+	}
+
+
+	@Override
+	public Administrateur getAdminById(int pIdAdmin) {
+		return sf.getCurrentSession().find(Administrateur.class, pIdAdmin);
+	}
+
+
+	@Override
+	public List<Administrateur> getAllAdmin() {
+		return sf.getCurrentSession().createQuery("FROM admin a").getResultList();
+	}
+
 	
 	
 }//end class

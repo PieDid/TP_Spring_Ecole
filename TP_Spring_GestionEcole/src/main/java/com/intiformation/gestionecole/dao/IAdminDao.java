@@ -1,5 +1,7 @@
 package com.intiformation.gestionecole.dao;
 
+import java.util.List;
+
 import com.intiformation.gestionecole.domain.Administrateur;
 
 public interface IAdminDao extends IGeneralDao<Administrateur> {
@@ -15,7 +17,11 @@ public interface IAdminDao extends IGeneralDao<Administrateur> {
 	
 	public void updateAdmin (Administrateur admin);
 	
+	public void deleteAdmin (int pIdAdmin);
 	
+	public Administrateur getAdminById (int pIdAdmin);
+	
+	public List<Administrateur> getAllAdmin();
 	
 
 }//end interface

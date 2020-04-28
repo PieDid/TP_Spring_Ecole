@@ -6,11 +6,13 @@ import com.intiformation.gestionecole.domain.Enseignant;
 
 public interface IEnseignantDao {
 	
+	public void addEnseignant(Enseignant pEnseignant);
+	
 	public void updateEnseignant(Enseignant pEnseignant);
 	
-	public void deleteEnseignant(Long pIdEnseignant);
+	public void deleteEnseignant(int pIdEnseignant);
 		
-	public Enseignant getEnseignantById(Long pIdEnseignant);
+	public Enseignant getEnseignantById(int pIdEnseignant);
 	
 	public List<Enseignant> getAllEnseignant();
 	

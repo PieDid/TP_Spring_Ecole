@@ -20,6 +20,14 @@ public class EnseignantDao implements IEnseignantDao{
 	@Autowired // injection par type du bean de la session factory
 	private SessionFactory SessionFactory;
 	
+	/*_________________ getters|setters ________________*/
+	public SessionFactory getSessionFactory() {
+		return SessionFactory;
+	}
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.SessionFactory = sessionFactory;
+	}
+	
 	/**
 	 * ajout d'un enseignant dans la bdd
 	 */
@@ -59,7 +67,7 @@ public class EnseignantDao implements IEnseignantDao{
 	 * suppression d'un enseignant dans la bdd
 	 */
 	@Transactional
-	public void deleteEnseignant(Long pIdEnseignant) {
+	public void deleteEnseignant(int pIdEnseignant) {
 		Session session = SessionFactory.getCurrentSession();
 		
 		try {
@@ -67,7 +75,7 @@ public class EnseignantDao implements IEnseignantDao{
 			session.delete(enseignant);
 			
 		} catch (HibernateException ex) {
-			System.out.println(" ... Erreur lors de la modification de l'enseignant... ");
+			System.out.println(" ... Erreur lors de la suppression de l'enseignant... ");
 			throw ex;
 		}// end catch
 	}// end deleteEnseignant()
@@ -76,7 +84,7 @@ public class EnseignantDao implements IEnseignantDao{
 	 * récupération d'un enseignant via id dans la bdd
 	 */
 	@Transactional(readOnly=true) // readOnly = l'optimisation de la transaction
-	public Enseignant getEnseignantById(Long pIdEnseignant) {
+	public Enseignant getEnseignantById(int pIdEnseignant) {
 		Session session = SessionFactory.getCurrentSession();
 		Enseignant Enseignant = session.find(Enseignant.class, pIdEnseignant);
 		return Enseignant;

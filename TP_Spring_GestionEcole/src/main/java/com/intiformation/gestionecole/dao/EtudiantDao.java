@@ -35,8 +35,8 @@ public class EtudiantDao implements IEtudiantDao{
 
 	// Récup un étudiant par son id
 	@Override
-	public Etudiant getById(int id) {
-		return sessionFactory.getCurrentSession().find(Etudiant.class, id);
+	public Etudiant getById(int pIdEtudiant) {
+		return sessionFactory.getCurrentSession().find(Etudiant.class, pIdEtudiant);
 	}
 
 	// Supprime un étudiant
@@ -55,6 +55,24 @@ public class EtudiantDao implements IEtudiantDao{
 	@Override
 	public void updateEtudiant(Etudiant etudiant) {
 		sessionFactory.getCurrentSession().update(etudiant);
+	}
+	
+	
+	
+	@Override
+	public Etudiant getEudiantById(int pIdEtudiant) {
+		return sessionFactory.getCurrentSession().find(Etudiant.class, pIdEtudiant);
+	}
+	
+	@Override
+	public void deleteEtudiant(int pIdEtudiant) {
+		sessionFactory.getCurrentSession().remove(getEudiantById(pIdEtudiant));
+		
+	}
+
+	@Override
+	public List<Etudiant> getAllEtudiant() {
+		return sessionFactory.getCurrentSession().createQuery("FROM etudiant e").getResultList();
 	}
 	
 	
