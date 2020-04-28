@@ -8,14 +8,16 @@
 <title>Page de liste des cours</title>
 </head>
 <body>
-
+	<%-- inclusion dynamique du fragment entete.jsp --%>
+	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
+	
 	<!-- récupérée grace à la méthode generateCoursList du controlleur CoursController-->
 	<h2>Liste des cours</h2>
 
 	<table>
 		<tr>
 			<th>Identifiant</th>
-<!-- 			<th>Matière</th> -->
+			<th>Matière</th>
 			<th>Libellé</th>
 			<th>Durée</th>
 			<th>Description</th>
@@ -26,12 +28,12 @@
 
 			<tr>
 				<td>${cours.idCours}</td>
-<%-- 				<td>${cours.matiere}</td> --%>
+				<td>${cours.matiere.libelle}</td>
 				<td>${cours.libelle}</td>
 				<td>${cours.date}</td>
 				<td>${cours.duree}</td>
 				<td>${cours.description}</td>
-				<td>${cours.promotion}</td>
+				<td>${cours.promotion.libelle}</td>
 				<!-- Cette méthode peut etre dans personne controller. 
 				
 					Elle s'appelle etudiantByIdCours, prend en argument 
@@ -55,22 +57,24 @@
 
 				<!-- appelle vers la méthode afficherFormulaireUpdateCours du CoursController, 
 					redirigant vers le formulaire pour udpater le cours -->
-				<td colspan="2"><a href="coursUpdate?coursId=${cours.idCours}">Modifier</a>
+				<td colspan="2"><a href="${pageContext.request.contextPath}/coursUpdate/${cours.idCours}">Modifier</a>
 				</td>
 
 				<!-- appelle vers la méthode supprimerCours du CoursController -->
-				<td colspan="2"><a href="delete?coursId=${cours.idCours}">Supprimer</a>
+				<td colspan="2"><a href="${pageContext.request.contextPath}/coursDelete/${cours.idCours}">Supprimer</a>
 				</td>
 			</tr>
 		</c:forEach>
 		<!-- appelle vers la méthode afficherFormulaireAddCours du CoursController, 
 					redirigant vers le formulaire pour ajouter le cours le cours -->
 		<tr>
-			<td colspan="10"><a href="coursAdd-form">Ajouter</a></td>
+			<td colspan="10"><a href="coursAdd">Ajouter</a></td>
 		</tr>
 	</table>
 	<hr />
 
-
+	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
+	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
+	
 </body>
 </html>

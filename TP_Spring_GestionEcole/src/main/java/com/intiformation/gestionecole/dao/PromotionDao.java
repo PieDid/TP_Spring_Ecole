@@ -4,13 +4,9 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Promotion;
 
-@Repository
-@Transactional
 public class PromotionDao implements IPromotionDao {
 	
 	@Autowired
@@ -27,43 +23,42 @@ public class PromotionDao implements IPromotionDao {
 
 	@Override
 	public List<Promotion> getAll() {
-		return sessionFactory.getCurrentSession().createQuery("FROM promotion p").getResultList();
+		return getSessionFactory().getCurrentSession().createQuery("FROM promotion p").list();
 	}
 
 	@Override
 	public Promotion getById(int id) {
-		return sessionFactory.getCurrentSession().find(Promotion.class, id);
+		return getSessionFactory().getCurrentSession().find(Promotion.class, id);
 	}
 
 	@Override
 	public void delete(int id) {
-		sessionFactory.getCurrentSession().remove(getById(id));
+		getSessionFactory().getCurrentSession().remove(getById(id));
 		
 	}
 
 	@Override
 	public void addPromotion(Promotion promotion) {
-		sessionFactory.getCurrentSession().save(promotion);
+		getSessionFactory().getCurrentSession().save(promotion);
 		
 	}
 
 	@Override
 	public void updatePromotion(Promotion promotion) {
-		sessionFactory.getCurrentSession().update(promotion);
+		getSessionFactory().getCurrentSession().update(promotion);
 
 
 
 }
 	@Override
 	public Promotion getByLibelle(String libelle) {
-		return sessionFactory.getCurrentSession().find(Promotion.class, libelle);
+		return getSessionFactory().getCurrentSession().find(Promotion.class, libelle);
 	}
 	
 	@Override
 	public void deletePromotion(String libelle) {
-		sessionFactory.getCurrentSession().remove(getByLibelle(libelle));
+		getSessionFactory().getCurrentSession().remove(getByLibelle(libelle));
 	
 	}
-	
 		
 	}//end class

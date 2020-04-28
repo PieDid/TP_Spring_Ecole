@@ -45,7 +45,7 @@ public class GenericDao<T> implements IGenericDao<T>{
 	public GenericDao(Class<T> entityClass) {
 		this.entityClass = entityClass;
 		System.out.println("Classe e entityClass : " + entityClass.getClass());
-		System.out.println("entitynameName : " + entityClass.getClass().getSimpleName().substring(0).toLowerCase());
+		System.out.println("entitynameName : " + entityClass.getSimpleName().substring(0).toLowerCase());
 	}
 
 
@@ -54,42 +54,41 @@ public class GenericDao<T> implements IGenericDao<T>{
 	 */
 	public GenericDao() {}
 	/*_________________ méthodes ________________*/
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll() {
 		//String entityName = (entityClass).getSimpleName().substring(0).toLowerCase();
-		String entityName = "";
+		String entityName = (this.entityClass).getSimpleName().substring(0).toLowerCase();
 		
-		if(this.entityClass.getClass().equals(Cours.class)) {
-			entityName = "cours";
-		}
-		if(this.entityClass.getClass().equals(Personne.class)) {
-			entityName = "personne";
-		}
-		if(this.entityClass.getClass().equals(Aide.class)) {
-			entityName = "aide";
-		}
-		if(this.entityClass.getClass().equals(Adresse.class)) {
-			entityName = "adresse";
-		}
-		if(this.entityClass.getClass().equals(Enseigne.class)) {
-			entityName = "enseigne";
-		}
-		if(this.entityClass.getClass().equals(EtudiantCours.class)) {
-			entityName = "etudiantCours";
-		}
-		if(this.entityClass.getClass().equals(Matiere.class)) {
-			entityName = "matiere";
-		}
-		if(this.entityClass.getClass().equals(Promotion.class)) {
-			entityName = "promotion";
-		}
+//		if(this.entityClass.getSimpleName().substring(0).toLowerCase().equals("cours")) {
+//			entityName = "cours";
+//		}
+//		if(this.entityClass.getClass().equals(Personne.class)) {
+//			entityName = "personne";
+//		}
+//		if(this.entityClass.getClass().equals(Aide.class)) {
+//			entityName = "aide";
+//		}
+//		if(this.entityClass.getClass().equals(Adresse.class)) {
+//			entityName = "adresse";
+//		}
+//		if(this.entityClass.getClass().equals(Enseigne.class)) {
+//			entityName = "enseigne";
+//		}
+//		if(this.entityClass.getClass().equals(EtudiantCours.class)) {
+//			entityName = "etudiantCours";
+//		}
+//		if(this.entityClass.getClass().equals(Matiere.class)) {
+//			entityName = "matiere";
+//		}
+//		if(this.entityClass.getClass().equals(Promotion.class)) {
+//			entityName = "promotion";
+//		}
 		
 		
 		System.out.println("CONTROLL :: Nom de l'entité : " + entityName);
 		String clauseFROM = "FROM " + entityName + " e";
 		//String clauseFROM = "FROM cours e";
-		return sessionFactory.getCurrentSession().createQuery(clauseFROM).getResultList();
+		return getSessionFactory().getCurrentSession().createQuery(clauseFROM).list();
 	}
 
 
@@ -97,36 +96,36 @@ public class GenericDao<T> implements IGenericDao<T>{
 
 	@Override
 	public T getById(int id) {
-		return sessionFactory.getCurrentSession().find(entityClass, id);
+		return getSessionFactory().getCurrentSession().find(entityClass, id);
 	}
 
 	@Override
 	public T getByLibelle(String libelle) {
-		return sessionFactory.getCurrentSession().find(entityClass, libelle);
+		return getSessionFactory().getCurrentSession().find(entityClass, libelle);
 	}
 
 
 	// Supprime un étudiant
 	public void delete(int id) {
-		sessionFactory.getCurrentSession().remove(getById(id));
+		getSessionFactory().getCurrentSession().remove(getById(id));
 	}
 	
 	@Override
 	public void delete(String pLibelle) {
-		sessionFactory.getCurrentSession().remove(getByLibelle(pLibelle));
+		getSessionFactory().getCurrentSession().remove(getByLibelle(pLibelle));
 		
 	}
 	
 	// Ajoute un étudiant
 	@Override
 	public void add(T entity) {
-		sessionFactory.getCurrentSession().save(entity);
+		getSessionFactory().getCurrentSession().save(entity);
 	}
 	
 	// Modifie un étudiant
 	@Override
 	public void update(T entity) {
-		sessionFactory.getCurrentSession().update(entity);
+		getSessionFactory().getCurrentSession().update(entity);
 	}
 	
 	

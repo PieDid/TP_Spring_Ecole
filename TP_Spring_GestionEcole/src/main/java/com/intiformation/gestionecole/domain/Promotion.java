@@ -30,6 +30,10 @@ public class Promotion  implements Serializable{
 //	@ManyToOne
 //	@JoinColumn(name="etudiant_id", referencedColumnName = "id_personne")
 //	private Etudiant etudiant;
+	
+	// relation entre promotion et cours
+	@OneToMany(mappedBy="promotion", cascade= CascadeType.ALL)
+	private List<Cours> cours;
 
 	
 	/* Constructeurs */

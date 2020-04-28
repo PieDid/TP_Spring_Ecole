@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,9 +33,10 @@ import com.intiformation.gestionecole.validator.CoursValidator;
 public class CoursController {
 
 	// Couche Dao
-	//@Autowired
-	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
-	//private ICoursDao coursDao = new CoursDao();
+	@Autowired
+	private ICoursDao coursDao;
+//	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
+//	private GenericDao<Cours> coursDao;
 	
 	// Validateur
 	@Autowired
@@ -44,8 +45,8 @@ public class CoursController {
 	
 	// Setters pour injection Spring
 
-	public void setCoursDao(GenericDao<Cours> coursDao) {
-//	//public void setCoursDao(CoursDao coursDao) {
+//	public void setCoursDao(GenericDao<Cours> coursDao) {
+	public void setCoursDao(CoursDao coursDao) {
 		this.coursDao = coursDao;
 	}
 
@@ -54,13 +55,18 @@ public class CoursController {
 	}
 	
 	
+//	@RequestMapping
+//    public void handleMe(HttpServletRequest request) {
+//        String path = request.getContextPath();
+//    }
+	
 	/* Méthodes gestionnaires du Cours Controller */
 	
 	
 	// Récupération de la liste des cours et affichage 
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
-	@RequestMapping(value="/coursList*" , method = RequestMethod.GET)
+	@RequestMapping(value="/coursList" , method = RequestMethod.GET)
 	public String generateCoursList(Model model) {
 		
 		List<Cours> listeCours = java.util.Collections.emptyList();
@@ -94,7 +100,7 @@ public class CoursController {
 	// Formulaire
 	
 	@RequestMapping(value="/coursUpdate/{idCours}", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateCours(@RequestParam("idCours") int pIdCours) {
+	public ModelAndView afficherFormulaireUpdateCours(@PathVariable("idCours") int pIdCours) {
 		
 		Cours coursUpdate = coursDao.getById(pIdCours);
 		
@@ -108,8 +114,8 @@ public class CoursController {
 	@RequestMapping(value="coursUpdate-meth", method=RequestMethod.POST)
 	public String updateCours(@ModelAttribute("coursUpdateCommand") Cours pCours, ModelMap model) {
 		
-		coursDao.update(pCours);
-//		coursDao.updateCours(pCours);
+//		coursDao.update(pCours);
+		coursDao.updateCours(pCours);
 		
 		model.addAttribute("attribut_listeCours", coursDao.getAll());
 		
@@ -138,7 +144,7 @@ public class CoursController {
 	}
 	
 	// Méthode Add 
-	@org.springframework.transaction.annotation.Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
+	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/coursAdd-meth", method=RequestMethod.POST)
 	public String addCours (@ModelAttribute("coursAddCommand") @Validated Cours pCours, ModelMap model, BindingResult result) {
@@ -149,8 +155,8 @@ public class CoursController {
 			return "coursAdd";
 			
 		}else {
-			coursDao.add(pCours);
-//			coursDao.addCours(pCours);
+//			coursDao.add(pCours);
+			coursDao.addCours(pCours);
 
 			model.addAttribute("attribut_listeCours", coursDao.getAll());
 			

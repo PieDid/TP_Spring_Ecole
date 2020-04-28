@@ -30,31 +30,31 @@ public class CoursDao implements ICoursDao{
 	// Récup tous les cours de la bdd	
 	@Override
 	public List<Cours> getAll() {
-		return sessionFactory.getCurrentSession().createQuery("FROM cours c").getResultList();
+		return getSessionFactory().getCurrentSession().createQuery("FROM cours c").list();
 	}
 
 	// Récup un cours par son id
 	@Override
 	public Cours getById(int id) {
-		return sessionFactory.getCurrentSession().find(Cours.class, id);
+		return getSessionFactory().getCurrentSession().find(Cours.class, id);
 	}
 
 	// Supprime un cours
 	@Override
 	public void delete(int id) {
-		sessionFactory.getCurrentSession().remove(getById(id));
+		getSessionFactory().getCurrentSession().remove(getById(id));
 	}
 
 	// Ajoute un cours
 	@Override
 	public void addCours(Cours cours) {
-		sessionFactory.getCurrentSession().save(cours);
+		getSessionFactory().getCurrentSession().save(cours);
 	}
 
 	// Modifie un cours
 	@Override
 	public void updateCours(Cours cours) {
-		sessionFactory.getCurrentSession().update(cours);
+		getSessionFactory().getCurrentSession().update(cours);
 	}
 
 	
