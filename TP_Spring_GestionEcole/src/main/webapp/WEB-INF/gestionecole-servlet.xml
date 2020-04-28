@@ -30,6 +30,7 @@
 			<property name="suffix" value=".jsp" />
 	</bean>
 	
+	
 	<!-- Déclaration de la hierarchie des roles -->
 	<bean class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 		<property name="hierarchy">
@@ -40,7 +41,6 @@
              </value>
          </property>
 	</bean>
-	
 	
 	
 	<!-- ////////////////////////////////// -->

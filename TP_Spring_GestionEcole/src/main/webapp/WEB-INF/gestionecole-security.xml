@@ -101,6 +101,8 @@
 		<sec:intercept-url pattern="/messageDelete*" access="hasRole('ROLE_ADMIN')" />
 	
 		
+		
+		
 		<!-- ////////////////formulaire personnalisé//////////////////////// -->
 		<!-- 
 				> config avec la balise form-login

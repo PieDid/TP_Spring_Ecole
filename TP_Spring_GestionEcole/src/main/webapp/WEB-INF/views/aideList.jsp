@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Page de Liste de l'aide</title>
+<title>Page de gestion de l'aide</title>
 </head>
 <body>
 	<%-- inclusion dynamique du fragment entete.jsp --%>

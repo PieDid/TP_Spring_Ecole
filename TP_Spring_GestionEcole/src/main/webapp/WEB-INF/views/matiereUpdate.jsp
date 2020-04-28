@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Page de modification de la promotion</title>
+<title>Page de modification des matières</title>
 </head>
 <body>
 
@@ -13,13 +13,13 @@
 	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
 
 	<div align="center">
-		<h1>Modification des informations d'une Promotion</h1>
+		<h1>Modification des informations d'une Matière</h1>
 	</div>
 
 	<div align="center">
 
-		<form:form modelAttribute="promotionUpdateCommand" method="POST"
-			action="${pageContext.request.contextPath}/promotionUpdate-meth">
+		<form:form modelAttribute="matiereUpdateCommand" method="POST"
+			action="${pageContext.request.contextPath}/matiereUpdate-meth">
 
 			<table>
 
@@ -39,6 +39,7 @@
 
 	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
 	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
+
 
 </body>
 </html>

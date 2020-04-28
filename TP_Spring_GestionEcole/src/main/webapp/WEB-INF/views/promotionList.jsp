@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Page de Liste des promotions</title>
+<title>Page de gestion des promotions</title>
 </head>
 <body>
 
 	<%-- inclusion dynamique du fragment entete.jsp --%>
 	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
 
-<!-- récupérée grace à la méthode generateCoursList du controlleur PromotionController-->
+	<!-- récupérée grace à la méthode generateCoursList du controlleur PromotionController-->
 	<h2>Liste des promotions</h2>
 
 	<table>
@@ -27,19 +27,18 @@
 				<!-- liste des etudiant / enseignant / cours / matiere de la promotion ? -->
 
 				<!-- appelle vers la méthode afficherFormulaireUpdatePromotion du PromotionController, 
-					redirigant vers le formulaire pour udpater l'aide -->
+					redirigant vers le formulaire pour udpater la promotion -->
 					<!-- !!! NE MARCHE PAS POUR LINSTANT CAR LIBELLE EST LA PK !!!! -->
 				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionUpdate/${promotion.libelle}">Modifier</a>
 				</td>
 
-				<!-- appelle vers la méthode supprimerAide du AideController -->
-				<!-- !!! AJOUTE DEFINITIVEMENT "promotionDelete/", rendant le site inutilisable apres son passage !!!! -->
+				<!-- appelle vers la méthode supprimerPromotion du PromotionController -->
 				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionDelete/${promotion.libelle}">Supprimer</a>
 				</td>
 			</tr>
 		</c:forEach>
 		<!-- appelle vers la méthode afficherFormulaireAddPromotion du PromotionController, 
-					redirigant vers le formulaire pour ajouter l'aide -->
+					redirigant vers le formulaire pour ajouter la promotion -->
 		<tr>
 			<td colspan="3"><a href="${pageContext.request.contextPath}/promotionAdd">Ajouter</a></td>
 		</tr>
