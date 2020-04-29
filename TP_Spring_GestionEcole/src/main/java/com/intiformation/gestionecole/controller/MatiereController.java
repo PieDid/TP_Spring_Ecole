@@ -44,7 +44,7 @@ public class MatiereController {
 	
 	// Setters pour Injection Spring 
 
-	public void setMatDao(IGenericDao<Matiere> matDao) {
+	public void setMatDao(GenericDao<Matiere> matDao) {
 		this.matDao = matDao;
 	}
 
@@ -138,7 +138,7 @@ public class MatiereController {
 	// Méthode Add 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/matiereAdd-meth", method=RequestMethod.GET)
+	@RequestMapping(value="/matiereAdd-meth", method=RequestMethod.POST)
 	public String addMatiere (@ModelAttribute("matiereAddCommand") @Validated Matiere pMatiere, ModelMap model, BindingResult result) {
 		
 		matValid.validate(pMatiere, result);
