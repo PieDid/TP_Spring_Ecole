@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Adresse;
 import com.intiformation.gestionecole.domain.Personne;
 
+@Repository
+@Transactional
 public class AdresseDao implements IAdresseDao {
 	
 	@Autowired

@@ -58,15 +58,15 @@ public class AbsenceController {
 	// Récupération de la liste des absences et affichage 
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/absList*" , method = RequestMethod.GET)
+	@RequestMapping(value="/etudiantCoursList" , method = RequestMethod.GET)
 	public String generateAbsenceList(Model model) {
 		
 		List<EtudiantCours> listeAbsences = java.util.Collections.emptyList();
 		listeAbsences = absDao.getAll();
 		
-		model.addAttribute("attribut_listeAbsences", listeAbsences);
+		model.addAttribute("attribut_listeEtudiantCours", listeAbsences);
 		
-		return "absList";
+		return "etudiantCoursList";
 	
 	}//end List
 	
@@ -93,16 +93,16 @@ public class AbsenceController {
 	// Suppression d'une absence
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value= {"/etudiantCours/delete/{idEtudiantCours}","/etudiantCours/remove/{idEtudiantCours}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/etudiantCoursDelete/{idEtudiantCours}","/etudiantCours/remove/{idEtudiantCours}"}, method=RequestMethod.GET)
 	public String deleteAbsence(@PathVariable("idEtudiantCours") int pIdAbsence, ModelMap model) {
 		
 		absDao.delete(pIdAbsence);
 
 		List<EtudiantCours> listeAbsences = absDao.getAll();
 		
-		model.addAttribute("attribut_listeAbsences", listeAbsences);
+		model.addAttribute("attribut_listeEtudiantCours", listeAbsences);
 		
-		return "absList";
+		return "etudiantCoursList";
 		
 	}//end delete
 	
@@ -110,26 +110,26 @@ public class AbsenceController {
 	// Modification d'une absence (utile ?)
 	// Formulaire
 	
-	@RequestMapping(value="/absUpdate-form", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateAbsence(@RequestParam("idEtudiantCours") int pIdAbsence) {
+	@RequestMapping(value="/etudiantCoursUpdate/{idEtudiantCours}", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireUpdateAbsence(@PathVariable("idEtudiantCours") int pIdAbsence) {
 		
 		EtudiantCours absUpdate = absDao.getById(pIdAbsence);
 		
-		return new ModelAndView("absUpdate", "absenceUpdateCommand", absUpdate);
+		return new ModelAndView("etudiantCoursUpdate", "etudiantCoursUpdateCommand", absUpdate);
 		
 	}
 	
 	// Méthode Update 
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/etudiantCours/update", method=RequestMethod.POST)
-	public String updateAbsence(@ModelAttribute("absenceUpdateCommand") EtudiantCours pAbsence, ModelMap model) {
+	@RequestMapping(value="/etudiantCoursUpdate-meth", method=RequestMethod.POST)
+	public String updateAbsence(@ModelAttribute("etudiantCoursUpdateCommand") EtudiantCours pAbsence, ModelMap model) {
 		
 		absDao.update(pAbsence);
 		
-		model.addAttribute("attribut_listeAbsences", absDao.getAll());
+		model.addAttribute("attribut_listeEtudiantCours", absDao.getAll());
 		
-		return "absList";
+		return "etudiantCoursList";
 	
 	}//end update
 	
@@ -137,17 +137,17 @@ public class AbsenceController {
 	// Ajout d'une absence
 	// Formulaire
 	
-	@RequestMapping(value="/absAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/etudiantCoursAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddAbsence() {
 		
 		EtudiantCours absence = new EtudiantCours();
 		
-		String objetCommandeAbsence = "absenceAddCommand";
+		String objetCommandeAbsence = "etudiantCoursAddCommand";
 		
 		Map<String, Object> data = new HashMap<> ();
 		data.put(objetCommandeAbsence, absence);
 		
-		String viewName = "absAdd";
+		String viewName = "etudiantCoursAdd";
 		
 		return new ModelAndView(viewName, data);
 		
@@ -156,20 +156,20 @@ public class AbsenceController {
 	// Méthode Add 
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/absAdd-meth", method=RequestMethod.POST)
-	public String addAbsence (@ModelAttribute("absenceAddCommand") @Validated EtudiantCours pAbsence, ModelMap model, BindingResult result) {
+	@RequestMapping(value="/etudiantCoursAdd-meth", method=RequestMethod.POST)
+	public String addAbsence (@ModelAttribute("etudiantCoursAddCommand") @Validated EtudiantCours pAbsence, ModelMap model, BindingResult result) {
 		
 		absValid.validate(pAbsence, result);
 		
 		if (result.hasErrors()) {
-			return "absdd";
+			return "etudiantCoursAdd";
 			
 		}else {
 			absDao.add(pAbsence);
 
-			model.addAttribute("attribut_listeAbsences", absDao.getAll());
+			model.addAttribute("attribut_listeEtudiantCours", absDao.getAll());
 			
-			return "absList";
+			return "etudiantCoursList";
 			
 		}//end if
 		

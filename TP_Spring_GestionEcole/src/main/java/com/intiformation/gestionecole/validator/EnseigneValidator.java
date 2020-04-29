@@ -16,13 +16,13 @@ public class EnseigneValidator implements Validator {
 	}//end supports
 
 	@Override
-	public void validate(Object matValid, Errors errors) {
+	public void validate(Object enseigneValid, Errors errors) {
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "enseignant", "required.enseignant", "Veuillez entrer un enseignant.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "matiere", "required.matiere", "Veuillez entrer une matière.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "promotion", "required.promotion", "Veuillez entrer une promotion.");
 		
-		Enseigne enseigne =  (Enseigne) matValid;
+		Enseigne enseigne =  (Enseigne) enseigneValid;
 		
 	}
 }

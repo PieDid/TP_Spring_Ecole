@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,13 +22,13 @@
 			<th>Matière</th>
 		</tr>
 		
-		<c:forEach items="${attribut_listeEnsigne}" var="enseigne">
+		<c:forEach items="${attribut_listeEnseigne}" var="enseigne">
 
 			<tr>
 				<td>${enseigne.id}</td>
-				<td>${enseigne.enseignant}</td>
-				<td>${enseigne.promotion}</td>
-				<td>${enseigne.matiere}</td>
+				<td>${enseigne.enseignant.identifiant}</td>
+				<td>${enseigne.promotion.libelle}</td>
+				<td>${enseigne.matiere.libelle}</td>
 
 
 				<td colspan="2"><a href="${pageContext.request.contextPath}/enseigneUpdate/${enseigne.id}">Modifier</a>
@@ -38,7 +39,7 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td colspan="3"><a href="${pageContext.request.contextPath}/eneigneAdd">Ajouter</a></td>
+			<td colspan="3"><a href="${pageContext.request.contextPath}/enseigneAdd">Ajouter</a></td>
 		</tr>
 	</table>
 	<hr />

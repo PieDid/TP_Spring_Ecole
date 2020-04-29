@@ -25,25 +25,25 @@
 
 			<table>
 				<tr>
-					<td><form:label path="enseignant">Enseignant : </form:label></td>
-					<td><form:input path="enseignant" /></td>
-					<td><form:errors path="enseignant" /></td>
+					<td><form:label path="enseignant.identifiant">Enseignant : </form:label></td>
+					<td><form:input path="enseignant.identifiant" /></td>
+					<td><form:errors path="enseignant.identifiant" /></td>
 				</tr>
 				
 				<tr>
-					<td><form:label path="matiere">Matiere : </form:label></td>
-					<td><form:input path="matiere" /></td>
-					<td><form:errors path="matiere" /></td>
+					<td><form:label path="matiere.libelle">Matiere : </form:label></td>
+					<td><form:input path="matiere.libelle" /></td>
+					<td><form:errors path="matiere.libelle" /></td>
 				</tr>
 				
 				<tr>
-					<td><form:label path="promotion">Promotion : </form:label></td>
-					<td><form:input path="promotion" /></td>
-					<td><form:errors path="promotion" /></td>
+					<td><form:label path="promotion.libelle">Promotion : </form:label></td>
+					<td><form:input path="promotion.libelle" /></td>
+					<td><form:errors path="promotion.libelle" /></td>
 				</tr>
 
 				<tr>
-					<td colspan="2"><input type="submit" value="Ajouter">
+					<td colspan="2"><input type="submit" value="Modifier">
 					</td>
 				</tr>
 

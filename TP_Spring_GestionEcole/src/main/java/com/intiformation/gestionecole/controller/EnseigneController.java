@@ -68,7 +68,7 @@ public class EnseigneController {
 
 		enseigneDao.delete(pIdEnseigne);
 
-		List<Enseigne> listeEnseigne = enseigneDao.getAll();
+		List<Enseigne> listeEnseigne = ((IGenericDao<Enseigne>) enseigneDao).getAll();
 
 		model.addAttribute("attribut_listeEnseigne", listeEnseigne);
 
@@ -82,7 +82,7 @@ public class EnseigneController {
 	@RequestMapping(value = "enseigneUpdate/{id}", method = RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEnseigne(@PathVariable("id") int pIdEnseigne) {
 
-		Enseigne enseigneUpdate = enseigneDao.getById(pIdEnseigne);
+		Enseigne enseigneUpdate = ((IGenericDao<Enseigne>) enseigneDao).getById(pIdEnseigne);
 
 		return new ModelAndView("enseigneUpdate", "enseigneUpdateCommand", enseigneUpdate);
 
