@@ -25,7 +25,13 @@ import com.intiformation.gestionecole.dao.CoursDao;
 import com.intiformation.gestionecole.dao.GenericDao;
 import com.intiformation.gestionecole.dao.ICoursDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
+import com.intiformation.gestionecole.dao.IMatiereDao;
+import com.intiformation.gestionecole.dao.IPromotionDao;
+import com.intiformation.gestionecole.dao.MatiereDao;
+import com.intiformation.gestionecole.dao.PromotionDao;
 import com.intiformation.gestionecole.domain.Cours;
+import com.intiformation.gestionecole.domain.Matiere;
+import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.CoursValidator;
 
 @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
@@ -37,6 +43,13 @@ public class CoursController {
 	private ICoursDao coursDao;
 //	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
 //	private GenericDao<Cours> coursDao;
+	
+	@Autowired
+	private IPromotionDao promoDao;
+	
+	@Autowired
+	private IMatiereDao matiereDao;
+	
 	
 	// Validateur
 	@Autowired
@@ -54,11 +67,14 @@ public class CoursController {
 		this.coursValid = coursValid;
 	}
 	
+	public void setPromoDao(PromotionDao promoDao) {
+		this.promoDao =  promoDao;
+	}
 	
-//	@RequestMapping
-//    public void handleMe(HttpServletRequest request) {
-//        String path = request.getContextPath();
-//    }
+	public void setMatiereDao(MatiereDao matiereDao) {
+		this.matiereDao =  matiereDao;
+	}
+
 	
 	/* Méthodes gestionnaires du Cours Controller */
 	
@@ -114,6 +130,13 @@ public class CoursController {
 	@RequestMapping(value="/coursUpdate-meth", method=RequestMethod.POST)
 	public String updateCours(@ModelAttribute("coursUpdateCommand") Cours pCours, ModelMap model) {
 		
+		String promo = pCours.getPromotion().getLibelle();
+		if (promoDao.getByLibelle(promo) == null)
+			promoDao.addPromotion(new Promotion(promo) );
+		String matiere = pCours.getMatiere().getLibelle();
+		if (matiereDao.getByLibelle(matiere) == null)
+			matiereDao.addMatiere(new Matiere(matiere) );
+		
 //		coursDao.update(pCours);
 		coursDao.updateCours(pCours);
 		
@@ -155,6 +178,14 @@ public class CoursController {
 			return "coursAdd";
 			
 		}else {
+			
+			String promo = pCours.getPromotion().getLibelle();
+			if (promoDao.getByLibelle(promo) == null)
+				promoDao.addPromotion(new Promotion(promo) );
+			String matiere = pCours.getMatiere().getLibelle();
+			if (matiereDao.getByLibelle(matiere) == null)
+				matiereDao.addMatiere(new Matiere(matiere) );
+			
 //			coursDao.add(pCours);
 			coursDao.addCours(pCours);
 

@@ -8,6 +8,8 @@
 <title>Page d'ajout d'un cours</title>
 </head>
 <body>
+	<%-- inclusion dynamique du fragment entete.jsp --%>
+	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
 
 	<div align="center">
 		<h2>Ajout d'un cours</h2>
@@ -67,6 +69,9 @@
 			</table>
 		</form:form>
 	</div>
+	
+	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
+	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
 
 </body>
 </html>

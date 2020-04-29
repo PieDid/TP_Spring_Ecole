@@ -14,6 +14,10 @@
 <!-- ================================================================ -->
 <header style="width:100%;">
 	
+	<a href="javascript:history.go(-1)">Retour</a>
+	<a href="javascript:history.go(+1)">Suivant</a>
+	<form:form  method="POST" action="javascript:history.go(+0)"> <a href="javascript:history.go(+0)">Actualiser</a></form:form>
+	
 	<!-- ================================================================ -->
 	<!-- ========== affichage du bouton connexion/déconnexion =========== -->
 	<!-- ================================================================ -->
