@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.intiformation.gestionecole.domain.Etudiant;
 
-public interface IEtudiantDao extends IGeneralDao<Etudiant>{
+public interface IEtudiantDao{
 
 	public void addEtudiant(Etudiant etudiant);
 	

@@ -72,7 +72,7 @@ public class PromotionController {
 	// Suppression d'une promotion
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/promotionDelete/{libelle}","/promotion/remove/{idAide}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/promotionDelete/{libelle}","/promotion/remove/{libelle}"}, method=RequestMethod.GET)
 	public String deletePromotion(@PathVariable("libelle") String pLibelle, ModelMap model) {
 		
 		promoDao.deletePromotion(pLibelle);

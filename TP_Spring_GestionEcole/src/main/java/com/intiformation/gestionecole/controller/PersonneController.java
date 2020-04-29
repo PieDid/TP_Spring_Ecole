@@ -29,6 +29,7 @@ import com.intiformation.gestionecole.domain.Administrateur;
 import com.intiformation.gestionecole.domain.Enseignant;
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.Personne;
+import com.intiformation.gestionecole.validator.EtudiantValidator;
 import com.intiformation.gestionecole.validator.PersonneValidator;
 
 
@@ -53,6 +54,9 @@ public class PersonneController {
 	// Validateur
 	@Autowired 
 	private PersonneValidator personneValid;
+	
+	@Autowired
+	private EtudiantValidator etuValid;
 	
 	
 	// Setters pour injection Spring
@@ -133,7 +137,7 @@ public class PersonneController {
 	public String generateEtudiantList(Model model) {
 		
 		List<Etudiant> listeEtudiants = java.util.Collections.emptyList();
-		listeEtudiants = etuDao.getAll();
+		listeEtudiants = etuDao.getAllEtudiant();
 		
 		model.addAttribute("attribut_listeEtudiants", listeEtudiants);
 		
@@ -167,7 +171,7 @@ public class PersonneController {
 	@RequestMapping(value= {"/administrateur/delete/{identifiant}","/administrateur/remove/{identifiant}"}, method=RequestMethod.GET)
 	public String deleteAdmin(@PathVariable("identifiant") int pIdAdmin, ModelMap model) {
 		
-		adminDao.delete(pIdAdmin);
+		adminDao.deleteAdmin(pIdAdmin);
 
 		List<Administrateur> listeAdmin = adminDao.getAllAdmin();
 		
@@ -224,43 +228,6 @@ public class PersonneController {
 		
 	}
 	
-	// Formulaire
-	
-	@RequestMapping(value="/adminUpdate-form", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateAdmin(@RequestParam("identifiant") int pIdAdmin) {
-		
-		Administrateur adminUpdate = adminDao.getAdminById(pIdAdmin);
-		
-		return new ModelAndView("adminUpdate", "adminUpdateCommand", adminUpdate);
-		
-	}
-	
-	// Formulaire
-	
-	@RequestMapping(value="/etuUpdate-form", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateEtudiant(@RequestParam("identifiant") int pIdEtudiant) {
-		
-		Etudiant etuUpdate = etuDao.getEudiantById(pIdEtudiant);
-		
-		return new ModelAndView("etuUpdate", "etuUpdateCommand", etuUpdate);
-		
-	}
-	
-	// Formulaire
-	
-	@RequestMapping(value="/ensUpdate-form", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateEnseignant(@RequestParam("identifiant") int pIdEnseignant) {
-		
-		Enseignant ensUpdate = enseignantDao.getEnseignantById(pIdEnseignant);
-		
-		return new ModelAndView("ensUpdate", "ensUpdateCommand", ensUpdate);
-		
-	}
-	
-	
-	
-	
-	
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -276,6 +243,17 @@ public class PersonneController {
 	}//end update
 	
 	
+	// Formulaire
+	
+	@RequestMapping(value="/adminUpdate-form", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireUpdateAdmin(@RequestParam("identifiant") int pIdAdmin) {
+		
+		Administrateur adminUpdate = adminDao.getAdminById(pIdAdmin);
+		
+		return new ModelAndView("adminUpdate", "adminUpdateCommand", adminUpdate);
+		
+	}
+	
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -290,6 +268,19 @@ public class PersonneController {
 	
 	}//end update
 	
+	
+	
+	// Formulaire
+	
+	@RequestMapping(value="/etuUpdate-form", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireUpdateEtudiant(@RequestParam("identifiant") int pIdEtudiant) {
+		
+		Etudiant etuUpdate = etuDao.getEudiantById(pIdEtudiant);
+		
+		return new ModelAndView("etuUpdate", "etuUpdateCommand", etuUpdate);
+		
+	}
+	
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -303,6 +294,19 @@ public class PersonneController {
 		return "etuList";
 	
 	}//end update
+		
+	
+	
+	// Formulaire
+	
+	@RequestMapping(value="/ensUpdate-form", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireUpdateEnseignant(@RequestParam("identifiant") int pIdEnseignant) {
+		
+		Enseignant ensUpdate = enseignantDao.getEnseignantById(pIdEnseignant);
+		
+		return new ModelAndView("ensUpdate", "ensUpdateCommand", ensUpdate);
+		
+	}
 	
 	// Méthode Update 
 	
@@ -341,57 +345,6 @@ public class PersonneController {
 		
 	}
 	
-	@RequestMapping(value="/adminAdd", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireAddAdmin() {
-		
-		Administrateur admin = new Administrateur();
-		
-		String objetCommandeAdmin = "adminAddCommand";
-		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeAdmin, admin);
-		
-		String viewName = "adminAdd";
-		
-		return new ModelAndView(viewName, data);
-		
-	}
-	
-	@RequestMapping(value="/etuAdd", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireAddEtudiant() {
-		
-		Etudiant etudiant = new Etudiant();
-		
-		String objetCommandeEtudiant = "etuAddCommand";
-		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeEtudiant, etudiant);
-		
-		String viewName = "etuAdd";
-		
-		return new ModelAndView(viewName, data);
-		
-	}
-	
-	@RequestMapping(value="/ensAdd", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireAddEnseignant() {
-		
-		Enseignant enseignant = new Enseignant();
-		
-		String objetCommandeEnseignant = "ensAddCommand";
-		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeEnseignant, enseignant);
-		
-		String viewName = "ensAdd";
-		
-		return new ModelAndView(viewName, data);
-		
-	}
-	
-	
-
-	
 	
 	// Méthode Add 
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
@@ -414,7 +367,23 @@ public class PersonneController {
 		}//end if
 		
 	}//end add
-
+	
+	
+	@RequestMapping(value="/adminAdd", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireAddAdmin() {
+		
+		Administrateur admin = new Administrateur();
+		
+		String objetCommandeAdmin = "adminAddCommand";
+		
+		Map<String, Object> data = new HashMap<> ();
+		data.put(objetCommandeAdmin, admin);
+		
+		String viewName = "adminAdd";
+		
+		return new ModelAndView(viewName, data);
+		
+	}
 	
 	// Méthode Add 
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
@@ -439,13 +408,31 @@ public class PersonneController {
 	}//end add
 	
 	
+	
+	
+	@RequestMapping(value="/etuAdd", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireAddEtudiant() {
+		
+		Etudiant etudiant = new Etudiant();
+		
+		String objetCommandeEtudiant = "etuAddCommand";
+		
+		Map<String, Object> data = new HashMap<> ();
+		data.put(objetCommandeEtudiant, etudiant);
+		
+		String viewName = "etuAdd";
+		
+		return new ModelAndView(viewName, data);
+		
+	}
+	
 	// Méthode Add 
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/etuAdd-meth", method=RequestMethod.POST)
 	public String addEtudiant (@ModelAttribute("etuAddCommand") @Validated Etudiant pEtudiant, ModelMap model, BindingResult result) {
 		
-		personneValid.validate(pEtudiant, result);
+		etuValid.validate(pEtudiant, result);
 		
 		if (result.hasErrors()) {
 			return "etuAdd";
@@ -461,6 +448,25 @@ public class PersonneController {
 		
 	}//end add
 	
+	
+	
+	
+	
+	@RequestMapping(value="/ensAdd", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireAddEnseignant() {
+		
+		Enseignant enseignant = new Enseignant();
+		
+		String objetCommandeEnseignant = "ensAddCommand";
+		
+		Map<String, Object> data = new HashMap<> ();
+		data.put(objetCommandeEnseignant, enseignant);
+		
+		String viewName = "ensAdd";
+		
+		return new ModelAndView(viewName, data);
+		
+	}
 	
 	// Méthode Add 
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)

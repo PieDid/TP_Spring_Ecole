@@ -33,31 +33,7 @@ public class AdminDao implements IAdminDao {
 	}
 
 
-	@Override
-	public List<Administrateur> getAll() {
-		
-		return (List<Administrateur>) sf.getCurrentSession()
-						.createQuery("SELECT a FROM Administrateur a")
-						.getResultList();
-		
 
-	}//end getAll
-
-
-	@Override
-	public Administrateur getById(int pIdAdmin) {
-		
-		return (Administrateur) sf.getCurrentSession().createQuery("SELECT a FROM Adminitrateur a WHERE a.id_personne = :identifiant").setParameter("identifiant", pIdAdmin).getSingleResult();
-
-	}//end getById
-
-
-	@Override
-	public void delete(int pIdAdmin) {
-		
-		sf.getCurrentSession().delete(pIdAdmin);
-		
-	}//end delete
 
 
 	@Override

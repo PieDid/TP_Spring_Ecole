@@ -27,23 +27,8 @@ public class EtudiantDao implements IEtudiantDao{
 
 	
 	/*_________________ methodes ________________*/
-	// Récup tous les étudiants de la bdd
-	@Override
-	public List<Etudiant> getAll() {
-		return sessionFactory.getCurrentSession().createQuery("FROM etudiant e").getResultList();
-	}
 
-	// Récup un étudiant par son id
-	@Override
-	public Etudiant getById(int pIdEtudiant) {
-		return sessionFactory.getCurrentSession().find(Etudiant.class, pIdEtudiant);
-	}
 
-	// Supprime un étudiant
-	@Override
-	public void delete(int id) {
-		sessionFactory.getCurrentSession().remove(getById(id));
-	}
 	
 	// Ajoute un étudiant
 	@Override
