@@ -58,35 +58,39 @@
 
 	<!-- Affichage de la liste des messages -->
 	<!-- ================================== -->
-	<h2>Liste de toutes les personnes de l'école </h2>
+	<div align="center">
+	<h2>Liste des personne</h2>
+	</div>
 
-	<c:forEach items="${attribut_listePersonnes}" var="personne">
-		<table>
-			<tr>
-				<td>Nom </td>
-				<td>Prénom</td>
-				<td>Adresse</td>				
-				<td>Mail</td>
+	<table>
+		<tr>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Adresse</th>
+			<th>Mail</th>
+		</tr>
+		<c:forEach items="${attribut_listePersonne}" var="personne">
+		<tr>
+			<td>${personne.nom}</td>
+			<td>${personne.prenom}</td>
+			<td>${personne.adresse}</td>
+			<td>${personne.email}</td>
 
-			</tr>
-			
-			<tr>
-				<td>${personne.nom}</td>
-				<td>${personne.prenom}</td>
-				<td>${personne.adresse}</td>
-				<td>${personne.email}</td>
-				
-				<td colspan="2">
-					<a href="messageUpdate?personneId=${personne.identifiant}">Modifier</a>
-				</td>
-				
-				<td colspan="2">
-					<a href="messageDelete?personneId=${personne.identifiant}">Supprimer</a>
-				</td>
-			</tr>
-		</table>
-		<hr />
-	</c:forEach>
+			<td colspan="2">
+				<a href="${pageContext.request.contextPath}/personUpdate/${personne.identifiant}">Modifier</a>
+			</td>
+
+			<td colspan="2">
+				<a href="${pageContext.request.contextPath}/personDelete/${personne.identifiant}">Supprimer</a>
+			</td>
+		</tr>
+		</c:forEach>
+		<tr>
+			<td colspan="3">
+				<a href="${pageContext.request.contextPath}/personAdd">Ajouter</a>
+			</td>
+		</tr>
+	</table>
 
 
 </body>

@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.intiformation.gestionecole.dao.GenericDao;
 import com.intiformation.gestionecole.dao.IAdminDao;
 import com.intiformation.gestionecole.dao.IEnseignantDao;
 import com.intiformation.gestionecole.dao.IEtudiantDao;
-import com.intiformation.gestionecole.dao.IGenericDao;
+import com.intiformation.gestionecole.dao.IPersonneDao;
 import com.intiformation.gestionecole.domain.Administrateur;
 import com.intiformation.gestionecole.domain.Enseignant;
 import com.intiformation.gestionecole.domain.Etudiant;
@@ -39,7 +38,7 @@ public class PersonneController {
 	
 	// Couche Dao
 	@Autowired
-	private IGenericDao<Personne> personneDao = new GenericDao<Personne>(Personne.class);
+	private IPersonneDao personneDao;
 
 	@Autowired
 	private IAdminDao adminDao; 
@@ -61,7 +60,7 @@ public class PersonneController {
 	
 	// Setters pour injection Spring
 	
-	public void setPersonneDao(IGenericDao<Personne> personneDao) {
+	public void setPersonneDao(IPersonneDao personneDao) {
 		this.personneDao =  personneDao;
 	}
 	
@@ -92,7 +91,7 @@ public class PersonneController {
 	public String generatePersonneList(Model model) {
 		
 		List<Personne> listePersonnes = java.util.Collections.emptyList();
-		listePersonnes = personneDao.getAll();
+		listePersonnes = personneDao.getAllPerson();
 		
 		model.addAttribute("attribut_listePersonnes", listePersonnes);
 		
@@ -151,12 +150,12 @@ public class PersonneController {
 	// Suppression d'une personne
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/personne/delete/{identifiant}","/personne/remove/{identifiant}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/personDelete/{identifiant}"}, method=RequestMethod.GET)
 	public String deletePersonne(@PathVariable("identifiant") int pIdPersonne, ModelMap model) {
 		
-		personneDao.delete(pIdPersonne);
+		personneDao.deletePerson(pIdPersonne);;
 
-		List<Personne> listePersonnes = personneDao.getAll();
+		List<Personne> listePersonnes = personneDao.getAllPerson();
 		
 		model.addAttribute("attribut_listePersonnes", listePersonnes);
 		
@@ -168,7 +167,7 @@ public class PersonneController {
 	// Suppression d'un admin
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/administrateur/delete/{identifiant}","/administrateur/remove/{identifiant}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/adminDelete/{identifiant}"}, method=RequestMethod.GET)
 	public String deleteAdmin(@PathVariable("identifiant") int pIdAdmin, ModelMap model) {
 		
 		adminDao.deleteAdmin(pIdAdmin);
@@ -181,10 +180,10 @@ public class PersonneController {
 		
 	}//end deletePersonne
 	
-	// Suppression d'une personne
+	// Suppression d'un enseignant
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/enseignant/delete/{identifiant}","/enseignant/remove/{identifiant}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/ensDelete/{identifiant}"}, method=RequestMethod.GET)
 	public String deleteEnseignant(@PathVariable("identifiant") int pIdEnseignant, ModelMap model) {
 		
 		enseignantDao.deleteEnseignant(pIdEnseignant);
@@ -197,7 +196,7 @@ public class PersonneController {
 		
 	}//end deletePersonne
 	
-	// Suppression d'une personne
+	// Suppression d'un étudiant
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value= {"/etudiant/delete/{identifiant}","/etudiant/remove/{identifiant}"}, method=RequestMethod.GET)
@@ -219,10 +218,10 @@ public class PersonneController {
 	// Modification d'une personne
 	// Formulaire
 	
-	@RequestMapping(value="/personUpdate-form", method=RequestMethod.GET)
+	@RequestMapping(value="/personUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdatePersonne(@RequestParam("identifiant") int pIdPersonne) {
 		
-		Personne personneUpdate = personneDao.getById(pIdPersonne);
+		Personne personneUpdate = personneDao.getPersonById(pIdPersonne);
 		
 		return new ModelAndView("personUpdate", "personUpdateCommand", personneUpdate);
 		
@@ -231,12 +230,12 @@ public class PersonneController {
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/personne/update", method=RequestMethod.POST)
+	@RequestMapping(value="/personUpdate-meth", method=RequestMethod.POST)
 	public String updatePersonne(@ModelAttribute("personUpdateCommand") Personne pPersonne, ModelMap model) {
 		
-		personneDao.update(pPersonne);
+		personneDao.updatePerson(pPersonne);;
 		
-		model.addAttribute("attribut_listePersonnes", personneDao.getAll());
+		model.addAttribute("attribut_listePersonnes", personneDao.getAllPerson());
 		
 		return "personList";
 	
@@ -245,7 +244,7 @@ public class PersonneController {
 	
 	// Formulaire
 	
-	@RequestMapping(value="/adminUpdate-form", method=RequestMethod.GET)
+	@RequestMapping(value="/adminUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateAdmin(@RequestParam("identifiant") int pIdAdmin) {
 		
 		Administrateur adminUpdate = adminDao.getAdminById(pIdAdmin);
@@ -257,7 +256,7 @@ public class PersonneController {
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/administrateur/update", method=RequestMethod.POST)
+	@RequestMapping(value="/adminUpdate-meth", method=RequestMethod.POST)
 	public String updateAdmin(@ModelAttribute("adminUpdateCommand") Administrateur pAdmin, ModelMap model) {
 		
 		adminDao.updateAdmin(pAdmin);
@@ -299,7 +298,7 @@ public class PersonneController {
 	
 	// Formulaire
 	
-	@RequestMapping(value="/ensUpdate-form", method=RequestMethod.GET)
+	@RequestMapping(value="/ensUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEnseignant(@RequestParam("identifiant") int pIdEnseignant) {
 		
 		Enseignant ensUpdate = enseignantDao.getEnseignantById(pIdEnseignant);
@@ -311,7 +310,7 @@ public class PersonneController {
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/enseignant/update", method=RequestMethod.POST)
+	@RequestMapping(value="/ensUpdate-meth", method=RequestMethod.POST)
 	public String updateEnseignant(@ModelAttribute("ensUpdateCommand") Enseignant pEnseignant, ModelMap model) {
 		
 		enseignantDao.updateEnseignant(pEnseignant);
@@ -358,9 +357,9 @@ public class PersonneController {
 			return "personAdd";
 			
 		}else {
-			personneDao.add(pPersonne);
+			personneDao.addPerson(pPersonne);;
 
-			model.addAttribute("attribut_listePersonnes", personneDao.getAll());
+			model.addAttribute("attribut_listePersonnes", personneDao.getAllPerson());
 			
 			return "personList";
 			
@@ -472,7 +471,7 @@ public class PersonneController {
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/ensAdd-meth", method=RequestMethod.POST)
-	public String addEnseignant (@ModelAttribute("personAddCommand") @Validated Enseignant pEnseignant, ModelMap model, BindingResult result) {
+	public String addEnseignant (@ModelAttribute("ensAddCommand") @Validated Enseignant pEnseignant, ModelMap model, BindingResult result) {
 		
 		personneValid.validate(pEnseignant, result);
 		
