@@ -10,7 +10,7 @@
 <body>
 
 	<div align="center">
-	<h2>Liste des administrateurs</h2>
+	<h2>Liste des Administrateurs</h2>
 	</div>
 
 	<table>

@@ -20,7 +20,7 @@ public class Etudiant extends Personne implements Serializable{
 	/*_________________ props ________________*/
 	
 	@Column(name="photo")
-	private int photo;
+	private String photo;
 	
 	@Column(name="date_de_naissance")
 	private String dateDeNaissance;
@@ -48,7 +48,7 @@ public class Etudiant extends Personne implements Serializable{
 	public Etudiant() {}
 	
 	public Etudiant(int identifiant, String motDePasse, String nom, String prenom, String email, String role,
-			Adresse adresse, int photo, String dateDeNaissance, Promotion promotion,
+			Adresse adresse, String photo, String dateDeNaissance, Promotion promotion,
 			List<EtudiantCours> etudiantCours) {
 		super(identifiant, motDePasse, nom, prenom, email, role, adresse);
 		this.photo = photo;
@@ -57,7 +57,7 @@ public class Etudiant extends Personne implements Serializable{
 		this.etudiantCours = etudiantCours;
 	}
 
-	public Etudiant(String motDePasse, String nom, String prenom, String email, String role, Adresse adresse, int photo,
+	public Etudiant(String motDePasse, String nom, String prenom, String email, String role, Adresse adresse, String photo,
 			String dateDeNaissance, Promotion promotion, List<EtudiantCours> etudiantCours) {
 		super(motDePasse, nom, prenom, email, role, adresse);
 		this.photo = photo;
@@ -79,11 +79,11 @@ public class Etudiant extends Personne implements Serializable{
 	
 	/*_________________ getters|setters ________________*/
 
-	public int getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(int photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 

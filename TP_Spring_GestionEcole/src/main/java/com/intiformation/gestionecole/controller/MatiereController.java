@@ -35,7 +35,7 @@ public class MatiereController {
 	
 	// Couche Dao
 	@Autowired
-	private IGenericDao<Matiere> matDao = new GenericDao<Matiere>(Matiere.class);
+	private IMatiereDao matDao;
 	
 	// Validateur
 	@Autowired
@@ -44,7 +44,7 @@ public class MatiereController {
 	
 	// Setters pour Injection Spring 
 
-	public void setMatDao(GenericDao<Matiere> matDao) {
+	public void setMatDao(MatiereDao matDao) {
 		this.matDao = matDao;
 	}
 
@@ -63,7 +63,7 @@ public class MatiereController {
 	public String generateMatiereList(Model model) {
 		
 		List<Matiere> listeMatiere = java.util.Collections.emptyList();
-		listeMatiere = matDao.getAll();
+		listeMatiere = matDao.getAllMatiere();
 		
 		model.addAttribute("attribut_listeMatiere", listeMatiere);
 		
@@ -75,12 +75,12 @@ public class MatiereController {
 	// Suppression d'une promotion
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/matiereDelete/{libelle}","/matiere/remove/{libelle}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/matiereDelete/{libelle}"}, method=RequestMethod.GET)
 	public String deleteMatiere(@PathVariable("libelle") String pLibelle, ModelMap model) {
 		
-		matDao.delete(pLibelle);
+		matDao.deleteMatiere(pLibelle);;
 
-		List<Matiere> listeMatiere = matDao.getAll();
+		List<Matiere> listeMatiere = matDao.getAllMatiere();
 		
 		model.addAttribute("attribut_listeMatiere", listeMatiere);
 		
@@ -107,9 +107,9 @@ public class MatiereController {
 	@RequestMapping(value="/matiereUpdate-meth", method=RequestMethod.POST)
 	public String updateMatiere(@ModelAttribute("matiereUpdateCommand") Matiere pMatiere, ModelMap model) {
 		
-		((IGenericDao<Matiere>) matDao).update(pMatiere);
+		matDao.updateMatiere(pMatiere);;
 		
-		model.addAttribute("attribut_listeMatiere", matDao.getAll());
+		model.addAttribute("attribut_listeMatiere", matDao.getAllMatiere());
 		
 		return "matiereList";
 	
@@ -147,9 +147,9 @@ public class MatiereController {
 			return "matiereAdd";
 			
 		}else {
-			((IGenericDao<Matiere>) matDao).add(pMatiere);
+			matDao.addMatiere(pMatiere);;
 
-			model.addAttribute("attribut_listeMatiere", matDao.getAll());
+			model.addAttribute("attribut_listeMatiere", matDao.getAllMatiere());
 			
 			return "matiereList";
 			

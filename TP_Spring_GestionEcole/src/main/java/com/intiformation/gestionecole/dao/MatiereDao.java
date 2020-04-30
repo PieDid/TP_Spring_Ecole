@@ -25,21 +25,6 @@ public class MatiereDao implements IMatiereDao {
 
 	/* Méthodes */
 	
-	@Override
-	public List<Matiere> getAll() {
-		return getSessionFactory().getCurrentSession().createQuery("FROM matiere m").list();
-	}
-
-	@Override
-	public Matiere getById(int id) {
-		return getSessionFactory().getCurrentSession().find(Matiere.class, id);
-	}
-
-	@Override
-	public void delete(int id) {
-		getSessionFactory().getCurrentSession().remove(getById(id));
-		
-	}
 
 	@Override
 	public void addMatiere(Matiere matiere) {
@@ -60,6 +45,10 @@ public class MatiereDao implements IMatiereDao {
 	public void deleteMatiere(String libelle) {
 		getSessionFactory().getCurrentSession().remove(getByLibelle(libelle));
 		
+	}
+	@Override
+	public List<Matiere> getAllMatiere() {
+		return sessionFactory.getCurrentSession().createQuery("FROM matiere m").getResultList();
 	}
 
 }//end class

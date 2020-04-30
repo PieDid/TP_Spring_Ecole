@@ -199,7 +199,7 @@ public class PersonneController {
 	// Suppression d'un étudiant
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/etudiant/delete/{identifiant}","/etudiant/remove/{identifiant}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/etuDelete/{identifiant}","/etudiant/remove/{identifiant}"}, method=RequestMethod.GET)
 	public String deleteEtudiant(@PathVariable("identifiant") int pIdEtudiant, ModelMap model) {
 		
 		etuDao.deleteEtudiant(pIdEtudiant);
@@ -271,7 +271,7 @@ public class PersonneController {
 	
 	// Formulaire
 	
-	@RequestMapping(value="/etuUpdate-form", method=RequestMethod.GET)
+	@RequestMapping(value="/etuUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEtudiant(@RequestParam("identifiant") int pIdEtudiant) {
 		
 		Etudiant etuUpdate = etuDao.getEudiantById(pIdEtudiant);
@@ -283,7 +283,7 @@ public class PersonneController {
 	// Méthode Update 
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/etudiant/update", method=RequestMethod.POST)
+	@RequestMapping(value="/etuUpdate-meth", method=RequestMethod.POST)
 	public String updateEtudiant(@ModelAttribute("etuUpdateCommand") Etudiant pEtudiant, ModelMap model) {
 		
 		etuDao.updateEtudiant(pEtudiant);

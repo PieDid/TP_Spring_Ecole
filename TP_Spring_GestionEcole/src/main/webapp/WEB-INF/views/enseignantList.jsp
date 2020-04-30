@@ -10,7 +10,7 @@
 <body>
 
 	<div align="center">
-	<h2>Liste des enseignants</h2>
+	<h2>Liste des Enseignants</h2>
 	</div>
 
 	<table>

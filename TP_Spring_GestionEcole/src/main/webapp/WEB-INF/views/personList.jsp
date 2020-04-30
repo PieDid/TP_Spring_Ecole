@@ -59,7 +59,7 @@
 	<!-- Affichage de la liste des messages -->
 	<!-- ================================== -->
 	<div align="center">
-	<h2>Liste des personne</h2>
+	<h2>Liste des Personnes</h2>
 	</div>
 
 	<table>
