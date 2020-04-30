@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.intiformation.gestionecole.dao.AdminDao;
+import com.intiformation.gestionecole.dao.EnseignantDao;
+import com.intiformation.gestionecole.dao.EtudiantDao;
 import com.intiformation.gestionecole.dao.IAdminDao;
 import com.intiformation.gestionecole.dao.IEnseignantDao;
 import com.intiformation.gestionecole.dao.IEtudiantDao;
 import com.intiformation.gestionecole.dao.IPersonneDao;
+import com.intiformation.gestionecole.dao.PersonneDao;
 import com.intiformation.gestionecole.domain.Administrateur;
 import com.intiformation.gestionecole.domain.Enseignant;
 import com.intiformation.gestionecole.domain.Etudiant;
@@ -60,19 +64,19 @@ public class PersonneController {
 	
 	// Setters pour injection Spring
 	
-	public void setPersonneDao(IPersonneDao personneDao) {
+	public void setPersonneDao(PersonneDao personneDao) {
 		this.personneDao =  personneDao;
 	}
 	
-	public void setAdminDao(IAdminDao adminDao) {
+	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
 	}
 
-	public void setEnseignantDao(IEnseignantDao enseignantDao) {
+	public void setEnseignantDao(EnseignantDao enseignantDao) {
 		this.enseignantDao = enseignantDao;
 	}
 
-	public void setEtuDao(IEtudiantDao etuDao) {
+	public void setEtuDao(EtudiantDao etuDao) {
 		this.etuDao = etuDao;
 	}
 
