@@ -40,6 +40,8 @@
 		<jsp.version>2.3.1</jsp.version>
 		<!-- version de spring security -->
 		<spring.security.version>5.0.2.RELEASE</spring.security.version>
+		<!-- version de Spring soap Web Service -->
+		<spring_ws_version>2.4.6.RELEASE</spring_ws_version>
 	</properties>
 
 	<!-- ================================================================ -->
@@ -76,6 +78,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- 1.5. spring web services -->
+		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-core</artifactId>
+			<version>${spring_ws_version}</version>
 		</dependency>
 
 		<!-- 2. dépendances d'Hibernate -->

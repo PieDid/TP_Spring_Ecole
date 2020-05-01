@@ -75,8 +75,59 @@ public class Cours implements Serializable{
 		this.description = description;
 	}
 
-
 	
+	
+	public Cours(int idCours, String libelle, String date, String duree, String description, Promotion promotion,
+			Matiere matiere, List<EtudiantCours> etudiantCours) {
+		super();
+		this.idCours = idCours;
+		this.libelle = libelle;
+		this.date = date;
+		this.duree = duree;
+		this.description = description;
+		this.promotion = promotion;
+		this.matiere = matiere;
+		this.etudiantCours = etudiantCours;
+	}
+
+
+	public Cours(String libelle, String date, String duree, String description, Promotion promotion, Matiere matiere) {
+		super();
+		this.libelle = libelle;
+		this.date = date;
+		this.duree = duree;
+		this.description = description;
+		this.promotion = promotion;
+		this.matiere = matiere;
+	}
+
+
+	public Cours(int idCours, String libelle, String date, String duree, String description, Promotion promotion,
+			Matiere matiere) {
+		super();
+		this.idCours = idCours;
+		this.libelle = libelle;
+		this.date = date;
+		this.duree = duree;
+		this.description = description;
+		this.promotion = promotion;
+		this.matiere = matiere;
+	}
+
+
+	public Cours(String libelle, String date, String duree, String description, Promotion promotion, Matiere matiere,
+			List<EtudiantCours> etudiantCours) {
+		super();
+		this.libelle = libelle;
+		this.date = date;
+		this.duree = duree;
+		this.description = description;
+		this.promotion = promotion;
+		this.matiere = matiere;
+		this.etudiantCours = etudiantCours;
+	}
+
+
 	/*_________________ getters|setters ________________*/
 	
 	public int getIdCours() {

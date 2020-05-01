@@ -1,12 +1,14 @@
 com\intiformation\gestionecole\validator\CoursValidator.class
 com\intiformation\gestionecole\validator\EtudiantValidator.class
 com\intiformation\gestionecole\dao\IAbsenceDao.class
+com\intiformation\gestionecole\dao\IEnseigneDao.class
 com\intiformation\gestionecole\apptest\AppTestAide.class
 com\intiformation\gestionecole\domain\Promotion.class
 com\intiformation\gestionecole\dao\AdminDao.class
 com\intiformation\gestionecole\dao\IGeneralDao.class
 com\intiformation\gestionecole\dao\IGenericDao.class
 com\intiformation\gestionecole\controller\EnseigneController.class
+com\intiformation\gestionecole\dao\PersonneDao.class
 com\intiformation\gestionecole\domain\Etudiant.class
 com\intiformation\gestionecole\domain\EtudiantCours.class
 com\intiformation\gestionecole\dao\IPersonneDao.class
@@ -19,6 +21,7 @@ com\intiformation\gestionecole\domain\Matiere.class
 com\intiformation\gestionecole\controller\CoursController.class
 com\intiformation\gestionecole\validator\AbsenceValidator.class
 com\intiformation\gestionecole\dao\IAdminDao.class
+com\intiformation\gestionecole\SoapWebService\CoursSoapWebService.class
 com\intiformation\gestionecole\validator\PromotionValidator.class
 com\intiformation\gestionecole\dao\ICoursDao.class
 com\intiformation\gestionecole\dao\IAideDao.class
@@ -30,6 +33,7 @@ com\intiformation\gestionecole\dao\PromotionDao.class
 com\intiformation\gestionecole\domain\Cours.class
 com\intiformation\gestionecole\dao\CoursDao.class
 com\intiformation\gestionecole\domain\Adresse.class
+com\intiformation\gestionecole\SoapWebService\AideSoapWebService.class
 com\intiformation\gestionecole\dao\IEtudiantDao.class
 com\intiformation\gestionecole\dao\AbsenceDao.class
 com\intiformation\gestionecole\validator\AideValidator.class
@@ -49,5 +53,6 @@ com\intiformation\gestionecole\dao\AideDao.class
 com\intiformation\gestionecole\domain\Enseignant.class
 com\intiformation\gestionecole\dao\IAdresseDao.class
 com\intiformation\gestionecole\controller\AdresseController.class
+com\intiformation\gestionecole\dao\EnseigneDao.class
 com\intiformation\gestionecole\dao\MatiereDao.class
 com\intiformation\gestionecole\domain\Personne.class
