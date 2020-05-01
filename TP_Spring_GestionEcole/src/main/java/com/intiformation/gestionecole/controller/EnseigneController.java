@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,9 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.intiformation.gestionecole.dao.EnseignantDao;
 import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.IEnseignantDao;
+import com.intiformation.gestionecole.dao.IEnseigneDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
+import com.intiformation.gestionecole.dao.IMatiereDao;
+import com.intiformation.gestionecole.dao.IPromotionDao;
+import com.intiformation.gestionecole.dao.MatiereDao;
+import com.intiformation.gestionecole.dao.PromotionDao;
 import com.intiformation.gestionecole.domain.Enseigne;
+import com.intiformation.gestionecole.domain.Matiere;
+import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.EnseigneValidator;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -28,8 +39,19 @@ public class EnseigneController {
 
 	// Couche Dao
 	@Autowired
-	private IGenericDao<Enseigne> enseigneDao = new GenericDao<Enseigne>(Enseigne.class);
+	private IEnseigneDao enseigneDao;
+//	private IGenericDao<Enseigne> enseigneDao = new GenericDao<Enseigne>(Enseigne.class);
 
+	@Autowired
+	private IPromotionDao promoDao;
+	
+	@Autowired
+	private IMatiereDao matiereDao;
+	
+	@Autowired
+	private IEnseignantDao enseignantDao;
+	
+	
 	// Validateur
 	@Autowired
 	private EnseigneValidator enseigneValid;
@@ -37,12 +59,24 @@ public class EnseigneController {
 	/**
 	 * setter pour injection spring
 	 */
-	public void setEnseigneDao(GenericDao<Enseigne> enseigneDao) {
+	public void setEnseigneDao(IEnseigneDao enseigneDao) {
 		this.enseigneDao = enseigneDao;
 	}
 
 	public void setEnseigneValid(EnseigneValidator enseigneValid) {
 		this.enseigneValid = enseigneValid;
+	}
+	
+	public void setPromoDao(PromotionDao promoDao) {
+		this.promoDao =  promoDao;
+	}
+	
+	public void setMatiereDao(MatiereDao matiereDao) {
+		this.matiereDao =  matiereDao;
+	}
+
+	public void setEnseignantDao(EnseignantDao enseignantDao) {
+		this.enseignantDao =  enseignantDao;
 	}
 
 	/* Méthodes gestionnaires du Enseigne Controller */
@@ -68,7 +102,8 @@ public class EnseigneController {
 
 		enseigneDao.delete(pIdEnseigne);
 
-		List<Enseigne> listeEnseigne = ((IGenericDao<Enseigne>) enseigneDao).getAll();
+//		List<Enseigne> listeEnseigne = ((IGenericDao<Enseigne>) enseigneDao).getAll();
+		List<Enseigne> listeEnseigne = enseigneDao.getAll();
 
 		model.addAttribute("attribut_listeEnseigne", listeEnseigne);
 
@@ -79,11 +114,12 @@ public class EnseigneController {
 	// Modification d'une promotion
 	// Formulaire
 
-	@RequestMapping(value = "enseigneUpdate/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/enseigneUpdate/{id}", method = RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEnseigne(@PathVariable("id") int pIdEnseigne) {
 
-		Enseigne enseigneUpdate = ((IGenericDao<Enseigne>) enseigneDao).getById(pIdEnseigne);
-
+//		Enseigne enseigneUpdate = ((IGenericDao<Enseigne>) enseigneDao).getById(pIdEnseigne);
+		Enseigne enseigneUpdate = enseigneDao.getById(pIdEnseigne);
+		
 		return new ModelAndView("enseigneUpdate", "enseigneUpdateCommand", enseigneUpdate);
 
 	} // end afficherFormulaireUpdateEnseigne()
@@ -94,7 +130,21 @@ public class EnseigneController {
 	@RequestMapping(value = "/enseigneUpdate-meth", method = RequestMethod.POST)
 	public String updateEnseigne(@ModelAttribute("enseigneUpdateCommand") Enseigne pEnseigne, ModelMap model) {
 
-		((IGenericDao<Enseigne>) enseigneDao).update(pEnseigne);
+		String promo = pEnseigne.getPromotion().getLibelle();
+		if (promoDao.getByLibelle(promo) == null)
+			promoDao.addPromotion(new Promotion(promo) );
+		String matiere = pEnseigne.getMatiere().getLibelle();
+		if (matiereDao.getByLibelle(matiere) == null)
+			matiereDao.addMatiere(new Matiere(matiere) );
+//		int enseignant = pEnseigne.getEnseignant().getIdentifiant();
+//		if (enseignantDao.getEnseignantById(enseignant) == null) {
+//			JOptionPane.showMessageDialog(null, "Veuillez d'abord créer un enseignant");
+//			return "personAdd";
+//			enseignantDao.addEnseignant(new Enseignant);
+//		}
+		
+//		((IGenericDao<Enseigne>) enseigneDao).update(pEnseigne);
+		enseigneDao.updateEnseigne(pEnseigne);
 
 		model.addAttribute("attribut_listeEnseigne", enseigneDao.getAll());
 
@@ -102,7 +152,7 @@ public class EnseigneController {
 
 	}// end updateEnseigne()
 
-	// Ajout d'une nouvelle matière
+	// Ajout d'un enseigne
 	// Formulaire
 
 	@RequestMapping(value = "/enseigneAdd", method = RequestMethod.GET)
@@ -131,7 +181,26 @@ public class EnseigneController {
 			return "enseigneAdd";
 			
 		}else {
-			((IGenericDao<Enseigne>) enseigneDao).add(pEnseigne);
+			
+			String promo = pEnseigne.getPromotion().getLibelle();
+			if (promoDao.getByLibelle(promo) == null)
+				promoDao.addPromotion(new Promotion(promo) );
+			String matiere = pEnseigne.getMatiere().getLibelle();
+			if (matiereDao.getByLibelle(matiere) == null)
+				matiereDao.addMatiere(new Matiere(matiere) );
+			int enseignant = pEnseigne.getEnseignant().getIdentifiant();
+			if (enseignantDao.getEnseignantById(enseignant) == null) {
+				JOptionPane.showMessageDialog(null, "Veuillez d'abord créer un enseignant");
+//				model.put("errorMessage", "Veuillez d'abord créer un enseignant");
+				/**
+				 * return "personAdd";
+				 * bon ici j'ai besoin du PersonneController fonctionnel
+				 */
+//				enseignantDao.addEnseignant(new Enseignant);
+			}
+			
+//			((IGenericDao<Enseigne>) enseigneDao).add(pEnseigne);
+			enseigneDao.addEnseigne(pEnseigne);
 
 			model.addAttribute("attribut_listeEnseigne", enseigneDao.getAll());
 			

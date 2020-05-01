@@ -25,6 +25,11 @@
 
 			<table>
 				<tr>
+					<td>
+						<form:hidden path="id_enseigne"/>
+					</td>
+				</tr>
+				<tr>
 					<td><form:label path="enseignant.identifiant">Enseignant : </form:label></td>
 					<td><form:input path="enseignant.identifiant" /></td>
 					<td><form:errors path="enseignant.identifiant" /></td>

@@ -25,16 +25,16 @@
 		<c:forEach items="${attribut_listeEnseigne}" var="enseigne">
 
 			<tr>
-				<td>${enseigne.id}</td>
+				<td>${enseigne.id_enseigne}</td>
 				<td>${enseigne.enseignant.identifiant}</td>
 				<td>${enseigne.promotion.libelle}</td>
 				<td>${enseigne.matiere.libelle}</td>
 
 
-				<td colspan="2"><a href="${pageContext.request.contextPath}/enseigneUpdate/${enseigne.id}">Modifier</a>
+				<td colspan="2"><a href="${pageContext.request.contextPath}/enseigneUpdate/${enseigne.id_enseigne}">Modifier</a>
 				</td>
 
-				<td colspan="2"><a href="${pageContext.request.contextPath}/enseigneDelete/${enseigne.id}">Supprimer</a>
+				<td colspan="2"><a href="${pageContext.request.contextPath}/enseigneDelete/${enseigne.id_enseigne}">Supprimer</a>
 				</td>
 			</tr>
 		</c:forEach>
