@@ -37,6 +37,29 @@
 		<servlet-name>gestionecole</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	
+	<!-- Configuration des Web Services REST - Servlet de Jersey -->
+	<!-- ======================================================= -->
+	<!-- Déclaration de la Servlet de Spring MVC -->
+	<servlet>
+		<servlet-name>jersey-servlet</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		
+		<!-- Package contenant le Web Service REST -->
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>com.intiformation.springmvc.webservice</param-value>
+		</init-param>
+		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>jersey-servlet</servlet-name>
+		<!-- Point d'netrée au Web Service (URL d'accès) -->
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	
 
 	<!-- ================== -->
 	<!-- == Welcome Page == -->

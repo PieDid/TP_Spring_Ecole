@@ -9,6 +9,9 @@
 
 	<!-- 1. détection automatique des controleurs : @Controller -->
  	<context:component-scan base-package="com.intiformation.gestionecole.controller" /> 
+ 	
+ 	<!-- Détection du Bean du Web Service REST -->
+	<context:component-scan base-package="com.intiformation.gestionecole.RestWebService"/>
 	
 	<!-- 2. détection des annotations : @RequestMapping -->
 	<!-- 

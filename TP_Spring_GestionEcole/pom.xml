@@ -42,6 +42,16 @@
 		<spring.security.version>5.0.2.RELEASE</spring.security.version>
 		<!-- version de Spring soap Web Service -->
 		<spring_ws_version>2.4.6.RELEASE</spring_ws_version>
+		
+		
+		<!-- version de JAX-RS et Jersey 2 -->
+		<jaxrs.version>2.0.1</jaxrs.version>
+		<jersey2.version>2.30</jersey2.version>
+		
+		<!-- Version Jackson -->
+		<jackson.version>2.9.10.1</jackson.version>
+		
+		
 	</properties>
 
 	<!-- ================================================================ -->
@@ -179,7 +189,63 @@
 			<artifactId>spring-security-data</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
+		
+		
+		<!-- JAX-RS -->
+		
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${jaxrs.version}</version>
+		</dependency>		
+		
+		<!-- Jersey 2 -->
+		
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jersey2.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${jersey2.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey2.version}</version>
+		</dependency>		
+		
+		<!-- Sérialisation/Désérialisation de JSON -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+			<version>${jersey2.version}</version>
+		</dependency>		
+
+		<!--   -->
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring5</artifactId>
+			<version>${jersey2.version}</version>
+		</dependency>		
+		
+		<!-- Dépendance de l'API Jackson -->
+		<!-- Gestion de la (dé)sérialisation XML/Json == Java -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>	
+		
+		
 	</dependencies>
+
+	
+
 
 	<!-- ===================================================================== -->
 	<!-- =================== Config des plugin de maven ====================== -->
