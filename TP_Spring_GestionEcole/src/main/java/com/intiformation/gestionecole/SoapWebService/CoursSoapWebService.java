@@ -19,7 +19,12 @@ import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Promotion;
 
-@WebService(name = "cours-sws")
+/**
+ * Disponible à l'adresse 		http://localhost:8081/tp-gestionecole-soap-webservices/cours-sws?wsdl
+ * @author IN-DF-028
+ *
+ */
+@WebService(serviceName = "cours-sws")
 @Component
 public class CoursSoapWebService {
 
@@ -34,17 +39,17 @@ public class CoursSoapWebService {
 	@Autowired
 	private IMatiereDao matiereDao;
 
-	public void setCoursDao(CoursDao coursDao) {
-		this.coursDao = coursDao;
-	}
-
-	public void setPromotionDao(PromotionDao promotionDao) {
-		this.promotionDao = promotionDao;
-	}
-
-	public void setMatiereDao(MatiereDao matiereDao) {
-		this.matiereDao = matiereDao;
-	}
+//	public void setCoursDao(CoursDao coursDao) {
+//		this.coursDao = coursDao;
+//	}
+//
+//	public void setPromotionDao(PromotionDao promotionDao) {
+//		this.promotionDao = promotionDao;
+//	}
+//
+//	public void setMatiereDao(MatiereDao matiereDao) {
+//		this.matiereDao = matiereDao;
+//	}
 	
 	/* _________________ meths ________________ */
 

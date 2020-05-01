@@ -56,4 +56,9 @@
 	
 	</bean>
 	
+	<!-- Gestion Du WS SOAP -->
+	<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+		<property name="baseAddress" value="http://localhost:8081/tp-gestionecole-soap-webservices/"/>
+	</bean>
+	
 </beans>

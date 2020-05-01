@@ -13,7 +13,13 @@ import com.intiformation.gestionecole.dao.AideDao;
 import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.domain.Aide;
 
-@WebService(name="aide-sws")
+
+/**
+ * Disponible à l'adresse		http://localhost:8081/tp-gestionecole-soap-webservices/aide-sws?wsdl
+ * @author IN-DF-028
+ *
+ */
+@WebService(serviceName="aide-sws")
 @Component
 public class AideSoapWebService {
 
@@ -25,9 +31,9 @@ public class AideSoapWebService {
 	
 	/*_________________ meths ________________*/
 	
-	public void setAideDao(AideDao aideDao) {
-		this.aideDao = aideDao;
-	}
+//	public void setAideDao(AideDao aideDao) {
+//		this.aideDao = aideDao;
+//	}
 
 	@WebMethod
 	public List<Aide> recupererListeAide(){
