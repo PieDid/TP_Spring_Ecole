@@ -38,22 +38,8 @@ public class CoursSoapWebService {
 
 	@Autowired
 	private IMatiereDao matiereDao;
-
-//	public void setCoursDao(CoursDao coursDao) {
-//		this.coursDao = coursDao;
-//	}
-//
-//	public void setPromotionDao(PromotionDao promotionDao) {
-//		this.promotionDao = promotionDao;
-//	}
-//
-//	public void setMatiereDao(MatiereDao matiereDao) {
-//		this.matiereDao = matiereDao;
-//	}
 	
-	/* _________________ meths ________________ */
-
-	
+	/* _________________ meths ________________ */	
 
 	@WebMethod
 	public List<Cours> recupererListeCours() {
@@ -80,5 +66,33 @@ public class CoursSoapWebService {
 		
 		coursDao.addCours(cours);
 	} // end CoursSoapWebService()
+	
+	@WebMethod
+	public void modifierCours(@WebParam(name = "id") String pId,
+							  @WebParam(name="date") String pDate,
+							  @WebParam(name="description") String pDescription,
+							  @WebParam(name="duree") String pDuree,
+							  @WebParam(name="libelle") String pLibelle,
+							  @WebParam(name="matiere") String pMatiere,
+							  @WebParam(name="promotion") String pPromotion) {
+		
+		Promotion promotion = promotionDao.getByLibelle(pPromotion);
+		Matiere matiere = matiereDao.getByLibelle(pMatiere);
+		
+		Cours cours = coursDao.getById(Integer.parseInt(pId));
+		cours.setDate(pDate);
+		cours.setDescription(pDescription);
+		cours.setDuree(pDuree);
+		cours.setLibelle(pLibelle);
+		cours.setMatiere(matiere);
+		cours.setPromotion(promotion);
+		
+		coursDao.updateCours(cours);
+
+	} // end modifierCours()
+	
+	public void supprimerCours(@WebParam(name = "id") String pId) {
+		coursDao.delete(Integer.parseInt(pId));
+	} // end supprimerCours
 
 } // end class

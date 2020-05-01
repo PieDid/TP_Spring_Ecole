@@ -22,8 +22,10 @@ C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Sp
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\validator\PromotionValidator.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\IAdresseDao.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\IPromotionDao.java
+C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\SoapWebService\EtudiantSoapWebService.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\domain\Matiere.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\AdresseDao.java
+C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\SoapWebService\MatiereSoapWebService.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\domain\Administrateur.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\SoapWebService\AideSoapWebService.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\validator\PersonneValidator.java
@@ -34,6 +36,7 @@ C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Sp
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\IPersonneDao.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\validator\AideValidator.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\controller\AdresseController.java
+C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\SoapWebService\PromotionSaopWebService.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\domain\EtudiantCours.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\dao\IAideDao.java
 C:\Users\IN-DF-028\Desktop\Java\Java_workspace\TP_ANDRE_V1\TP_Spring_Ecole\TP_Spring_GestionEcole\src\main\java\com\intiformation\gestionecole\domain\Etudiant.java

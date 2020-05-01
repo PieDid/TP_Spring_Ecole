@@ -30,10 +30,6 @@ public class AideSoapWebService {
 	
 	
 	/*_________________ meths ________________*/
-	
-//	public void setAideDao(AideDao aideDao) {
-//		this.aideDao = aideDao;
-//	}
 
 	@WebMethod
 	public List<Aide> recupererListeAide(){

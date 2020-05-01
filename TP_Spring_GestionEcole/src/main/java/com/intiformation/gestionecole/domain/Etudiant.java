@@ -65,6 +65,14 @@ public class Etudiant extends Personne implements Serializable{
 		this.promotion = promotion;
 		this.etudiantCours = etudiantCours;
 	}
+	
+	public Etudiant(String motDePasse, String nom, String prenom, String email, String role, Adresse adresse, String photo,
+			String dateDeNaissance, Promotion promotion) {
+		super(motDePasse, nom, prenom, email, role, adresse);
+		this.photo = photo;
+		this.dateDeNaissance = dateDeNaissance;
+		this.promotion = promotion;
+	}
 
 	/*_________________ meths ________________*/
 
