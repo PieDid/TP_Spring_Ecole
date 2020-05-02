@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,7 +16,7 @@ public class Enseignant extends Personne{
 
 	/* Propriétés */
 	
-	@OneToMany(mappedBy="enseignant", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy="enseignant", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Enseigne> enseigne;
 	
 	/* Constructeurs */

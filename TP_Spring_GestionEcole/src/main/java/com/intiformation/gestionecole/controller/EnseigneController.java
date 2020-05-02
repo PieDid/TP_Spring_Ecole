@@ -28,8 +28,10 @@ import com.intiformation.gestionecole.dao.IMatiereDao;
 import com.intiformation.gestionecole.dao.IPromotionDao;
 import com.intiformation.gestionecole.dao.MatiereDao;
 import com.intiformation.gestionecole.dao.PromotionDao;
+import com.intiformation.gestionecole.domain.Enseignant;
 import com.intiformation.gestionecole.domain.Enseigne;
 import com.intiformation.gestionecole.domain.Matiere;
+import com.intiformation.gestionecole.domain.Personne;
 import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.EnseigneValidator;
 
@@ -50,6 +52,9 @@ public class EnseigneController {
 	
 	@Autowired
 	private IEnseignantDao enseignantDao;
+	
+	@Autowired
+	PersonneController personneController;
 	
 	
 	// Validateur
@@ -114,13 +119,27 @@ public class EnseigneController {
 	// Modification d'une promotion
 	// Formulaire
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/enseigneUpdate/{id}", method = RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEnseigne(@PathVariable("id") int pIdEnseigne) {
 
 //		Enseigne enseigneUpdate = ((IGenericDao<Enseigne>) enseigneDao).getById(pIdEnseigne);
 		Enseigne enseigneUpdate = enseigneDao.getById(pIdEnseigne);
 		
-		return new ModelAndView("enseigneUpdate", "enseigneUpdateCommand", enseigneUpdate);
+//------pour la liste déroulante du formulaire--------------------------------------
+		List<Enseignant> liste_enseignants = enseignantDao.getAllEnseignant();
+//		List<Integer> liste_enseignantsID = enseignantDao.getAllPk();
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("enseigneUpdateCommand", enseigneUpdate);
+		data.put("listeEnseignants", liste_enseignants);
+//		data.put("liste_enseignantsID", liste_enseignants);
+		data.put("ens", new Enseignant());
+
+		return new ModelAndView("enseigneUpdate", data);
+//----------------------------------------------------------------------------------
+		
+//		return new ModelAndView("enseigneUpdate", "enseigneUpdateCommand", enseigneUpdate);
 
 	} // end afficherFormulaireUpdateEnseigne()
 
@@ -136,12 +155,17 @@ public class EnseigneController {
 		String matiere = pEnseigne.getMatiere().getLibelle();
 		if (matiereDao.getByLibelle(matiere) == null)
 			matiereDao.addMatiere(new Matiere(matiere) );
-//		int enseignant = pEnseigne.getEnseignant().getIdentifiant();
-//		if (enseignantDao.getEnseignantById(enseignant) == null) {
+//		pEnseigne.setEnseignant(pEnseigne.getEns());
+		int enseignantID = pEnseigne.getEnseignant().getIdentifiant();
+		if (enseignantDao.getEnseignantById(enseignantID) == null) {
 //			JOptionPane.showMessageDialog(null, "Veuillez d'abord créer un enseignant");
-//			return "personAdd";
+//			return "enseigneList";
 //			enseignantDao.addEnseignant(new Enseignant);
-//		}
+			System.out.println("Dans le if enseignant equals null");
+//			personneController.afficherFormulaireAddPersonne();
+//			afficherFormulaireAddPersonne();
+			return "enseigneUpdate";
+		}
 		
 //		((IGenericDao<Enseigne>) enseigneDao).update(pEnseigne);
 		enseigneDao.updateEnseigne(pEnseigne);
@@ -154,6 +178,23 @@ public class EnseigneController {
 
 	// Ajout d'un enseigne
 	// Formulaire
+	
+	//méthode d'André : 
+//	@RequestMapping(value = "/enseigneUpdate-meth", method = RequestMethod.GET)
+//	public ModelAndView afficherFormulaireAddPersonne() {
+//		
+//		Personne personne = new Personne();
+//		
+//		String objetCommandePersonne = "personAddCommand";
+//		
+//		Map<String, Object> data = new HashMap<> ();
+//		data.put(objetCommandePersonne, personne);
+//		
+//		String viewName = "personAdd";
+//		
+//		return new ModelAndView(viewName, data);
+//		
+//	}
 
 	@RequestMapping(value = "/enseigneAdd", method = RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddEnseigne() {

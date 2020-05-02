@@ -48,7 +48,7 @@ public class MatiereDao implements IMatiereDao {
 	}
 	@Override
 	public List<Matiere> getAllMatiere() {
-		return sessionFactory.getCurrentSession().createQuery("FROM matiere m").getResultList();
+		return getSessionFactory().getCurrentSession().createQuery("FROM matiere m").list();
 	}
 
 }//end class

@@ -23,7 +23,7 @@ public class Enseigne implements Serializable{
 	private int id_enseigne;
 	
 	@ManyToOne
-	@JoinColumn(name="enseignant_id")
+	@JoinColumn(name="enseignant_id", referencedColumnName="id_personne")
 	private Enseignant enseignant;
 	
 	@ManyToOne
