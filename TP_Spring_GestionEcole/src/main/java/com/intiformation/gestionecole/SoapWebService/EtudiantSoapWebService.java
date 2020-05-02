@@ -17,7 +17,7 @@ import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.Promotion;
 
 /**
- * Disponible à l'adresse		http://localhost:8081/tp-gestionecole-soap-webservices/etidiant-sws?wsdl
+ * Disponible à l'adresse		http://localhost:8081/tp-gestionecole-soap-webservices/etudiant-sws?wsdl
  * @author IN-DF-028
  *
  */
@@ -56,14 +56,13 @@ public class EtudiantSoapWebService {
 								@WebParam(name="nom") String pNom,
 								@WebParam(name="prenom") String pPrenom,
 								@WebParam(name="email") String pEmail,
-								@WebParam(name="role") String pRole,
 								@WebParam(name="adresse_id") String pAdresse,
 								@WebParam(name="photo") String pPhoto,
 								@WebParam(name="dateDeNaissance") String pDateDeNaissance,
 								@WebParam(name="promotion_id") String pPromotion) {
 		Promotion promotion = promotionDao.getById(Integer.parseInt(pPromotion));
 		Adresse adresse = adresseDao.getById(Integer.parseInt(pAdresse));
-		Etudiant etudiant = new Etudiant(pMotDePasse, pNom, pPrenom, pEmail, pRole, adresse, pPhoto, pDateDeNaissance, promotion);
+		Etudiant etudiant = new Etudiant(pMotDePasse, pNom, pPrenom, pEmail, "ROLE_ETU", adresse, pPhoto, pDateDeNaissance, promotion);
 
 		etudiantDao.addEtudiant(etudiant);
 	} // end ajouterEtudiant()
@@ -74,7 +73,6 @@ public class EtudiantSoapWebService {
 								 @WebParam(name="nom") String pNom,
 								 @WebParam(name="prenom") String pPrenom,
 								 @WebParam(name="email") String pEmail,
-								 @WebParam(name="role") String pRole,
 								 @WebParam(name="adresse_id") String pAdresse,
 								 @WebParam(name="photo") String pPhoto,
 								 @WebParam(name="dateDeNaissance") String pDateDeNaissance,
@@ -91,7 +89,7 @@ public class EtudiantSoapWebService {
 		etudiant.setPrenom(pPrenom);
 		etudiant.setPhoto(pPhoto);
 		etudiant.setPromotion(promotion);
-		etudiant.setRole(pRole);
+		etudiant.setRole("ROLE_ETU");
 		
 		etudiantDao.updateEtudiant(etudiant); 
 		

@@ -41,6 +41,7 @@ public class MatiereSoapWebService {
 	@WebMethod
 	public void ajouterMatiere(@WebParam(name="libelle") String pLibelle) {
 		Matiere matiere = new Matiere(pLibelle);
+		matiereDao.addMatiere(matiere);
 	} // end ajouterMatiere()
 	
 //	public void modifierMatiere(@WebParam(name="libelle") String pLibelle) {

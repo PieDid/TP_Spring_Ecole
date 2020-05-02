@@ -61,10 +61,15 @@ public class Enseignant extends Personne{
 	}
 
 
-	
+	public Enseignant(String pMotDePasse, String pNom, String pPrenom, String pEmail, String pRole, Adresse adresse) {
+		super(pMotDePasse, pNom, pPrenom, pEmail, pRole, adresse);
+	}
 	
 	/* Setter/Getters */
 	
+	
+
+
 	@Override
 	public String toString() {
 		return "Enseignant [" + super.toString() + ",enseigne=" + enseigne + "]";
