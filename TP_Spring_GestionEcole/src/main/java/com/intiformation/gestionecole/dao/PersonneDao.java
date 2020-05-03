@@ -21,20 +21,27 @@ public class PersonneDao implements IPersonneDao {
 	public void setSessionFactory(SessionFactory sf) {
 		this.sf = sf;
 	}
-	
-	
-	
+	public SessionFactory getSf() {
+		return sf;
+	}
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+
+
+
+
 	@Override
 	public void addPerson(Personne personne) {
 		
-			sf.getCurrentSession().save(personne);
+		getSf().getCurrentSession().save(personne);
 		
 	}//end add
 
 	@Override
 	public void updatePerson(Personne personne) {
 		
-			sf.getCurrentSession().update(personne);
+		getSf().getCurrentSession().update(personne);
 		
 	}//end update
 
@@ -42,7 +49,7 @@ public class PersonneDao implements IPersonneDao {
 	@Override
 	public void deletePerson(int pIdPersonne) {
 		
-		sf.getCurrentSession().remove(getPersonById(pIdPersonne));
+		getSf().getCurrentSession().remove(getPersonById(pIdPersonne));
 		
 	}//end delete
 
@@ -50,7 +57,7 @@ public class PersonneDao implements IPersonneDao {
 	@Override
 	public Personne getPersonById(int pIdPersonne) {
 
-		return sf.getCurrentSession().find(Personne.class, pIdPersonne);
+		return getSf().getCurrentSession().find(Personne.class, pIdPersonne);
 		
 	}//end get
 	
@@ -58,7 +65,7 @@ public class PersonneDao implements IPersonneDao {
 	@Override
 	public List<Personne> getAllPerson() {
 
-		return sf.getCurrentSession().createQuery("FROM personne p").getResultList();
+		return getSf().getCurrentSession().createQuery("FROM personne p").getResultList();
 		
 	}//end list
 	

@@ -98,7 +98,8 @@ public class Adresse implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Adresse [rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
+		return "Adresse [idAdresse=" + idAdresse + ", rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville
+				+ "]";
 	}
 
 	/*__________________ G/S _________________*/

@@ -33,15 +33,36 @@
 				</tr>
 				
 				<tr>
-					<td> <form:label path="adresse">Adresse : </form:label> </td>
-					<td> <form:input path="adresse"/> </td>
-					<td> <form:errors path="adresse"/> </td>
+					<td> <form:label path="adresse.idAdresse">Adresse : </form:label> </td>
+					<td> <form:input path="adresse.idAdresse"/> </td>
+					<td> <form:errors path="adresse.idAdresse"/> </td>
 				</tr>
 				
 				<tr>
 					<td> <form:label path="email">Adresse Mail : </form:label> </td>
 					<td> <form:input path="email"/> </td>
 					<td> <form:errors path="email"/> </td>
+				</tr>
+				
+				<tr>
+					<td> <form:label path="role">Rôle : </form:label> </td>
+<%-- 					<td> <form:input path="role"/> </td> --%>
+					<td>
+						<form:select path="role">
+							<form:option value="ADM" label="Administrateur"/>
+							<form:option value="ENS" label="Enseignant"/>
+							<form:option value="ETU" label="Etudiant"/>
+							
+							<form:options items="${ role }" />
+						</form:select>
+					</td>
+					<td> <form:errors path="role"/> </td>
+				</tr>
+				
+				<tr>
+					<td> <form:label path="motDePasse">Mot De Passe : </form:label> </td>
+					<td> <form:input path="motDePasse"/> </td>
+					<td> <form:errors path="motDePasse"/> </td>
 				</tr>
 				
 				<tr>

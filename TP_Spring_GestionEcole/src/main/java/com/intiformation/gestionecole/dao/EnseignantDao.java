@@ -34,7 +34,7 @@ public class EnseignantDao implements IEnseignantDao{
 	@Transactional
 	public void addEnseignant(Enseignant pEnseignant) {
 	
-	Session session = SessionFactory.getCurrentSession();
+	Session session = getSessionFactory().getCurrentSession();
 		
 		try {
 			session.save(pEnseignant);
@@ -52,7 +52,7 @@ public class EnseignantDao implements IEnseignantDao{
 	 */
 	@Transactional
 	public void updateEnseignant(Enseignant pEnseignant) {
-		Session session = SessionFactory.getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		
 		try {
 			session.update(pEnseignant);
@@ -68,7 +68,7 @@ public class EnseignantDao implements IEnseignantDao{
 	 */
 	@Transactional
 	public void deleteEnseignant(int pIdEnseignant) {
-		Session session = SessionFactory.getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		
 		try {
 			Enseignant enseignant = session.find(Enseignant.class, pIdEnseignant);
@@ -85,7 +85,7 @@ public class EnseignantDao implements IEnseignantDao{
 	 */
 	@Transactional(readOnly=true) // readOnly = l'optimisation de la transaction
 	public Enseignant getEnseignantById(int pIdEnseignant) {
-		Session session = SessionFactory.getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Enseignant Enseignant = session.find(Enseignant.class, pIdEnseignant);
 		return Enseignant;
 	}// end getEmployById
@@ -95,7 +95,7 @@ public class EnseignantDao implements IEnseignantDao{
 	 */
 	@Transactional(readOnly=true) // readOnly = l'optimisation de la transaction
 	public List<Enseignant> getAllEnseignant() {
-		Session session = SessionFactory.getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		
 		// Query = org.hibernate.query.Query
 		

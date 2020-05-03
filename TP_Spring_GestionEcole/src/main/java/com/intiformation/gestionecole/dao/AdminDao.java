@@ -31,15 +31,18 @@ public class AdminDao implements IAdminDao {
 	public void setSessionFactory(SessionFactory sf) {
 		this.sf = sf;
 	}
-
-
-
-
-
+	public SessionFactory getSf() {
+		return sf;
+	}
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+	
+	
 	@Override
 	public void addAdmin(Administrateur admin) {
 		
-		sf.getCurrentSession().save(admin);
+		getSf().getCurrentSession().save(admin);
 		
 	}//end add
 
@@ -47,7 +50,7 @@ public class AdminDao implements IAdminDao {
 	@Override
 	public void updateAdmin(Administrateur admin) {
 		
-		sf.getCurrentSession().update(admin);
+		getSf().getCurrentSession().update(admin);
 		
 	}//end update
 
@@ -57,20 +60,20 @@ public class AdminDao implements IAdminDao {
 	
 	@Override
 	public void deleteAdmin(int pIdAdmin) {
-		sf.getCurrentSession().remove(getAdminById(pIdAdmin));
+		getSf().getCurrentSession().remove(getAdminById(pIdAdmin));
 		
 	}
 
 
 	@Override
 	public Administrateur getAdminById(int pIdAdmin) {
-		return sf.getCurrentSession().find(Administrateur.class, pIdAdmin);
+		return getSf().getCurrentSession().find(Administrateur.class, pIdAdmin);
 	}
 
 
 	@Override
 	public List<Administrateur> getAllAdmin() {
-		return sf.getCurrentSession().createQuery("FROM admin a").getResultList();
+		return getSf().getCurrentSession().createQuery("FROM admin a").getResultList();
 	}
 
 	

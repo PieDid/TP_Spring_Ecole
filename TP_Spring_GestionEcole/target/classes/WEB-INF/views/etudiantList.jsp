@@ -32,11 +32,11 @@
 			<td>${etudiant.dateDeNaissance}</td>
 
 			<td colspan="2">
-				<a href="${pageContext.request.contextPath}/etuUpdate/${administrateur.identifiant}">Modifier</a>
+				<a href="${pageContext.request.contextPath}/etuUpdate/${etudiant.identifiant}">Modifier</a>
 			</td>
 
 			<td colspan="2">
-				<a href="${pageContext.request.contextPath}/etuDelete/${administrateur.identifiant}">Supprimer</a>
+				<a href="${pageContext.request.contextPath}/etuDelete/${etudiant.identifiant}">Supprimer</a>
 			</td>
 		</tr>
 		</c:forEach>

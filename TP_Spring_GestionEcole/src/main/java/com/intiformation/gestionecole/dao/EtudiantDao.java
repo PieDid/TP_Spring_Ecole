@@ -33,31 +33,31 @@ public class EtudiantDao implements IEtudiantDao{
 	// Ajoute un étudiant
 	@Override
 	public void addEtudiant(Etudiant etudiant) {
-		sessionFactory.getCurrentSession().save(etudiant);
+		getSessionFactory().getCurrentSession().save(etudiant);
 	}
 	
 	// Modifie un étudiant
 	@Override
 	public void updateEtudiant(Etudiant etudiant) {
-		sessionFactory.getCurrentSession().update(etudiant);
+		getSessionFactory().getCurrentSession().update(etudiant);
 	}
 	
 	
 	
 	@Override
 	public Etudiant getEudiantById(int pIdEtudiant) {
-		return sessionFactory.getCurrentSession().find(Etudiant.class, pIdEtudiant);
+		return getSessionFactory().getCurrentSession().find(Etudiant.class, pIdEtudiant);
 	}
 	
 	@Override
 	public void deleteEtudiant(int pIdEtudiant) {
-		sessionFactory.getCurrentSession().remove(getEudiantById(pIdEtudiant));
+		getSessionFactory().getCurrentSession().remove(getEudiantById(pIdEtudiant));
 		
 	}
 
 	@Override
 	public List<Etudiant> getAllEtudiant() {
-		return sessionFactory.getCurrentSession().createQuery("FROM etudiant e").getResultList();
+		return getSessionFactory().getCurrentSession().createQuery("FROM etudiant e").getResultList();
 	}
 	
 	

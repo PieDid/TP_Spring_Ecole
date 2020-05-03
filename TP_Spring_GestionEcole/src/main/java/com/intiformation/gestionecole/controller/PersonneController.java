@@ -24,11 +24,13 @@ import com.intiformation.gestionecole.dao.AdminDao;
 import com.intiformation.gestionecole.dao.EnseignantDao;
 import com.intiformation.gestionecole.dao.EtudiantDao;
 import com.intiformation.gestionecole.dao.IAdminDao;
+import com.intiformation.gestionecole.dao.IAdresseDao;
 import com.intiformation.gestionecole.dao.IEnseignantDao;
 import com.intiformation.gestionecole.dao.IEtudiantDao;
 import com.intiformation.gestionecole.dao.IPersonneDao;
 import com.intiformation.gestionecole.dao.PersonneDao;
 import com.intiformation.gestionecole.domain.Administrateur;
+import com.intiformation.gestionecole.domain.Adresse;
 import com.intiformation.gestionecole.domain.Enseignant;
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.Personne;
@@ -52,6 +54,9 @@ public class PersonneController {
 
 	@Autowired
 	private IEtudiantDao etuDao;
+	
+	@Autowired
+	private IAdresseDao adresseDao;
 	
 
 	// Validateur
@@ -82,6 +87,10 @@ public class PersonneController {
 
 	public void setPersonneValid(PersonneValidator personneValid) {
 		this.personneValid = personneValid;
+	}
+	
+	public void setAdresseDao(IAdresseDao adresseDao) {
+		this.adresseDao = adresseDao;
 	}
 	
 	
@@ -127,9 +136,9 @@ public class PersonneController {
 		List<Enseignant> listeEnseignants = java.util.Collections.emptyList();
 		listeEnseignants = enseignantDao.getAllEnseignant();
 		
-		model.addAttribute("attribut_listeEnseignants", listeEnseignants);
+		model.addAttribute("attribut_listeEnseignant", listeEnseignants);
 		
-		return "ensList";
+		return "enseignantList";
 	
 	}//end ListEnseignants
 	
@@ -142,9 +151,9 @@ public class PersonneController {
 		List<Etudiant> listeEtudiants = java.util.Collections.emptyList();
 		listeEtudiants = etuDao.getAllEtudiant();
 		
-		model.addAttribute("attribut_listeEtudiants", listeEtudiants);
+		model.addAttribute("attribut_listeEtudiant", listeEtudiants);
 		
-		return "etuList";
+		return "etudiantList";
 	
 	}//end ListEtudiant
 	
@@ -196,7 +205,7 @@ public class PersonneController {
 		
 		model.addAttribute("attribut_listeEnseignant", listeEnseignant);
 		
-		return "ensList";
+		return "enseignantList";
 		
 	}//end deletePersonne
 	
@@ -212,7 +221,7 @@ public class PersonneController {
 		
 		model.addAttribute("attribut_listeEtudiant", listeEtudiant);
 		
-		return "etuList";
+		return "etudiantList";
 		
 	}//end deletePersonne
 	
@@ -237,7 +246,7 @@ public class PersonneController {
 	@RequestMapping(value="/personUpdate-meth", method=RequestMethod.POST)
 	public String updatePersonne(@ModelAttribute("personUpdateCommand") Personne pPersonne, ModelMap model) {
 		
-		personneDao.updatePerson(pPersonne);;
+		personneDao.updatePerson(pPersonne);
 		
 		model.addAttribute("attribut_listePersonnes", personneDao.getAllPerson());
 		
@@ -249,11 +258,21 @@ public class PersonneController {
 	// Formulaire
 	
 	@RequestMapping(value="/adminUpdate/{identifiant}", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateAdmin(@RequestParam("identifiant") int pIdAdmin) {
+	public ModelAndView afficherFormulaireUpdateAdmin(@PathVariable("identifiant") int pIdAdmin) {
 		
 		Administrateur adminUpdate = adminDao.getAdminById(pIdAdmin);
 		
-		return new ModelAndView("adminUpdate", "adminUpdateCommand", adminUpdate);
+		//------pour la liste déroulante du formulaire--------------------------------------
+		List<Adresse> liste_adresses = adresseDao.getAll();
+				
+		Map<String, Object> data = new HashMap<>();
+		data.put("adminUpdateCommand", adminUpdate);
+		data.put("listeAdresses", liste_adresses);
+
+		return new ModelAndView("adminUpdate", data);
+		//----------------------------------------------------------------------------------
+				
+//		return new ModelAndView("adminUpdate", "adminUpdateCommand", adminUpdate);
 		
 	}
 	
@@ -276,11 +295,21 @@ public class PersonneController {
 	// Formulaire
 	
 	@RequestMapping(value="/etuUpdate/{identifiant}", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateEtudiant(@RequestParam("identifiant") int pIdEtudiant) {
+	public ModelAndView afficherFormulaireUpdateEtudiant(@PathVariable("identifiant") int pIdEtudiant) {
 		
 		Etudiant etuUpdate = etuDao.getEudiantById(pIdEtudiant);
 		
-		return new ModelAndView("etuUpdate", "etuUpdateCommand", etuUpdate);
+		//------pour la liste déroulante du formulaire--------------------------------------
+		List<Adresse> liste_adresses = adresseDao.getAll();
+				
+		Map<String, Object> data = new HashMap<>();
+		data.put("etuUpdateCommand", etuUpdate);
+		data.put("listeAdresses", liste_adresses);
+
+		return new ModelAndView("etudiantUpdate", data);
+		//----------------------------------------------------------------------------------
+		
+//		return new ModelAndView("etuUpdate", "etuUpdateCommand", etuUpdate);
 		
 	}
 	
@@ -294,7 +323,7 @@ public class PersonneController {
 		
 		model.addAttribute("attribut_listeEtudiant", etuDao.getAllEtudiant());
 		
-		return "etuList";
+		return "etudiantList";
 	
 	}//end update
 		
@@ -303,11 +332,21 @@ public class PersonneController {
 	// Formulaire
 	
 	@RequestMapping(value="/ensUpdate/{identifiant}", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateEnseignant(@RequestParam("identifiant") int pIdEnseignant) {
+	public ModelAndView afficherFormulaireUpdateEnseignant(@PathVariable("identifiant") int pIdEnseignant) {
 		
 		Enseignant ensUpdate = enseignantDao.getEnseignantById(pIdEnseignant);
 		
-		return new ModelAndView("ensUpdate", "ensUpdateCommand", ensUpdate);
+		//------pour la liste déroulante du formulaire--------------------------------------
+		List<Adresse> liste_adresses = adresseDao.getAll();
+				
+		Map<String, Object> data = new HashMap<>();
+		data.put("ensUpdateCommand", ensUpdate);
+		data.put("listeAdresses", liste_adresses);
+
+		return new ModelAndView("enseignantUpdate", data);
+		//----------------------------------------------------------------------------------
+		
+//		return new ModelAndView("ensUpdate", "ensUpdateCommand", ensUpdate);
 		
 	}
 	
@@ -321,7 +360,7 @@ public class PersonneController {
 		
 		model.addAttribute("attribut_listeEnseignant", enseignantDao.getAllEnseignant());
 		
-		return "ensList";
+		return "enseignantList";
 	
 	}//end update
 	
@@ -423,7 +462,7 @@ public class PersonneController {
 		Map<String, Object> data = new HashMap<> ();
 		data.put(objetCommandeEtudiant, etudiant);
 		
-		String viewName = "etuAdd";
+		String viewName = "etudiantAdd";
 		
 		return new ModelAndView(viewName, data);
 		
@@ -438,14 +477,14 @@ public class PersonneController {
 		etuValid.validate(pEtudiant, result);
 		
 		if (result.hasErrors()) {
-			return "etuAdd";
+			return "etudiantAdd";
 			
 		}else {
 			etuDao.addEtudiant(pEtudiant);
 
 			model.addAttribute("attribut_listeEtudiant", etuDao.getAllEtudiant());
 			
-			return "etuList";
+			return "etudiantList";
 			
 		}//end if
 		
@@ -465,7 +504,7 @@ public class PersonneController {
 		Map<String, Object> data = new HashMap<> ();
 		data.put(objetCommandeEnseignant, enseignant);
 		
-		String viewName = "ensAdd";
+		String viewName = "enseignantAdd";
 		
 		return new ModelAndView(viewName, data);
 		
@@ -480,14 +519,14 @@ public class PersonneController {
 		personneValid.validate(pEnseignant, result);
 		
 		if (result.hasErrors()) {
-			return "ensAdd";
+			return "enseignantAdd";
 			
 		}else {
 			enseignantDao.addEnseignant(pEnseignant);
 
 			model.addAttribute("attribut_listeEnseignant", enseignantDao.getAllEnseignant());
 			
-			return "ensList";
+			return "enseignantList";
 			
 		}//end if
 		

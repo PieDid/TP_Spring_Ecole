@@ -105,6 +105,12 @@ public class EnseigneController {
 	@RequestMapping(value = { "/enseigneDelete/{id}", "/enseigne/remove/{id}" }, method = RequestMethod.GET)
 	public String deleteEnseigne(@PathVariable("id") int pIdEnseigne, ModelMap model) {
 
+		//pour corriger l'erreur : (remove deleted object from associations)
+//		Enseigne enseigneToDelete = enseigneDao.getById(pIdEnseigne);
+//		enseigneToDelete.getParent().getChildren().remove(enseigneToDelete);
+//		Enseigne enseigneToDelete = enseigneDao.getById(pIdEnseigne);
+//		enseigneToDelete.setEnseignant(null);
+		
 		enseigneDao.delete(pIdEnseigne);
 
 //		List<Enseigne> listeEnseigne = ((IGenericDao<Enseigne>) enseigneDao).getAll();
