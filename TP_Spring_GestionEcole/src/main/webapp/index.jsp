@@ -62,9 +62,27 @@
 			</ul>
 	</div>
 	
-	<a href="<c:url value='/aideList'/>">Liste aide</a>
+	<div style="text-align:center">
+		<h1>Page d'accueil</h1>
 	
+	<a href="${pageContext.request.contextPath}/adminList">Liste des Admins</a>
+	<br><br>
+	<a href="${pageContext.request.contextPath}/aideList">Liste des aides</a>
+	<br><br>
+	<a href="${pageContext.request.contextPath}/coursList">Liste des cours</a>
+	<br><br>
+	<a href="${pageContext.request.contextPath}/enseignantList">Liste des enseignants</a>
+	<br><br>
+	<a href="${pageContext.request.contextPath}/etudiantList">Liste des étudiants</a>
+	<br><br>
+	<a href="${pageContext.request.contextPath}/matiereList">Liste des matières</a>
+	<br><br>
+	<a href="${pageContext.request.contextPath}/personList">Liste des personnes</a>
+	<br><br>
+	<a href="${pageContext.request.contextPath}/promotionList">Liste des promotions</a>
 	</div>
+	
+	
 
 </body>
 </html>
