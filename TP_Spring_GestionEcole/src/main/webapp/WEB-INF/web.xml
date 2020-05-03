@@ -38,6 +38,23 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
+	<!-- ============================================================ -->
+  <!-- ============ Configuration de spring security ============== -->
+  <!-- ============================================================ -->
+  <!-- 
+  		Déclaration du filtre pour l'interception des requêtes
+   -->
+   <filter>
+   		<filter-name>springSecurityFilterChain</filter-name>
+   		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+   </filter>
+   
+   <!-- /* toutes les requêtes sont interceptées par le filtre -->
+   <filter-mapping>
+   		<filter-name>springSecurityFilterChain</filter-name>
+   		<url-pattern>/*</url-pattern>
+   </filter-mapping>
+	
 	
 	<!-- Configuration des Web Services REST - Servlet de Jersey -->
 	<!-- ======================================================= -->

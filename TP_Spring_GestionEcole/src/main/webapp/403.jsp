@@ -16,13 +16,13 @@
 		<h1>Statut http 403 accès refusé</h1>
 
 	<br/>
-	<s:authorize access="hasRole('ROLE_USER')" >
 	
 	<h2>Vous n'avez pas les authorisations requises pour cette action</h2>
 	
-	<h3>Veuillez vous connecter en tant que ADMIN  : <a href="<c:url value='/login.jsp'/>">Se connecter</a></h3>
+	<h3> <a href="<c:url value='/login.jsp'/>">Se connecter</a></h3>
 	
-	</s:authorize>
+	<h3> <a href="<c:url value='/index.jsp'/>">Page d'accueil</a></h3>
+	
 	
 
 </body>

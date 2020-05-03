@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,7 +10,26 @@
 </head>
 <body>
 	<%-- inclusion dynamique du fragment entete.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
+<%-- 	<jsp:include page="/WEB-INF/fragments/entete.jsp" /> --%>
+
+	<!-- =========================================================== -->
+	<!-- ======== affichage de l'identifiant et des rôles ========== -->
+	<!-- =========================================================== -->
+	<div style="border: 1px dotted red; width: 400px;">
+			<!-- affichage de l'identifiant de l'utilisateur -->
+			<h3>
+				Bienvenue, <s:authentication property="name"/>
+			</h3>
+			
+			<!-- affichage des rôle de l'utilisateur -->
+			<s:authentication property="authorities" var="authorites"/>
+			
+			<ul>
+				<c:forEach items="${authorites}" var="auth">
+					<li>${auth.authority}</li>	
+				</c:forEach>
+			</ul>
+	</div>
 
 	<!-- récupérée grace à la méthode generateCoursList du controlleur AideController-->
 	<h2>Liste des aides</h2>
@@ -48,7 +68,7 @@
 	<hr />
 
 	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
+<%-- 	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" /> --%>
 
 </body>
 </html>

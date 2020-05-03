@@ -34,7 +34,7 @@ import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.CoursValidator;
 
-@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
 @Controller
 public class CoursController {
 
@@ -81,7 +81,7 @@ public class CoursController {
 	
 	// Récupération de la liste des cours et affichage 
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
 	@RequestMapping(value="/coursList" , method = RequestMethod.GET)
 	public String generateCoursList(Model model) {
 		

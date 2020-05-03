@@ -10,33 +10,17 @@
 <title>Formulaire d'authentification perso)</title>
 </head>
 <body>
-		
-		<!-- ================================================= -->
-		<!-- =======Affichage des messages d'erreurs ========= -->
-		<!-- ================================================= -->
-		<!-- en cas d'echec de l'authentification -->
-		
+	
+		<!-- ======================================================== -->
+		<!-- ========== Affichage des messages d'erreurs ============ -->
+		<!-- ======================================================== -->
+		<!-- en cas d'échec de l'authentification -->
 		<c:if test="${not empty param.error}">
-		
 			<font color="red;">
-				Erreur d'authentification. Identifiant ou mot de passe invalide <br/>
-				Raison : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} 
+				Erreur d'authentification.Identifiant ou mot de passe invalide. <br/>
+				Raison : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 			</font>
-		
 		</c:if>
-		
-		<!-- ================================================= -->
-		<!-- =======Affichage du message de deconnexion ========= -->
-		<!-- ================================================= -->
-		
-			<c:if test="${not empty param.logout_message}">
-			<font color="green;">
-				Déconnexion avec succès !!!
-			
-			</font>
-			
-			</c:if>
-
 
 		<!-- ================================================= -->
 		<!-- =======Formulaire d'authentification perso======= -->
@@ -65,13 +49,12 @@
 		<td> <input type="text" name="u_motdepasse"/></td>
 		</tr>
 		
+		
 		<tr>
-		
-			<td colspan="2">
-			<input type="submit" value="se connecter"/>
-			<input type="reset" value="Reset"/>
-		
-			</td>		
+				<td>
+					<input type="submit" value="Se Connecter"/>
+							
+				</td>
 		</tr>
 		
 		</table>
@@ -83,13 +66,13 @@
 		<br/>
 		<!-- lien vers la page d'acceuil après déconnexion -->
 
-	<c:if test="${not empty param.logout_message}">
+<%-- 	<c:if test="${not empty param.logout_message}"> --%>
 	
-	<a href="${pageContext.request.contextPath}/index">
-	Page d'accueil
-	</a>
+<%-- 	<a href="${pageContext.request.contextPath}/index"> --%>
+<!-- 	Page d'accueil -->
+<!-- 	</a> -->
 	
-	</c:if>
+<%-- 	</c:if> --%>
 		
 
 </body>

@@ -26,7 +26,7 @@
 <body>
 
 	<%-- inclusion dynamique du fragment entete.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
+<%-- 	<jsp:include page="/WEB-INF/fragments/entete.jsp" /> --%>
 
 	<div align="center">
 		<h2>Ajout d'une adresse</h2>

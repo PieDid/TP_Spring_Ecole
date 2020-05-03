@@ -25,7 +25,7 @@ import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.validator.AdresseValidator;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ENS', 'ROLE_ADMIN')")
 public class AdresseController {
 
 	// Couche Dao
@@ -58,7 +58,7 @@ public class AdresseController {
 	
 	// Récupération de la liste des adresses et affichage 
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ENS' )")
 	@RequestMapping(value="/adresseList" , method = RequestMethod.GET)
 	public String generateAdresseList(Model model) {
 		

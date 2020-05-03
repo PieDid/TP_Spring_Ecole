@@ -28,7 +28,7 @@ import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.validator.AideValidator;
 
 
-@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
 @Controller
 public class AideController {
 
@@ -54,7 +54,7 @@ public class AideController {
 
 	/*----------- methodes ---------------*/
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
 	@RequestMapping(value="/aideList" , method = RequestMethod.GET)
 	public String generateAideList(Model model) {
 		
@@ -97,7 +97,7 @@ public class AideController {
 		
 	
 	// Méthode Update 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(value="aideUpdate-meth", method=RequestMethod.POST)
 	public String updateAide(@ModelAttribute("aideUpdateCommand") Aide pAide, ModelMap model) {
 			
@@ -113,6 +113,7 @@ public class AideController {
 	// Ajout d'un nouveau cours
 	// Formulaire
 		
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(value="/aideAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddAide() {
 		
