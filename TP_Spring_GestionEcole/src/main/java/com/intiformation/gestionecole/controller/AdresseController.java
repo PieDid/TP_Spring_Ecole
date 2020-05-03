@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.intiformation.gestionecole.dao.AideDao;
 import com.intiformation.gestionecole.dao.IAdresseDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.domain.Adresse;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.validator.AdresseValidator;
 
 @Controller
@@ -28,6 +31,9 @@ public class AdresseController {
 	// Couche Dao
 	@Autowired
 	private IAdresseDao adresseDao;
+	
+	@Autowired
+	private IAideDao aideDao;
 	
 	// Validator
 	@Autowired
@@ -45,6 +51,8 @@ public class AdresseController {
 	}
 	
 	
+	
+	
 	/* Méthodes gestionnaires du Promotion Controller */
 	
 	
@@ -57,8 +65,22 @@ public class AdresseController {
 		List<Adresse> listeAdresse = java.util.Collections.emptyList();
 		listeAdresse = adresseDao.getAll();
 		
-		model.addAttribute("attribut_listeAdresse", listeAdresse);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
+		
+		model.addAttribute("attribut_listeAdresse", listeAdresse);
 		return "adresseList";
 		
 	}//get all
@@ -73,6 +95,20 @@ public class AdresseController {
 		adresseDao.delete(pIdAdresse);
 		
 		List<Adresse> listeAdresse = adresseDao.getAll();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeAdresse", listeAdresse);
 		
@@ -89,7 +125,26 @@ public class AdresseController {
 		
 		Adresse adresseUpdate = adresseDao.getById(pIdAdresse);
 		
-		return new ModelAndView("adresseUpdate", "adresseUpdateCommand", adresseUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("adresseUpdate", "adresseUpdateCommand", adresseUpdate);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 		
 	}
 	
@@ -101,6 +156,20 @@ public class AdresseController {
 			
 		adresseDao.updateAdresse(pAdresse);
 			
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeAdresse", adresseDao.getAll());
 			
 		return "adresseList";
@@ -117,14 +186,28 @@ public class AdresseController {
 		
 		Adresse adresse = new Adresse();
 		
-		String objetCommandeAdresse = "adresseAddCommand";
 		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeAdresse, adresse);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		String viewName = "adresseAdd";
+		ModelAndView mov = new ModelAndView("adresseAdd", "adresseAddCommand", adresse);
 		
-		return new ModelAndView(viewName, data);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		
+		return mov;
 		
 	}
 	
@@ -137,11 +220,25 @@ public class AdresseController {
 		adresseValid.validate(pAdresse, result);
 		
 		if (result.hasErrors()) {
-			return "promotionAdd";
+			return "adresseAdd";
 			
 		}else {
 			adresseDao.addAdresse(pAdresse);
 
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("adresseList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+			
 			model.addAttribute("attribut_listeAdresse", adresseDao.getAll());
 			
 			return "adresseList";

@@ -21,7 +21,7 @@ public class AdresseValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "rue", "required.rue", "Veuillez entrer le nom de la rue.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "codePostal", "required.codePostal", "Veuillez entrer le code postal.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ville", "required.ville", "Veuillez entrer la ville.");	
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personne", "required.personne", "Veuillez entrer le nom de la personne habitant à cette adresse.");
+		//ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personne", "required.personne", "Veuillez entrer le nom de la personne habitant à cette adresse.");
 		
 		Adresse adresse = (Adresse) adresseValid;
 		

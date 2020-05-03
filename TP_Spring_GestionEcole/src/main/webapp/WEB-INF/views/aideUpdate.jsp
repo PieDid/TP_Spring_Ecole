@@ -14,7 +14,7 @@
 	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
 
 	<div align="center">
-		<h1>Modification des informations d'un cours</h1>
+		<h1>Modification des informations d'une aide</h1>
 	</div>	
 
 	<div align="center">
