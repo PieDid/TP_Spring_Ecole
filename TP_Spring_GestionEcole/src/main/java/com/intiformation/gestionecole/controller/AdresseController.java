@@ -25,7 +25,6 @@ import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.validator.AdresseValidator;
 
 @Controller
-@PreAuthorize("hasAnyRole('ROLE_ENS', 'ROLE_ADMIN')")
 public class AdresseController {
 
 	// Couche Dao
@@ -58,7 +57,7 @@ public class AdresseController {
 	
 	// Récupération de la liste des adresses et affichage 
 	
-	@PreAuthorize("hasAnyRole('ROLE_ENS','ROLE_ADMIN' )")
+	@PreAuthorize("hasAnyRole('ROLE_ENS','ROLE_ADMIN','ROLE_ETU' )")
 	@RequestMapping(value="/adresseList" , method = RequestMethod.GET)
 	public String generateAdresseList(Model model) {
 		
@@ -119,7 +118,7 @@ public class AdresseController {
 	
 	// Modification d'une promotion
 	// Formulaire
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@RequestMapping(value="/adresseUpdate/{idAdresse}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateAdresse(@PathVariable("idAdresse") int pIdAdresse) {
 		
@@ -180,7 +179,7 @@ public class AdresseController {
 		
 	// Ajout d'une nouvelle adresse
 	// Formulaire
-		
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@RequestMapping(value="/adresseAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddAdresse() {
 		

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 //import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.domain.Enseignant;
+import com.intiformation.gestionecole.encoder.Encoder;
 
 
 @Repository
@@ -37,6 +38,7 @@ public class EnseignantDao implements IEnseignantDao{
 	Session session = getSessionFactory().getCurrentSession();
 		
 		try {
+			pEnseignant.setMotDePasse(Encoder.crypt(pEnseignant.getMotDePasse()));
 			session.save(pEnseignant);
 			
 		} catch (HibernateException ex) {
@@ -52,6 +54,7 @@ public class EnseignantDao implements IEnseignantDao{
 	 */
 	@Transactional
 	public void updateEnseignant(Enseignant pEnseignant) {
+		pEnseignant.setMotDePasse(Encoder.crypt(pEnseignant.getMotDePasse()));
 		Session session = getSessionFactory().getCurrentSession();
 		
 		try {
