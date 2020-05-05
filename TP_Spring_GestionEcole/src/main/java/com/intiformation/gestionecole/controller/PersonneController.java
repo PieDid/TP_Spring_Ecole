@@ -25,12 +25,14 @@ import com.intiformation.gestionecole.dao.EnseignantDao;
 import com.intiformation.gestionecole.dao.EtudiantDao;
 import com.intiformation.gestionecole.dao.IAdminDao;
 import com.intiformation.gestionecole.dao.IAdresseDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.dao.IEnseignantDao;
 import com.intiformation.gestionecole.dao.IEtudiantDao;
 import com.intiformation.gestionecole.dao.IPersonneDao;
 import com.intiformation.gestionecole.dao.PersonneDao;
 import com.intiformation.gestionecole.domain.Administrateur;
 import com.intiformation.gestionecole.domain.Adresse;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Enseignant;
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.Personne;
@@ -39,7 +41,6 @@ import com.intiformation.gestionecole.validator.PersonneValidator;
 
 
 @Controller
-@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 public class PersonneController {
 	
 	// Couche Dao
@@ -58,7 +59,9 @@ public class PersonneController {
 	@Autowired
 	private IAdresseDao adresseDao;
 	
-
+	@Autowired
+	private IAideDao aideDao;
+	
 	// Validateur
 	@Autowired 
 	private PersonneValidator personneValid;
@@ -99,12 +102,26 @@ public class PersonneController {
 	
 	// Récupération de la liste des personnes et affichage 
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENS','ROLE_ETU')")
 	@RequestMapping(value="/personList*" , method = RequestMethod.GET)
 	public String generatePersonneList(Model model) {
 		
 		List<Personne> listePersonnes = java.util.Collections.emptyList();
 		listePersonnes = personneDao.getAllPerson();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("personList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listePersonnes", listePersonnes);
 		
@@ -114,12 +131,26 @@ public class PersonneController {
 	
 	// Récupération de la liste des admin et affichage 
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENS','ROLE_ETU')")
 	@RequestMapping(value="/adminList*" , method = RequestMethod.GET)
 	public String generateAdminList(Model model) {
 		
 		List<Administrateur> listAdmin = java.util.Collections.emptyList();
 		listAdmin = adminDao.getAllAdmin();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adminList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeAdmin", listAdmin);
 		
@@ -129,12 +160,26 @@ public class PersonneController {
 	
 	// Récupération de la liste des enseignants et affichage 
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENS','ROLE_ETU')")
 	@RequestMapping(value="/ensList*" , method = RequestMethod.GET)
 	public String generateEnseignantList(Model model) {
 		
 		List<Enseignant> listeEnseignants = java.util.Collections.emptyList();
 		listeEnseignants = enseignantDao.getAllEnseignant();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseignantList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeEnseignant", listeEnseignants);
 		
@@ -144,12 +189,26 @@ public class PersonneController {
 	
 	// Récupération de la liste des étudiants et affichage 
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENS','ROLE_ETU')")
 	@RequestMapping(value="/etuList*" , method = RequestMethod.GET)
 	public String generateEtudiantList(Model model) {
 		
 		List<Etudiant> listeEtudiants = java.util.Collections.emptyList();
 		listeEtudiants = etuDao.getAllEtudiant();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeEtudiant", listeEtudiants);
 		
@@ -170,6 +229,20 @@ public class PersonneController {
 
 		List<Personne> listePersonnes = personneDao.getAllPerson();
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("personList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listePersonnes", listePersonnes);
 		
 		return "personList";
@@ -187,6 +260,20 @@ public class PersonneController {
 
 		List<Administrateur> listeAdmin = adminDao.getAllAdmin();
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adminList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeAdmin", listeAdmin);
 		
 		return "adminList";
@@ -202,6 +289,20 @@ public class PersonneController {
 		enseignantDao.deleteEnseignant(pIdEnseignant);
 
 		List<Enseignant> listeEnseignant = enseignantDao.getAllEnseignant();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseignantList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeEnseignant", listeEnseignant);
 		
@@ -219,6 +320,20 @@ public class PersonneController {
 
 		List<Etudiant> listeEtudiant = etuDao.getAllEtudiant();
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeEtudiant", listeEtudiant);
 		
 		return "etudiantList";
@@ -230,13 +345,31 @@ public class PersonneController {
 	
 	// Modification d'une personne
 	// Formulaire
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/personUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdatePersonne(@RequestParam("identifiant") int pIdPersonne) {
 		
 		Personne personneUpdate = personneDao.getPersonById(pIdPersonne);
 		
-		return new ModelAndView("personUpdate", "personUpdateCommand", personneUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("personUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("personUpdate", "personUpdateCommand", personneUpdate);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 		
 	}
 	
@@ -248,6 +381,20 @@ public class PersonneController {
 		
 		personneDao.updatePerson(pPersonne);
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("personList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listePersonnes", personneDao.getAllPerson());
 		
 		return "personList";
@@ -256,7 +403,7 @@ public class PersonneController {
 	
 	
 	// Formulaire
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/adminUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateAdmin(@PathVariable("identifiant") int pIdAdmin) {
 		
@@ -265,11 +412,32 @@ public class PersonneController {
 		//------pour la liste déroulante du formulaire--------------------------------------
 		List<Adresse> liste_adresses = adresseDao.getAll();
 				
-		Map<String, Object> data = new HashMap<>();
-		data.put("adminUpdateCommand", adminUpdate);
-		data.put("listeAdresses", liste_adresses);
+		//Map<String, Object> data = new HashMap<>();
+		//data.put("adminUpdateCommand", adminUpdate);
+		//data.put("listeAdresses", liste_adresses);
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adminUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("adminUpdate", "adminUpdateCommand", adminUpdate);
+		mov.addObject("listeAdresses", liste_adresses);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 
-		return new ModelAndView("adminUpdate", data);
+		//return new ModelAndView("adminUpdate", data);
 		//----------------------------------------------------------------------------------
 				
 //		return new ModelAndView("adminUpdate", "adminUpdateCommand", adminUpdate);
@@ -284,6 +452,20 @@ public class PersonneController {
 		
 		adminDao.updateAdmin(pAdmin);
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adminList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeAdmin", adminDao.getAllAdmin());
 		
 		return "adminList";
@@ -293,7 +475,7 @@ public class PersonneController {
 	
 	
 	// Formulaire
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/etuUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEtudiant(@PathVariable("identifiant") int pIdEtudiant) {
 		
@@ -302,11 +484,32 @@ public class PersonneController {
 		//------pour la liste déroulante du formulaire--------------------------------------
 		List<Adresse> liste_adresses = adresseDao.getAll();
 				
-		Map<String, Object> data = new HashMap<>();
-		data.put("etuUpdateCommand", etuUpdate);
-		data.put("listeAdresses", liste_adresses);
+		//Map<String, Object> data = new HashMap<>();
+		//data.put("etuUpdateCommand", etuUpdate);
+		//data.put("listeAdresses", liste_adresses);
 
-		return new ModelAndView("etudiantUpdate", data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("etudiantUpdate", "etuUpdateCommand", etuUpdate);
+		mov.addObject("listeAdresses", liste_adresses);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
+		
+		//return new ModelAndView("etudiantUpdate", data);
 		//----------------------------------------------------------------------------------
 		
 //		return new ModelAndView("etuUpdate", "etuUpdateCommand", etuUpdate);
@@ -321,6 +524,20 @@ public class PersonneController {
 		
 		etuDao.updateEtudiant(pEtudiant);
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeEtudiant", etuDao.getAllEtudiant());
 		
 		return "etudiantList";
@@ -330,7 +547,7 @@ public class PersonneController {
 	
 	
 	// Formulaire
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/ensUpdate/{identifiant}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEnseignant(@PathVariable("identifiant") int pIdEnseignant) {
 		
@@ -339,11 +556,32 @@ public class PersonneController {
 		//------pour la liste déroulante du formulaire--------------------------------------
 		List<Adresse> liste_adresses = adresseDao.getAll();
 				
-		Map<String, Object> data = new HashMap<>();
-		data.put("ensUpdateCommand", ensUpdate);
-		data.put("listeAdresses", liste_adresses);
+		//Map<String, Object> data = new HashMap<>();
+		//data.put("ensUpdateCommand", ensUpdate);
+		//data.put("listeAdresses", liste_adresses);
 
-		return new ModelAndView("enseignantUpdate", data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseignantUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("enseignantUpdate","ensUpdateCommand", ensUpdate);
+		mov.addObject("listeAdresses", liste_adresses);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
+		
+		//return new ModelAndView("enseignantUpdate", data);
 		//----------------------------------------------------------------------------------
 		
 //		return new ModelAndView("ensUpdate", "ensUpdateCommand", ensUpdate);
@@ -358,6 +596,20 @@ public class PersonneController {
 		
 		enseignantDao.updateEnseignant(pEnseignant);
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseignantList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeEnseignant", enseignantDao.getAllEnseignant());
 		
 		return "enseignantList";
@@ -370,20 +622,45 @@ public class PersonneController {
 	
 	// Ajout d'une nouvelle personne
 	// Formulaire
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/personAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddPersonne() {
 		
 		Personne personne = new Personne();
 		
-		String objetCommandePersonne = "personAddCommand";
+		//------pour la liste déroulante du formulaire--------------------------------------
+		List<Adresse> liste_adresses = adresseDao.getAll();
 		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandePersonne, personne);
+		//String objetCommandePersonne = "personAddCommand";
 		
-		String viewName = "personAdd";
+		//Map<String, Object> data = new HashMap<> ();
+		//data.put(objetCommandePersonne, personne);
+		//data.put("listeAdresses", liste_adresses);
 		
-		return new ModelAndView(viewName, data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("personAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("personAdd","personAddCommand", personne);
+		mov.addObject("listeAdresses", liste_adresses);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
+		
+		//String viewName = "personAdd";
+		
+		//return new ModelAndView(viewName, data);
 		
 	}
 	
@@ -402,6 +679,20 @@ public class PersonneController {
 		}else {
 			personneDao.addPerson(pPersonne);;
 
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("personList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+			
 			model.addAttribute("attribut_listePersonnes", personneDao.getAllPerson());
 			
 			return "personList";
@@ -410,20 +701,44 @@ public class PersonneController {
 		
 	}//end add
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/adminAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddAdmin() {
 		
 		Administrateur admin = new Administrateur();
 		
-		String objetCommandeAdmin = "adminAddCommand";
+		//------pour la liste déroulante du formulaire--------------------------------------
+		List<Adresse> liste_adresses = adresseDao.getAll();
 		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeAdmin, admin);
+		//String objetCommandeAdmin = "adminAddCommand";
 		
-		String viewName = "adminAdd";
+		//Map<String, Object> data = new HashMap<> ();
+		//data.put(objetCommandeAdmin, admin);
 		
-		return new ModelAndView(viewName, data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adminAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("adminAdd","adminAddCommand", admin);
+		mov.addObject("listeAdresses", liste_adresses);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
+		
+		//String viewName = "adminAdd";
+		
+		//return new ModelAndView(viewName, data);
 		
 	}
 	
@@ -441,6 +756,20 @@ public class PersonneController {
 		}else {
 			adminDao.addAdmin(pAdmin);
 
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("adminList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+			
 			model.addAttribute("attribut_listeAdmin", adminDao.getAllAdmin());
 			
 			return "adminList";
@@ -451,20 +780,44 @@ public class PersonneController {
 	
 	
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/etuAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddEtudiant() {
 		
 		Etudiant etudiant = new Etudiant();
 		
-		String objetCommandeEtudiant = "etuAddCommand";
+		//------pour la liste déroulante du formulaire--------------------------------------
+		List<Adresse> liste_adresses = adresseDao.getAll();
 		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeEtudiant, etudiant);
+		//String objetCommandeEtudiant = "etuAddCommand";
 		
-		String viewName = "etudiantAdd";
+		//Map<String, Object> data = new HashMap<> ();
+		//data.put(objetCommandeEtudiant, etudiant);
 		
-		return new ModelAndView(viewName, data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("etudiantAdd","etuAddCommand", etudiant);
+		mov.addObject("listeAdresses", liste_adresses);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
+		
+		//String viewName = "etudiantAdd";
+		
+		//return new ModelAndView(viewName, data);
 		
 	}
 	
@@ -482,6 +835,20 @@ public class PersonneController {
 		}else {
 			etuDao.addEtudiant(pEtudiant);
 
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("etudiantList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+			
 			model.addAttribute("attribut_listeEtudiant", etuDao.getAllEtudiant());
 			
 			return "etudiantList";
@@ -493,20 +860,44 @@ public class PersonneController {
 	
 	
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/ensAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddEnseignant() {
 		
 		Enseignant enseignant = new Enseignant();
 		
-		String objetCommandeEnseignant = "ensAddCommand";
+		//------pour la liste déroulante du formulaire--------------------------------------
+		List<Adresse> liste_adresses = adresseDao.getAll();
 		
-		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeEnseignant, enseignant);
+		//String objetCommandeEnseignant = "ensAddCommand";
 		
-		String viewName = "enseignantAdd";
+		//Map<String, Object> data = new HashMap<> ();
+		//data.put(objetCommandeEnseignant, enseignant);
 		
-		return new ModelAndView(viewName, data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseignantAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("enseignantAdd","ensAddCommand", enseignant);
+		mov.addObject("listeAdresses", liste_adresses);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
+		
+		//String viewName = "enseignantAdd";
+		
+		//return new ModelAndView(viewName, data);
 		
 	}
 	
@@ -524,6 +915,20 @@ public class PersonneController {
 		}else {
 			enseignantDao.addEnseignant(pEnseignant);
 
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("enseignantList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+			
 			model.addAttribute("attribut_listeEnseignant", enseignantDao.getAllEnseignant());
 			
 			return "enseignantList";

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 1. détection automatique des controleurs : @Controller -->
+ 	<context:component-scan base-package="com.intiformation.gestionecole.controller" /> 
+ 	
+ 	<!-- Détection du Bean du Web Service REST -->
+	<context:component-scan base-package="com.intiformation.gestionecole.RestWebService"/>
+	
+	<!-- 2. détection des annotations : @RequestMapping -->
+	<!-- 
+		permet l'association des requetes aux controleurs et méthodes
+	 -->
+	 <mvc:annotation-driven/>
+	 
+	 <sec:global-method-security pre-post-annotations="enabled" />
+	 
+	 <!-- 
+	 	> configuration du handler pour la gestion des ressources statiques (images, jss, js)
+	 	
+	 	> répondre à toutes les demandes de ressources provenant de l'URL "/assets/**" (mapping)
+	 	en recherchant dans le répertoire "/assets/" (location) sous le dossier racine de l'application
+	  -->
+	 <mvc:resources location="/assets/" mapping="/assets/**"/>
+	
+	<!-- Déclaration du résolveur de vue -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property name="prefix" value="/WEB-INF/views/" />
+			<property name="suffix" value=".jsp" />
+	</bean>
+	
+	
+	<!-- Déclaration de la hierarchie des roles -->
+	<bean class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+		<property name="hierarchy">
+             <value>
+                 ROLE_ADMIN > ROLE_ENS
+                 ROLE_ENS > ROLE_ETU
+                 ROLE_ETU > ROLE_ANONYMOUS
+             </value>
+         </property>
+	</bean>
+	
+	
+	<!-- ////////////////////////////////// -->
+	<!-- //////// CONFIG DU BUNDLE //////// -->
+	<!-- ////////////////////////////////// -->
+	<bean id="messageSourceBean" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="basenames">
+			<list>
+				<value>/webapp/bundle/validation</value>
+			</list>
+		</property>
+	
+	</bean>
+	
+	<!-- Gestion Du WS SOAP -->
+	<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+		<property name="baseAddress" value="http://localhost:8081/tp-gestionecole-soap-webservices/"/>
+	</bean>
+	
+</beans>
