@@ -48,7 +48,7 @@
 					<td><form:label class="flabel" path="nom">Nom : </form:label>
 					</td>
 					<td><form:input class="finput" path="nom" /></td>
-					<td><form:errors class="ferror" path="rue" for="rue" /></td>
+					<td><form:errors class="ferror" path="nom" /></td>
 				</tr>
 
 				<tr>

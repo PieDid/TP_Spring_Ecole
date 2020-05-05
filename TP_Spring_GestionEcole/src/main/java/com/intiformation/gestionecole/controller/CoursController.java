@@ -23,18 +23,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.CoursDao;
 import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.dao.ICoursDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.dao.IMatiereDao;
 import com.intiformation.gestionecole.dao.IPromotionDao;
 import com.intiformation.gestionecole.dao.MatiereDao;
 import com.intiformation.gestionecole.dao.PromotionDao;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.CoursValidator;
 
-@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
+//@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
 @Controller
 public class CoursController {
 
@@ -49,6 +51,9 @@ public class CoursController {
 	
 	@Autowired
 	private IMatiereDao matiereDao;
+	
+	@Autowired
+	private IAideDao aideDao;
 	
 	
 	// Validateur
@@ -76,6 +81,7 @@ public class CoursController {
 	}
 
 	
+	
 	/* Méthodes gestionnaires du Cours Controller */
 	
 	
@@ -87,6 +93,20 @@ public class CoursController {
 		
 		List<Cours> listeCours = java.util.Collections.emptyList();
 		listeCours = coursDao.getAll();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeCours", listeCours);
 		
@@ -105,6 +125,20 @@ public class CoursController {
 
 		List<Cours> listeCours = coursDao.getAll();
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeCours", listeCours);
 		
 		return "coursList";
@@ -114,19 +148,38 @@ public class CoursController {
 	
 	// Modification d'un cours
 	// Formulaire
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/coursUpdate/{idCours}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateCours(@PathVariable("idCours") int pIdCours) {
 		
 		Cours coursUpdate = coursDao.getById(pIdCours);
 		
-		return new ModelAndView("coursUpdate", "coursUpdateCommand", coursUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("coursUpdate", "coursUpdateCommand", coursUpdate);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 		
 	}
 	
 	// Méthode Update 
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/coursUpdate-meth", method=RequestMethod.POST)
 	public String updateCours(@ModelAttribute("coursUpdateCommand") Cours pCours, ModelMap model) {
 		
@@ -140,6 +193,20 @@ public class CoursController {
 //		coursDao.update(pCours);
 		coursDao.updateCours(pCours);
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeCours", coursDao.getAll());
 		
 		return "coursList";
@@ -149,20 +216,36 @@ public class CoursController {
 	
 	// Ajout d'un nouveau cours
 	// Formulaire
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/coursAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddCours() {
 		
 		Cours cours = new Cours();
 		
-		String objetCommandeCours = "coursAddCommand";
-		
 		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeCours, cours);
+		data.put("coursAddCommand", cours);
 		
-		String viewName = "coursAdd";
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		return new ModelAndView(viewName, data);
+		ModelAndView mov = new ModelAndView("coursAdd", data);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		
+		return mov;
 		
 	}
 	
@@ -188,6 +271,20 @@ public class CoursController {
 			
 //			coursDao.add(pCours);
 			coursDao.addCours(pCours);
+			
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("coursList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
 
 			model.addAttribute("attribut_listeCours", coursDao.getAll());
 			
