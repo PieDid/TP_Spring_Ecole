@@ -97,21 +97,14 @@ margin-top : 40px;
 		<!-- =========================================================== -->
 		<!-- ======== affichage de l'identifiant et des rôles ========== -->
 		<!-- =========================================================== -->
-		<div style="border: 1px dotted red; width: 400px;">
-			<!-- affichage de l'identifiant de l'utilisateur -->
-			<h3>
-				Bienvenue,
-				<s:authentication property="name" />
-			</h3>
-
-			<!-- affichage des rôle de l'utilisateur -->
-			<s:authentication property="authorities" var="authorites" />
-
-			<ul>
-				<c:forEach items="${authorites}" var="auth">
-					<li>${auth.authority}</li>
-				</c:forEach>
-			</ul>
+		<div style="border: 1px dotted red; width: 600px; border-radius: 10px;">
+			Vous êtes maintenant connecté en tant qu'
+			<s:authentication property="authorities" var="authorites"/>
+			<c:forEach items="${authorites}" var="auth">
+				<c:if test="${auth.authority == 'ROLE_ADMIN'}">administrateur</c:if>
+				<c:if test="${auth.authority == 'ROLE_ENS'}">enseignant</c:if>
+				<c:if test="${auth.authority == 'ROLE_ETU'}">étudiant</c:if>
+			</c:forEach>
 		</div>
 
 		<div style="text-align: center">

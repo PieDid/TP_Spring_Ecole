@@ -38,22 +38,19 @@
 	<!-- ================================================================ -->
 	<!-- =========== affichage de l'identifiant et des rôles ============ -->
 	<!-- ================================================================ -->
-	<div style="border: 1px dotted red; width: 400px;">
+	<div style="border: 1px solid red; width: 400px;">
 	
 		<!-- affichage de l'identifiant de l'utilisateur -->
-		<h3 align="center">
-			Bienvenue, <s:authentication property="name"/>
+		<h3 >
+			Vous êtes connecté en tant qu'
+			<s:authentication property="authorities" var="authorites"/>
+			<c:forEach items="${authorites}" var="auth">
+				<c:if test="${auth.authority == 'ROLE_ADMIN'}">administrateur</c:if>
+				<c:if test="${auth.authority == 'ROLE_ENS'}">enseignant</c:if>
+				<c:if test="${auth.authority == 'ROLE_ETU'}">étudiant</c:if>
+			</c:forEach>
 		</h3>	
 		
-		<!-- affichage des rôles de l'utilisateur -->
-		<s:authentication property="authorities" var="authorites"/>
-		
-		<ul>
-			<c:forEach items="${authorites}" var="auth">
-				<li>${auth.authority}</li>
-			</c:forEach>
-		</ul>
-	
 	</div>
 	
 	<br/><br/>

@@ -74,7 +74,7 @@ public class AdminDao implements IAdminDao {
 
 	@Override
 	public List<Administrateur> getAllAdmin() {
-		return getSf().getCurrentSession().createQuery("FROM admin a").getResultList();
+		return getSf().getCurrentSession().createQuery("FROM administrateur a").getResultList();
 	}
 
 	
