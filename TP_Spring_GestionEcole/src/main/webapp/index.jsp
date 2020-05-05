@@ -16,7 +16,7 @@
 <spring:url value="/assets/scripts/jquery-3.4.1.js" var="JQuery" />
 <script type="text/javascript" src="${JQuery}"></script>
 
-<spring:url value ="/assets/images/universite_photo.jpg" var="photo_fac" />
+<spring:url value ="/assets/images/universite_photo_bis.jpg" var="photo_fac" />
 
 <style>
 .col {
@@ -36,7 +36,8 @@ hr{
 }
 
 .image_universite{
-	background-image: url("assets/images/universite_photo.jpg");
+	background-image: url("assets/images/universite_photo_bis.jpg");
+	background-size: 100%;
 	height : 335px;
 	
 }
@@ -161,6 +162,17 @@ margin-top : 40px;
 				<div class="col">
 					<a href="${pageContext.request.contextPath}/promotionList">Liste
 						des promotions</a>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col">
+					<a href="${pageContext.request.contextPath}/adresseList">Liste
+						des Adresses</a>
+				</div>
+				<div class="col">
+					<a href="${pageContext.request.contextPath}/enseigneList">Liste
+						des Enseignes</a>
 				</div>
 				
 			</div>

@@ -26,7 +26,7 @@
 <body>
 
 	<%-- inclusion dynamique du fragment entete.jsp --%>
-<%-- 	<jsp:include page="/WEB-INF/fragments/entete.jsp" /> --%>
+	<jsp:include page="/WEB-INF/fragments/entete.jsp" /> 
 
 	<div align="center">
 		<h2>Ajout d'une adresse</h2>
@@ -73,7 +73,7 @@
 		<p class="alert alert-info p-aide">${attribut_aide}<p>
 	</div>
 	
-		<script type="text/javascript">
+	<script type="text/javascript">
 	//#Bouton Aide
 		$(".btn-aide").click(function() {
 			$(".p-aide").toggle();
@@ -81,7 +81,7 @@
 	</script>
 
 			<%-- inclusion dynamique du fragment piedDePage.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
+ 	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" /> 
 	
 
 

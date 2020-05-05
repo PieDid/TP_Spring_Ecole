@@ -42,7 +42,7 @@
 	
 		<!-- affichage de l'identifiant de l'utilisateur -->
 		<h3 align="center">
-			Bienvenue, <s:authentication property="nom"/>
+			Bienvenue, <s:authentication property="name"/>
 		</h3>	
 		
 		<!-- affichage des rôles de l'utilisateur -->

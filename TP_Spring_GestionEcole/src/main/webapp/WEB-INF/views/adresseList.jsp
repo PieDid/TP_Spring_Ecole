@@ -24,7 +24,7 @@
 <body>
 
 	<%-- inclusion dynamique du fragment entete.jsp --%>
-<%-- 	<jsp:include page="/WEB-INF/fragments/entete.jsp" /> --%>
+ 	<jsp:include page="/WEB-INF/fragments/entete.jsp" /> 
 
 	<!-- récupérée grace à la méthode generateCoursList du controlleur AideController-->
 	<h2>Liste des adresses</h2>

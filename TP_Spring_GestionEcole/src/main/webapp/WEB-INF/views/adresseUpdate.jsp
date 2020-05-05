@@ -23,7 +23,7 @@
 <body>
 
 	<%-- inclusion dynamique du fragment entete.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/entete.jsp" />
+	<jsp:include page="/WEB-INF/fragments/entete.jsp" /> 
 
 	<div align="center">
 		<h2>Modification des informations d'une adresse</h2>
@@ -80,7 +80,7 @@
 	</script>
 
 	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
-	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
+ 	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" /> 
 
 </body>
 </html>
