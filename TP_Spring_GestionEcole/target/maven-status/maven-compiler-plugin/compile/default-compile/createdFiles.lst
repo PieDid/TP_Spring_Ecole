@@ -49,6 +49,7 @@ com\intiformation\gestionecole\SoapWebService\AideSoapWebService.class
 com\intiformation\gestionecole\SoapWebService\EnseigneSoapWebService.class
 com\intiformation\gestionecole\dao\IEtudiantDao.class
 com\intiformation\gestionecole\dao\AbsenceDao.class
+com\intiformation\gestionecole\encoder\PasswordIncoder.class
 com\intiformation\gestionecole\validator\AideValidator.class
 com\intiformation\gestionecole\validator\PersonneValidator.class
 com\intiformation\gestionecole\controller\PromotionController.class
@@ -74,5 +75,6 @@ com\intiformation\gestionecole\dao\MatiereDao.class
 com\intiformation\gestionecole\domain\Personne.class
 com\intiformation\gestionecole\SoapWebService\AbsenceSoapWebService.class
 com\intiformation\gestionecole\RestWebService\AdresseRest.class
+com\intiformation\gestionecole\RestWebService\EnseigneRest.class
 com\intiformation\gestionecole\RestWebService\AdminRest.class
 com\intiformation\gestionecole\RestWebService\CoursRest.class
