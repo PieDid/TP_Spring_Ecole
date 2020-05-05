@@ -69,7 +69,7 @@
  <!-- 
  		> configuration de nos propres tables table 
   -->
-<!--   	  <sec:global-method-security pre-post-annotations="enabled" /> -->
+
   	  		
   	
 	  <sec:authentication-manager>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Administrateur;
+import com.intiformation.gestionecole.encoder.Encoder;
 
 
 
@@ -41,7 +42,7 @@ public class AdminDao implements IAdminDao {
 	
 	@Override
 	public void addAdmin(Administrateur admin) {
-		
+		admin.setMotDePasse(Encoder.crypt(admin.getMotDePasse()));
 		getSf().getCurrentSession().save(admin);
 		
 	}//end add
@@ -49,7 +50,7 @@ public class AdminDao implements IAdminDao {
 
 	@Override
 	public void updateAdmin(Administrateur admin) {
-		
+		admin.setMotDePasse(Encoder.crypt(admin.getMotDePasse()));
 		getSf().getCurrentSession().update(admin);
 		
 	}//end update

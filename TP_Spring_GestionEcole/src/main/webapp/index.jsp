@@ -140,13 +140,13 @@ margin-top : 40px;
 						des cours</a>
 				</div>
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/enseignantList">Liste
+					<a href="${pageContext.request.contextPath}/ensList">Liste
 						des enseignants</a>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					<a href="${pageContext.request.contextPath}/etudiantList">Liste
+					<a href="${pageContext.request.contextPath}/etuList">Liste
 						des étudiants</a>
 				</div>
 				<div class="col">

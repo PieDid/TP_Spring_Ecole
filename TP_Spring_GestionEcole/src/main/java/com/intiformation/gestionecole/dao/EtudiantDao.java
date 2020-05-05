@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Etudiant;
+import com.intiformation.gestionecole.encoder.Encoder;
 
 @Repository
 @Transactional
@@ -33,12 +34,14 @@ public class EtudiantDao implements IEtudiantDao{
 	// Ajoute un étudiant
 	@Override
 	public void addEtudiant(Etudiant etudiant) {
+		etudiant.setMotDePasse(Encoder.crypt(etudiant.getMotDePasse()));
 		getSessionFactory().getCurrentSession().save(etudiant);
 	}
 	
 	// Modifie un étudiant
 	@Override
 	public void updateEtudiant(Etudiant etudiant) {
+		etudiant.setMotDePasse(Encoder.crypt(etudiant.getMotDePasse()));
 		getSessionFactory().getCurrentSession().update(etudiant);
 	}
 	
