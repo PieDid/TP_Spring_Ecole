@@ -52,7 +52,7 @@ public class AideRest {
 	@RequestMapping(value="/aideUpdate/{idAide}", method=RequestMethod.PUT)
 	public void upAide (@PathVariable("idAide") int pIdAide, @RequestBody Aide aide) {
 		
-		aideDao.getById(pIdAide);
+		aideDao.update(aide);
 		
 	}//end update
 	
