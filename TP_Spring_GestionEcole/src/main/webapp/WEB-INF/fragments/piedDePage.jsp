@@ -11,6 +11,7 @@
 	</p>
 	
 	<div style="text-align: center">
+	
 			<img src="assets/images/index.png" class="logo" style="height: 100px; width: 150px;">	
 	</div>
 
