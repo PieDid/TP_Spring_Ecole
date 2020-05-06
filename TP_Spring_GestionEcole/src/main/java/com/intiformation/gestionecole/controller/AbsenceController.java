@@ -17,15 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.AbsenceDao;
 import com.intiformation.gestionecole.dao.IAbsenceDao;
-import com.intiformation.gestionecole.dao.IGenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.EtudiantCours;
-import com.intiformation.gestionecole.domain.Personne;
 import com.intiformation.gestionecole.validator.AbsenceValidator;
 
 @Controller
@@ -35,6 +34,9 @@ public class AbsenceController {
 	// Couche Dao
 	@Autowired
 	private IAbsenceDao absDao;
+	
+	@Autowired
+	private IAideDao aideDao;
 	
 	// Validateur
 	@Autowired
@@ -64,6 +66,20 @@ public class AbsenceController {
 		List<EtudiantCours> listeAbsences = java.util.Collections.emptyList();
 		listeAbsences = absDao.getAll();
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeEtudiantCours", listeAbsences);
 		
 		return "etudiantCoursList";
@@ -81,6 +97,20 @@ public class AbsenceController {
 		
 		List<EtudiantCours> listeAbsencesEtu = java.util.Collections.emptyList();
 		listeAbsencesEtu = absDao.getByEtudiant(pEtudiant);
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeAbsences", listeAbsencesEtu);
 		
@@ -100,6 +130,20 @@ public class AbsenceController {
 
 		List<EtudiantCours> listeAbsences = absDao.getAll();
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeEtudiantCours", listeAbsences);
 		
 		return "etudiantCoursList";
@@ -115,8 +159,25 @@ public class AbsenceController {
 		
 		EtudiantCours absUpdate = absDao.getById(pIdAbsence);
 		
-		return new ModelAndView("etudiantCoursUpdate", "etudiantCoursUpdateCommand", absUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantCoursUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
+		ModelAndView mov = new ModelAndView ("etudiantCoursUpdate", "etudiantCoursUpdateCommand", absUpdate);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 	}
 	
 	// Méthode Update 
@@ -126,6 +187,20 @@ public class AbsenceController {
 	public String updateAbsence(@ModelAttribute("etudiantCoursUpdateCommand") EtudiantCours pAbsence, ModelMap model) {
 		
 		absDao.update(pAbsence);
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantCoursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeEtudiantCours", absDao.getAll());
 		
@@ -149,7 +224,26 @@ public class AbsenceController {
 		
 		String viewName = "etudiantCoursAdd";
 		
-		return new ModelAndView(viewName, data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantCoursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView(viewName, data);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		
+		return mov;
 		
 	}
 	
@@ -166,6 +260,20 @@ public class AbsenceController {
 			
 		}else {
 			absDao.add(pAbsence);
+			
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("etudiantCoursList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
 
 			model.addAttribute("attribut_listeEtudiantCours", absDao.getAll());
 			
