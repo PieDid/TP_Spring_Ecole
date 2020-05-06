@@ -53,7 +53,7 @@ public class AideRest {
 	public void upAide (@PathVariable("idAide") int pIdAide, @RequestBody Aide aide) {
 		
 		aideDao.update(aide);
-		
+		 
 	}//end update
 	
 	
