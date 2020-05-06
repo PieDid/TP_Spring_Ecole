@@ -34,6 +34,7 @@
 			<th>Adresse</th>
 			<th>Mail</th>
 			<th>Date de Naissance</th>
+			<th>Promotion</th>
 			<th colspan="4">Actions</th>
 		</tr>
 		<c:forEach items="${attribut_listeEtudiant}" var="etudiant">
@@ -44,6 +45,7 @@
 			<td>${etudiant.adresse}</td>
 			<td>${etudiant.email}</td>
 			<td>${etudiant.dateDeNaissance}</td>
+			<td>${etudiant.promotion.libelle}</td>
 
 			<td colspan="2">
 				<a href="${pageContext.request.contextPath}/etuUpdate/${etudiant.identifiant}">Modifier</a>

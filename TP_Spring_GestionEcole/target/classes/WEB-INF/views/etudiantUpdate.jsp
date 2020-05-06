@@ -86,6 +86,12 @@
 				</tr>
 				
 				<tr>
+					<td> <form:label class="flabel" path="promotion.libelle">Promotion : </form:label> </td>
+					<td> <form:input class="finput" path="promotion.libelle" placeholder="Entrez l'année"/> </td>
+					<td> <form:errors class="ferror" path="promotion.libelle"/> </td>
+				</tr>
+				
+				<tr>
 					<td> <form:label class="flabel" path="role">Rôle : </form:label> </td>
 <%-- 					<td> <form:input path="role"/> </td> --%>
 					<td>
