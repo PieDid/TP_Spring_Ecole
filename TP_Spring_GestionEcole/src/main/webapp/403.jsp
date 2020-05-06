@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,8 +19,7 @@
 <body >
 
 		<div style="text-align: center">
-<%-- 		<spring:url value ="assets/images/universite_photo_bis.jpg" var="img_forb" />  --%>
-<%-- 		<img src="${img_forb}"  style="height: 300px; width: 300px;"> --%>
+		<img src="assets/images/forbidden.jpg" height="300px" width="300px"/>
 		<br/>
 		<span  style=" font-size: 48px">
 			Statut http 403: accès refusé

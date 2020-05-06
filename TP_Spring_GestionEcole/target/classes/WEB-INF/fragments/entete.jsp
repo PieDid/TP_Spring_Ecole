@@ -45,6 +45,9 @@
 			      <li class="nav-item">
 			        <a class="nav-link" href="<c:url value='/promotionList'/>">Liste promotions</a>
 			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="<c:url value='/etudiantCoursList'/>">Liste cours</a>
+			      </li>
 		      </s:authorize>
 		      
 		      <s:authorize access="hasAnyRole('ROLE_ENS')"> 
@@ -58,11 +61,17 @@
 			      <li class="nav-item">
 			        <a class="nav-link" href="<c:url value='/promotionList'/>">Liste promotions</a>
 			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="<c:url value='/etudiantCoursList'/>">Liste cours</a>
+			      </li>
 		      </s:authorize>
 		      
 		      <s:authorize access="hasAnyRole('ROLE_ETU')"> 
 			      <li class="nav-item">
 			        <a class="nav-link" href="<c:url value='/coursList'/>">Liste cours</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="<c:url value='/etudiantCoursList'/>">Liste cours</a>
 			      </li>
 		      </s:authorize>
 		    </ul>

@@ -74,7 +74,7 @@
 				
 				<tr>
 					<td> <form:label class="flabel" path="photo">Photo : </form:label> </td>
-					<td> <form:input class="finput" path="photo" placeholder="bilbon.jpg"/> </td>
+					<td> <form:input class="finput" path="photo" placeholder="bilbon.png"/> </td>
 					<td> <form:errors class="ferror" path="photo"/> </td>
 				</tr>
 				
