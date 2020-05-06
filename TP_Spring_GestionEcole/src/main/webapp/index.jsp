@@ -104,6 +104,7 @@ margin-top : 40px;
 				<c:if test="${auth.authority == 'ROLE_ADMIN'}">administrateur</c:if>
 				<c:if test="${auth.authority == 'ROLE_ENS'}">enseignant</c:if>
 				<c:if test="${auth.authority == 'ROLE_ETU'}">étudiant</c:if>
+				<c:if test="${auth.authority == 'ROLE_ANONYMOUS'}">anonyme</c:if>
 			</c:forEach>
 		</div>
 
