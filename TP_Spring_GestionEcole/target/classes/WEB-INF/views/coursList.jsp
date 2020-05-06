@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Page de liste des cours</title>
+
+<spring:url value="/assets/styles/bootstrap.min.css" var="bootstrapCss" />
+<link rel="stylesheet" href="${bootstrapCss}" />
+
+<spring:url value="/assets/styles/ListStyle.css" var="ListCss" />
+<link rel="stylesheet" href="${ListCss}" />
+
+
+<spring:url value="/assets/scripts/jquery-3.4.1.js" var="JQuery" />
+<script type="text/javascript" src="${JQuery}"></script>
+
 </head>
 <body>
 	<%-- inclusion dynamique du fragment entete.jsp --%>
@@ -14,22 +26,24 @@
 	<!-- récupérée grace à la méthode generateCoursList du controlleur CoursController-->
 	<h2>Liste des cours</h2>
 
-	<table>
+	<table class="stable table-striped">
 		<tr>
 			<th>Identifiant</th>
+			<th>Libellé Cours</th>
 			<th>Matière</th>
-			<th>Libellé</th>
+			<th>Date</th>
 			<th>Durée</th>
 			<th>Description</th>
 			<th>Promotion</th>
+			<th colspan="4">Actions</th>
 
 		</tr>
 		<c:forEach items="${attribut_listeCours}" var="cours">
 
 			<tr>
 				<td>${cours.idCours}</td>
-				<td>${cours.matiere.libelle}</td>
 				<td>${cours.libelle}</td>
+				<td>${cours.matiere.libelle}</td>
 				<td>${cours.date}</td>
 				<td>${cours.duree}</td>
 				<td>${cours.description}</td>
@@ -68,10 +82,23 @@
 		<!-- appelle vers la méthode afficherFormulaireAddCours du CoursController, 
 					redirigant vers le formulaire pour ajouter le cours le cours -->
 		<tr>
-			<td colspan="10"><a href="${pageContext.request.contextPath}/coursAdd">Ajouter</a></td>
+			<td colspan="22" class="AjoutRow"><a href="${pageContext.request.contextPath}/coursAdd">Ajouter</a></td>
 		</tr>
 	</table>
+	
+	<div align="center">
+		<button type="button" class="btn btn-lg btn-info btn-aide">Aide</button>
+		<p class="alert alert-info p-aide">${attribut_aide}
+		<p>
+	</div>
 	<hr />
+
+	<script type="text/javascript">
+	//Bouton Aide
+		$(".btn-aide").click(function() {
+			$(".p-aide").toggle();
+		});
+	</script>
 
 	<%-- inclusion dynamique du fragment piedDePage.jsp --%>
 	<jsp:include page="/WEB-INF/fragments/piedDePage.jsp" />
