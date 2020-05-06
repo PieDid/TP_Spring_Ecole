@@ -59,7 +59,7 @@
 				</tr>
 
 				<tr>
-					<td><form:label class="flabel" path="adresse.idAdresse">Adresse : </form:label>
+					<td><form:label class="flabel" path="adresse.idAdresse">ID de l'adresse : </form:label>
 					</td>
 					<td><form:input class="finput" path="adresse.idAdresse" /></td>
 					<td><form:select items="${listeAdresses}" path="">

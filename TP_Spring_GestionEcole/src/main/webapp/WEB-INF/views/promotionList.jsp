@@ -30,7 +30,7 @@
 	<table class="stable table-striped">
 		<tr>
 			<th>Libellé de la promotion</th>
-			<th colspan="4">Actions</th>
+			<th colspan="2">Actions</th>
 		</tr>
 		<c:forEach items="${attribut_listePromotion}" var="promotion">
 
@@ -42,18 +42,16 @@
 				<!-- appelle vers la méthode afficherFormulaireUpdatePromotion du PromotionController, 
 					redirigant vers le formulaire pour udpater la promotion -->
 					<!-- !!! NE MARCHE PAS POUR LINSTANT CAR LIBELLE EST LA PK !!!! -->
-				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionUpdate/${promotion.libelle}">Modifier</a>
-				</td>
+<%-- 				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionUpdate/${promotion.libelle}">Modifier</a></td> --%>
 
 				<!-- appelle vers la méthode supprimerPromotion du PromotionController -->
-				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionDelete/${promotion.libelle}">Supprimer</a>
-				</td>
+				<td colspan="2"><a href="${pageContext.request.contextPath}/promotionDelete/${promotion.libelle}">Supprimer</a></td>
 			</tr>
 		</c:forEach>
 		<!-- appelle vers la méthode afficherFormulaireAddPromotion du PromotionController, 
 					redirigant vers le formulaire pour ajouter la promotion -->
 		<tr>
-			<td colspan="6" class="AjoutRow"><a href="${pageContext.request.contextPath}/promotionAdd">Ajouter</a></td>
+			<td colspan="3" class="AjoutRow"><a href="${pageContext.request.contextPath}/promotionAdd">Ajouter</a></td>
 		</tr>
 	</table>
 	

@@ -30,7 +30,7 @@
 	<table class="stable table-striped">
 		<tr>
 			<th>Libellé de la matière</th>
-			<th colspan="4">Actions</th>
+			<th colspan="2">Actions</th>
 		</tr>
 		<c:forEach items="${attribut_listeMatiere}" var="matiere">
 
@@ -42,8 +42,8 @@
 				<!-- appelle vers la méthode afficherFormulaireUpdateMatiere du MatiereController, 
 					redirigant vers le formulaire pour udpater la matiere -->
 					<!-- !!! NE MARCHE PAS POUR LINSTANT CAR LIBELLE EST LA PK !!!! -->
-				<td colspan="2"><a href="${pageContext.request.contextPath}/matiereUpdate/${matiere.libelle}">Modifier</a>
-				</td>
+<%-- 				<td colspan="2"><a href="${pageContext.request.contextPath}/matiereUpdate/${matiere.libelle}">Modifier</a> --%>
+<!-- 				</td> -->
 
 				<!-- appelle vers la méthode supprimerMatiere du MatiereController -->
 				<td colspan="2"><a href="${pageContext.request.contextPath}/matiereDelete/${matiere.libelle}">Supprimer</a>
@@ -53,7 +53,7 @@
 		<!-- appelle vers la méthode afficherFormulaireAddMatiere du MatiereController, 
 					redirigant vers le formulaire pour ajouter la matiere -->
 		<tr>
-			<td colspan="6" class="AjoutRow"><a href="${pageContext.request.contextPath}/matiereAdd">Ajouter</a></td>
+			<td colspan="3" class="AjoutRow"><a href="${pageContext.request.contextPath}/matiereAdd">Ajouter</a></td>
 		</tr>
 	</table>
 	

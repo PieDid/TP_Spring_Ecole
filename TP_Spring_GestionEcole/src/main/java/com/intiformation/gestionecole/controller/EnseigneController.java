@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.EnseignantDao;
 import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.dao.IEnseignantDao;
 import com.intiformation.gestionecole.dao.IEnseigneDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
@@ -28,6 +29,7 @@ import com.intiformation.gestionecole.dao.IMatiereDao;
 import com.intiformation.gestionecole.dao.IPromotionDao;
 import com.intiformation.gestionecole.dao.MatiereDao;
 import com.intiformation.gestionecole.dao.PromotionDao;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Enseignant;
 import com.intiformation.gestionecole.domain.Enseigne;
 import com.intiformation.gestionecole.domain.Matiere;
@@ -55,6 +57,9 @@ public class EnseigneController {
 	
 	@Autowired
 	PersonneController personneController;
+	
+	@Autowired
+	private IAideDao aideDao;
 	
 	
 	// Validateur
@@ -92,7 +97,21 @@ public class EnseigneController {
 
 		List<Enseigne> listeEnseigne = java.util.Collections.emptyList();
 		listeEnseigne = enseigneDao.getAll();
-
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseigneList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeEnseigne", listeEnseigne);
 
 		return "enseigneList";
@@ -115,6 +134,20 @@ public class EnseigneController {
 
 //		List<Enseigne> listeEnseigne = ((IGenericDao<Enseigne>) enseigneDao).getAll();
 		List<Enseigne> listeEnseigne = enseigneDao.getAll();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseigneList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 
 		model.addAttribute("attribut_listeEnseigne", listeEnseigne);
 
@@ -124,7 +157,6 @@ public class EnseigneController {
 
 	// Modification d'une promotion
 	// Formulaire
-
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/enseigneUpdate/{id}", method = RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdateEnseigne(@PathVariable("id") int pIdEnseigne) {
@@ -136,13 +168,36 @@ public class EnseigneController {
 		List<Enseignant> liste_enseignants = enseignantDao.getAllEnseignant();
 //		List<Integer> liste_enseignantsID = enseignantDao.getAllPk();
 		
-		Map<String, Object> data = new HashMap<>();
-		data.put("enseigneUpdateCommand", enseigneUpdate);
-		data.put("listeEnseignants", liste_enseignants);
+		//Map<String, Object> data = new HashMap<>();
+		//data.put();
+		//data.put();
 //		data.put("liste_enseignantsID", liste_enseignants);
-		data.put("ens", new Enseignant());
+		//data.put();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseigneUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("enseigneUpdate","enseigneUpdateCommand", enseigneUpdate);
+		mov.addObject("listeEnseignants", liste_enseignants);
+		mov.addObject("ens", new Enseignant());
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 
-		return new ModelAndView("enseigneUpdate", data);
+		//return new ModelAndView(, data);
 //----------------------------------------------------------------------------------
 		
 //		return new ModelAndView("enseigneUpdate", "enseigneUpdateCommand", enseigneUpdate);
@@ -170,13 +225,31 @@ public class EnseigneController {
 			System.out.println("Dans le if enseignant equals null");
 //			personneController.afficherFormulaireAddPersonne();
 //			afficherFormulaireAddPersonne();
+			
+			
+			
 			return "enseigneUpdate";
 		}
 		
 //		((IGenericDao<Enseigne>) enseigneDao).update(pEnseigne);
 		enseigneDao.updateEnseigne(pEnseigne);
 
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseigneList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeEnseigne", enseigneDao.getAll());
+		
 
 		return "enseigneList";
 
@@ -207,14 +280,36 @@ public class EnseigneController {
 
 		Enseigne enseigne = new Enseigne();
 
-		String objetCommandeEnseigne = "enseigneAddCommand";
+		//String objetCommandeEnseigne = "enseigneAddCommand";
 
-		Map<String, Object> data = new HashMap<>();
-		data.put(objetCommandeEnseigne, enseigne);
+		//Map<String, Object> data = new HashMap<>();
+		//data.put(objetCommandeEnseigne, enseigne);
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("enseigneAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("enseigneAdd", "enseigneAddCommand", enseigne);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		
+		return mov;
 
-		String viewName = "enseigneAdd";
+		//String viewName = "enseigneAdd";
 
-		return new ModelAndView(viewName, data);
+		//return new ModelAndView(viewName, data);
 
 	} // end afficherFormulaireAddEnseigne()
 	
@@ -249,6 +344,20 @@ public class EnseigneController {
 //			((IGenericDao<Enseigne>) enseigneDao).add(pEnseigne);
 			enseigneDao.addEnseigne(pEnseigne);
 
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("enseigneList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+			
 			model.addAttribute("attribut_listeEnseigne", enseigneDao.getAll());
 			
 			return "enseigneList";

@@ -55,7 +55,7 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td colspan="6" class="AjoutRow"><a
+			<td colspan="7" class="AjoutRow"><a
 				href="${pageContext.request.contextPath}/adresseAdd">Ajouter</a></td>
 
 		</tr>

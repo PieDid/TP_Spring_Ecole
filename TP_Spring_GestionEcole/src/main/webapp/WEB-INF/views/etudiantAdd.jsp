@@ -49,7 +49,7 @@
 				</tr>
 				
 				<tr>
-					<td> <form:label class="flabel" path="adresse.idAdresse">Adresse : </form:label> </td>
+					<td> <form:label class="flabel" path="adresse.idAdresse">ID de l'adresse : </form:label> </td>
 					<td> <form:input class="finput" path="adresse.idAdresse" placeholder="Veuillez entrer l'id de l'adresse"/> </td>
 					<td>
 						<form:select items="${listeAdresses}" path="" >
