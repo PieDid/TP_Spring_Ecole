@@ -79,6 +79,9 @@ public class EtudiantCours implements Serializable {
 	public boolean isAbsence() {
 		return absence;
 	}
+	public boolean getAbsence() {
+		return absence;
+	}
 	public void setAbsence(boolean absence) {
 		this.absence = absence;
 	}

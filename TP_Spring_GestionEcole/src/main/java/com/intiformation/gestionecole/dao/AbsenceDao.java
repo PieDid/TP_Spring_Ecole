@@ -56,7 +56,7 @@ public class AbsenceDao implements IAbsenceDao {
 		
 	}
 	@Override
-	public void update(EtudiantCours pAbsence) {
+	public void update(EtudiantCours pAbsence) {	
 		getSessionFactory().getCurrentSession().update(pAbsence);
 	}
 
