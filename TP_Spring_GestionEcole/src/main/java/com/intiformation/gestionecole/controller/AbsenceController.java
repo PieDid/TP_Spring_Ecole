@@ -185,9 +185,9 @@ public class AbsenceController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/etudiantCoursUpdate-meth", method=RequestMethod.POST)
 	public String updateAbsence(@ModelAttribute("etudiantCoursUpdateCommand") EtudiantCours pAbsence, ModelMap model) {
-		
+		System.out.println("Il entre dans updateAbsence");
 		absDao.update(pAbsence);
-		
+		System.out.println("Il entre a passé update");
 		List<Aide> listeAide = aideDao.getAll();
 		String isAide = null;
 		for (Aide aide : listeAide) {
