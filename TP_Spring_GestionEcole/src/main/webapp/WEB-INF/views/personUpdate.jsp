@@ -17,7 +17,7 @@
 
 	<div align="center">
 		
-		<form:form modelAttribute="personUpdateCommand" method="POST" action="${pageContext.request.contextPath}/personne/update">
+		<form:form modelAttribute="personUpdateCommand" method="POST" action="${pageContext.request.contextPath}/personUpdate-meth">
 		
 			<table>
 			

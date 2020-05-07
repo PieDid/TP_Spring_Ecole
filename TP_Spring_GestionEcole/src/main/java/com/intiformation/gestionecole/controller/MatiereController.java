@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.dao.IMatiereDao;
 import com.intiformation.gestionecole.dao.MatiereDao;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Cours;
 import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Promotion;
@@ -35,7 +37,10 @@ public class MatiereController {
 	
 	// Couche Dao
 	@Autowired
-	private IGenericDao<Matiere> matDao = new GenericDao<Matiere>(Matiere.class);
+	private IMatiereDao matDao;
+	
+	@Autowired
+	private IAideDao aideDao;
 	
 	// Validateur
 	@Autowired
@@ -44,7 +49,7 @@ public class MatiereController {
 	
 	// Setters pour Injection Spring 
 
-	public void setMatDao(IGenericDao<Matiere> matDao) {
+	public void setMatDao(MatiereDao matDao) {
 		this.matDao = matDao;
 	}
 
@@ -58,16 +63,30 @@ public class MatiereController {
 	
 	// Récupération de la liste des matieres et affichage 
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/matList*" , method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
+	@RequestMapping(value="/matiereList" , method = RequestMethod.GET)
 	public String generateMatiereList(Model model) {
 		
 		List<Matiere> listeMatiere = java.util.Collections.emptyList();
-		listeMatiere = matDao.getAll();
+		listeMatiere = matDao.getAllMatiere();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("matiereList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeMatiere", listeMatiere);
 		
-		return "matList";
+		return "matiereList";
 	
 	}//end ListMat
 	
@@ -75,83 +94,157 @@ public class MatiereController {
 	// Suppression d'une promotion
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/matiere/delete/{libelle}","/matiere/remove/{libelle}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/matiereDelete/{libelle}"}, method=RequestMethod.GET)
 	public String deleteMatiere(@PathVariable("libelle") String pLibelle, ModelMap model) {
 		
-		matDao.delete(pLibelle);
+		matDao.deleteMatiere(pLibelle);;
 
-		List<Matiere> listeMatiere = matDao.getAll();
+		List<Matiere> listeMatiere = matDao.getAllMatiere();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("matiereList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeMatiere", listeMatiere);
 		
-		return "matList";
+		return "matiereList";
 		
 	}//end delete	
 	
 	
 	// Modification d'une promotion
 	// Formulaire
-	
-	@RequestMapping(value="matUpdate", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateMatiere(@RequestParam("libelle") String pLibelle) {
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value="matiereUpdate/{libelle}", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireUpdateMatiere(@PathVariable("libelle") String pLibelle) {
 		
 		Matiere matUpdate = matDao.getByLibelle(pLibelle);
 		
-		return new ModelAndView("matUpdate", "matiereUpdateCommand", matUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("matiereUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("matiereUpdate", "matiereUpdateCommand", matUpdate);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 		
 	}
 	
 	// Méthode Update 
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/matiere/update", method=RequestMethod.POST)
+	@RequestMapping(value="/matiereUpdate-meth", method=RequestMethod.POST)
 	public String updateMatiere(@ModelAttribute("matiereUpdateCommand") Matiere pMatiere, ModelMap model) {
 		
-		((IGenericDao<Matiere>) matDao).update(pMatiere);
+		matDao.updateMatiere(pMatiere);
 		
-		model.addAttribute("attribut_listeMatiere", matDao.getAll());
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("matiereList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		return "matList";
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
+		model.addAttribute("attribut_listeMatiere", matDao.getAllMatiere());
+		
+		return "matiereList";
 	
 	}//end update
 	
 	
 	// Ajout d'une nouvelle matière
 	// Formulaire
-	
-	@RequestMapping(value="/matAdd-form", method=RequestMethod.GET)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value="/matiereAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddMatiere() {
 		
 		Matiere matiere = new Matiere();
 		
-		String objetCommandeMatiere = "matiereAddCommand";
-		
 		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeMatiere, matiere);
+		data.put("matiereAddCommand", matiere);
 		
-		String viewName = "matAdd";
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("matiereAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		return new ModelAndView(viewName, data);
+		ModelAndView mov = new ModelAndView("matiereAdd", data);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+
+		return mov;
 		
 	}
 	
 	// Méthode Add 
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/matAdd-meth", method=RequestMethod.GET)
+	@RequestMapping(value="/matiereAdd-meth", method=RequestMethod.POST)
 	public String addMatiere (@ModelAttribute("matiereAddCommand") @Validated Matiere pMatiere, ModelMap model, BindingResult result) {
 		
 		matValid.validate(pMatiere, result);
 		
 		if (result.hasErrors()) {
-			return "matAdd";
+			return "matiereAdd";
 			
 		}else {
-			((IGenericDao<Matiere>) matDao).add(pMatiere);
-
-			model.addAttribute("attribut_listeMatiere", matDao.getAll());
+			matDao.addMatiere(pMatiere);
 			
-			return "matList";
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("matiereList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+
+			model.addAttribute("attribut_listeMatiere", matDao.getAllMatiere());
+			
+			return "matiereList";
 			
 		}//end if
 		

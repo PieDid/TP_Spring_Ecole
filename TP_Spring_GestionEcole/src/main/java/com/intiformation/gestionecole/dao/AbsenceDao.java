@@ -30,17 +30,17 @@ public class AbsenceDao implements IAbsenceDao {
 
 	@Override
 	public List<EtudiantCours> getAll() {
-		return sessionFactory.getCurrentSession().createQuery("FROM etudiantCours a").getResultList();
+		return getSessionFactory().getCurrentSession().createQuery("FROM etudiantCours a").list();
 	}
 
 	@Override
 	public EtudiantCours getById(int id) {
-		return sessionFactory.getCurrentSession().find(EtudiantCours.class, id);
+		return getSessionFactory().getCurrentSession().find(EtudiantCours.class, id);
 	}
 
 	@Override
 	public void delete(int id) {
-		sessionFactory.getCurrentSession().remove(getById(id));
+		getSessionFactory().getCurrentSession().remove(getById(id));
 		
 	}
 
@@ -48,17 +48,16 @@ public class AbsenceDao implements IAbsenceDao {
 	
 	@Override
 	public List<EtudiantCours> getByEtudiant(Etudiant etudiant) {
-		return sessionFactory.getCurrentSession().createQuery("FROM etudiantCours a WHERE a.etudiant_id = :etudiant").getResultList();
+		return getSessionFactory().getCurrentSession().createQuery("FROM etudiantCours a WHERE a.etudiant_id = :etudiant").list();
 	}
 	@Override
 	public void add(EtudiantCours pAbsence) {
-		sessionFactory.getCurrentSession().save(pAbsence);
+		getSessionFactory().getCurrentSession().save(pAbsence);
 		
 	}
 	@Override
-	public void update(EtudiantCours pAbsence) {
-		// TODO Auto-generated method stub
-		
+	public void update(EtudiantCours pAbsence) {	
+		getSessionFactory().getCurrentSession().update(pAbsence);
 	}
 
 	

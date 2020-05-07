@@ -16,6 +16,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * classe mère de Administrateur, Eleve et Enseignant
@@ -53,6 +54,9 @@ public class Personne implements Serializable{
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "adresse_id", referencedColumnName = "id_adresse") 
 	private Adresse adresse;
+	
+	@Transient
+	private Adresse adresse2;
 
 	/*_________________ ctors ________________*/
 	
@@ -223,6 +227,14 @@ public class Personne implements Serializable{
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public Adresse getAdresse2() {
+		return adresse2;
+	}
+
+	public void setAdresse2(Adresse adresse2) {
+		this.adresse2 = adresse2;
 	}
 	
 	

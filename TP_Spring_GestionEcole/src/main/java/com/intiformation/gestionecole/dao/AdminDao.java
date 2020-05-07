@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Administrateur;
+import com.intiformation.gestionecole.encoder.Encoder;
 
 
 
@@ -31,47 +32,26 @@ public class AdminDao implements IAdminDao {
 	public void setSessionFactory(SessionFactory sf) {
 		this.sf = sf;
 	}
-
-
-	@Override
-	public List<Administrateur> getAll() {
-		
-		return (List<Administrateur>) sf.getCurrentSession()
-						.createQuery("SELECT a FROM Administrateur a")
-						.getResultList();
-		
-
-	}//end getAll
-
-
-	@Override
-	public Administrateur getById(int pIdAdmin) {
-		
-		return (Administrateur) sf.getCurrentSession().createQuery("SELECT a FROM Adminitrateur a WHERE a.id_personne = :identifiant").setParameter("identifiant", pIdAdmin).getSingleResult();
-
-	}//end getById
-
-
-	@Override
-	public void delete(int pIdAdmin) {
-		
-		sf.getCurrentSession().delete(pIdAdmin);
-		
-	}//end delete
-
-
+	public SessionFactory getSf() {
+		return sf;
+	}
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+	
+	
 	@Override
 	public void addAdmin(Administrateur admin) {
-		
-		sf.getCurrentSession().save(admin);
+		admin.setMotDePasse(Encoder.crypt(admin.getMotDePasse()));
+		getSf().getCurrentSession().save(admin);
 		
 	}//end add
 
 
 	@Override
 	public void updateAdmin(Administrateur admin) {
-		
-		sf.getCurrentSession().update(admin);
+		admin.setMotDePasse(Encoder.crypt(admin.getMotDePasse()));
+		getSf().getCurrentSession().update(admin);
 		
 	}//end update
 
@@ -81,20 +61,19 @@ public class AdminDao implements IAdminDao {
 	
 	@Override
 	public void deleteAdmin(int pIdAdmin) {
-		sf.getCurrentSession().remove(getAdminById(pIdAdmin));
+		getSf().getCurrentSession().remove(getAdminById(pIdAdmin));
 		
 	}
-
-
+	
 	@Override
 	public Administrateur getAdminById(int pIdAdmin) {
-		return sf.getCurrentSession().find(Administrateur.class, pIdAdmin);
+		return getSf().getCurrentSession().find(Administrateur.class, pIdAdmin);
 	}
 
 
 	@Override
 	public List<Administrateur> getAllAdmin() {
-		return sf.getCurrentSession().createQuery("FROM admin a").getResultList();
+		return getSf().getCurrentSession().createQuery("FROM administrateur a").getResultList();
 	}
 
 	

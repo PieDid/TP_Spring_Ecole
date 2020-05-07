@@ -17,14 +17,14 @@ public class PersonneValidator implements Validator {
 }//end supports
 
 	@Override
-	public void validate(Object objetValid, Errors errors) {
+	public void validate(Object personValid, Errors errors) {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nom", "required.nom", "Veuillez entrer votre nom.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "prenom", "required.prenom", "Veuillez entrer votre prénom.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "adresse", "required.adresse", "Veuillez entrer votre adresse.");	
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.email", "Veuillez entrer votre adresse mail.");
 	
-		Personne personne = (Personne) objetValid;
+		Personne personne = (Personne) personValid;
 		
 		}//end validate
 		

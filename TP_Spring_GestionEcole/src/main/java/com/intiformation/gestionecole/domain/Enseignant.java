@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,7 +16,7 @@ public class Enseignant extends Personne{
 
 	/* Propriétés */
 	
-	@OneToMany(mappedBy="enseignant", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy="enseignant", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Enseigne> enseigne;
 	
 	/* Constructeurs */
@@ -61,10 +62,15 @@ public class Enseignant extends Personne{
 	}
 
 
-	
+	public Enseignant(String pMotDePasse, String pNom, String pPrenom, String pEmail, String pRole, Adresse adresse) {
+		super(pMotDePasse, pNom, pPrenom, pEmail, pRole, adresse);
+	}
 	
 	/* Setter/Getters */
 	
+	
+
+
 	@Override
 	public String toString() {
 		return "Enseignant [" + super.toString() + ",enseigne=" + enseigne + "]";

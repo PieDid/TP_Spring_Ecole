@@ -59,6 +59,13 @@ public class EtudiantCours implements Serializable {
 	
 	
 	
+	public EtudiantCours(boolean absence, String motif, Etudiant etudiant, Cours cours) {
+		super();
+		this.absence = absence;
+		this.motif = motif;
+		this.etudiant = etudiant;
+		this.cours = cours;
+	}
 	/*_________________ méthodes ________________*/
 	@Override
 	public String toString() {
@@ -70,6 +77,9 @@ public class EtudiantCours implements Serializable {
 	/*_________________ getters|setters ________________*/
 	
 	public boolean isAbsence() {
+		return absence;
+	}
+	public boolean getAbsence() {
 		return absence;
 	}
 	public void setAbsence(boolean absence) {

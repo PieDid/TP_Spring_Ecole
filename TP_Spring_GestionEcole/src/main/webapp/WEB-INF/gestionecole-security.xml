@@ -7,73 +7,7 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-		<!-- ////////////////////////////////////// -->
-		<!-- //////Authentification utilisateur (config par défaut)///////// -->
-		<!-- ////////////////////////////////////// -->
-	
-	
-		<!-- ======================================== -->
-		<!-- ====== 1.1Déf de la stratégie de sécurité=============== -->
-		<!-- ======================================== -->
-		<!-- 
-					> auto-config = "true" : config par défaut formulaire d'authentification fournis par spring 
-					security , filter pour la deconnexion et un service pour connecter
-					automatiquement l'utilisateur 
-					
-					> sec:intercept-url/> permet de définir une regle d'interception à appliquer sur 
-					un ensemble d'urls
-					
-					> exemple de syntaxe pour les urls :
-							-> /** l'ensemble des url 
-							> /admin/** : l'ensemble des urls sous chemin admin ainsi que ses sous chemins
-							-> /*delete*/ : toute kes url contenant le mot delete
-							
-					> définition d'un role : doit absolument commencer par 'ROLE_'
-					
-					> il est possible d'utiliser les expressions spEL dans l'attribut access de la balise  intercept-url
-					
-							-> pour activer l'utilisation des expressions, on utilise l'attribut 'use-expression'
-							de la balise 'http' avec la valeur true (par défaut à true)
-							
-							-> une expression peut etres associé à des expressions logique and, or, et not
-					
-							-> Exemple d'expression :
-										-hasRole('ROLE_USER') : renvoi true si l'utilisateur à le role ROLE_USER
-										-hasAnyRole('ROLE_USER', 'ROLE_ADMIN') : renvoie true si l'utilisateur à au moins un des roles en param
-										
-										-etc	
-										
-										
-													
-		 -->
-		 <!--  
-		<sec:http auto-config="true" use-expressions="true">
-		-->
-		<!-- toutes les requetes sans exception sont soumises à la restriction d'accès 
 		
-		de détention du role ROLE_USER par l'utilisateur  -->
-	<!--  <sec:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
-		
-		</sec:http>
-		-->	
-			<!-- ======================================== -->
-		<!-- ====== 1.2 Déf des utilisateurs avec elurs roles=============== -->
-		<!-- ======================================== -->
-<!-- 
-		-> spring security 5 : obligation de crypter le mot de passe
- -->
- <!--  
-	<sec:authentication-manager>
-		
-		<sec:authentication-provider>
-		<sec:password-encoder hash="bcrypt"/>
-			<sec:user-service>
-				<sec:user name="user1" password="$2a$10$vGi0QD4iJ4Zu..9iUzAkuuH7FpYNnNZngxl/oPUxctwpG7HQ7BAFO" authorities="ROLE_USER"/>
-			</sec:user-service>
-		</sec:authentication-provider>
-		
-	</sec:authentication-manager>
-	-->
 	
 		<!-- /////////////////////////////////////////////////////////// -->
 		<!-- //////Authentification par formulaire personnalise///////// -->
@@ -82,80 +16,30 @@
 		<!-- ======================================================== -->
 		<!-- ====== 1.1Déf de la stratégie de sécurité=============== -->
 		<!-- ======================================================== -->
-		<!-- 
-			>ROLE_ANONYMOUS : role de l'utilisateur s'il n'ya pas eu d'authentificatnion
-			
-					-> les utilisateurs avec le role ROLE_USER et les utilisateurs anonymes avec le ROLE_ANONYMOUS
-					ont le droit d'accès à l'url '/messageList*' pour afficher la liste des messages
-		 -->
+		
+		
+		
 		<sec:http auto-config="true" use-expressions="true" >
 	
-	<!-- use expression a false
-		<sec:intercept-url pattern="/messageList*" access="ROLE_USER, ROLE_ANONYMOUS" />
-		<sec:intercept-url pattern="/messagePost*" access="ROLE_USER" />
-		<sec:intercept-url pattern="/messageDelete*" access="ROLE_ADMIN" />
-		 -->	
-		<!--  use-expressions="true" -->
-		<sec:intercept-url pattern="/messageList*" access="hasAnyRole('ROLE_USER','ROLE_ANONYMOUS')" />
-		<sec:intercept-url pattern="/messagePost*" access="hasRole('ROLE_USER')" />
-		<sec:intercept-url pattern="/messageDelete*" access="hasRole('ROLE_ADMIN')" />
-	
-		
+			
+			
 		<!-- ////////////////formulaire personnalisé//////////////////////// -->
-		<!-- 
-				> config avec la balise form-login
-				
-				> attribut de form-login  :
-				
-				-> login-page : l'url qui affihe notre formuaire d'authentification
-				->	default-target-url : url vers laquelle l'utilisateur est redirigé si
-										l'authentification à réussi
-										
-				-> authentication-failure-url : url vers laquelle l'utilisateur est redirigé si
-										l'authentification à échoué
-										redirectio vers la page du formulaire avec passage d'un param error=true
-				
-				-> login-processing-url : l'url sur laquelle spring security attend les params
-											d'authentification par défaut /login
-											c'est l'url pointé dans l'attribut action de login
-				
-				
-				-> username-parameter/password-parameter : nom des paramètres (attribut name)
-														du formulaire de login.jsp
-				
-
-		 -->
-		
+	
 		<sec:form-login login-page="/login.jsp"
-						default-target-url="/messageList"
+						default-target-url="/index.jsp"
 						authentication-failure-url="/login.jsp?error=true" 
 						login-processing-url="/login"
 						username-parameter="u_identifiant"
 						password-parameter="u_motdepasse"/>
 		
 		<!-- ++++++++++++++Déconnexion de l'utilisateur ++++++++++++++++ -->
-		<!--
-					> par défaut l'url de déconnexion est /logout
-					
-					> attribut de logout : 
-								
-						->  logout-success-url : url vers laquelle l utilisateur est redirigé après deconnexion
-		 										redirection vers login.jsp avec passage de param avec logout_message=true
 		
-						-> logout-url : url de deconnexion par defaut /logout
-						
-						-> invalidate-session : destruction de la session http après deconnexion
-		  -->
-		<sec:logout logout-success-url="/login.jsp?logout_message=true"
+		<sec:logout logout-success-url="/index.jsp?logout_message=true"
 					logout-url="/logout"
 					invalidate-session="true"/>
 					
-					<!-- protection contre des attaques CSRF (Cross Site Request Forgery)
-						-> par défaut c 'est activé dans spring security
-						-> activer/désactivre => la balise csrf	
-					 -->
-					 
-					 <!-- désactivation de la protction -->
+				
+					 <!-- désactivation de la protection -->
 					 <sec:csrf disabled="true"/>
 					 
 		
@@ -172,59 +56,32 @@
 		
 		
 		
+		
+		
 				<!-- ======================================== -->
-		<!-- ====== 1.2 Déf des utilisateurs avec elurs roles=============== -->
+		<!-- ====== 1.2 Déf des utilisateurs avec leurs roles=============== -->
 		<!-- ======================================== -->
 		
-		<!--  ||||||||||||utilisation du xml |||||||||||||||||| -->
 		
-		<!-- 
-				> la déf des utilisateurs dans le xml est destinés généralement 
-				pour les tests
-				
-				> dans la pratique on utilise une bdd pour stocker les utilisteurs
-		 -->
-		
-		<!-- 
-			<sec:authentication-manager>
-		
-		<sec:authentication-provider>
-		<sec:password-encoder hash="bcrypt"/>
-			<sec:user-service>
-				<sec:user name="user1" password="$2a$10$vGi0QD4iJ4Zu..9iUzAkuuH7FpYNnNZngxl/oPUxctwpG7HQ7BAFO" authorities="ROLE_USER"/>
-				
-				<sec:user name="admin1" password="$2a$10$CF1Yu5TWc5E/E.BsOHgtVOOfUNnKMJGPI575ofYj96tR0d0Yd.dUy" authorities="ROLE_USER, ROLE_ADMIN"/>
-				
-			</sec:user-service>
-		</sec:authentication-provider>
-		
-	</sec:authentication-manager>
- -->
- 
  				<!--  ||||||||||||utilisation d'une bdd |||||||||||||||||| -->
  			
- 	<!-- 
- 			> configuration par défaut : tales USERS - AUTHORITIES
- 	 -->
- 	<!-- 		
- <sec:authentication-manager>
- <sec:authentication-provider>
- 	<sec:password-encoder hash="bcrypt"/>	
- 	<sec:jdbc-user-service data-source-ref="dataSourceBean"/>
- </sec:authentication-provider>
- </sec:authentication-manager>
-  -->
+ 	
  <!-- 
- 		> configuration de nos propres tables table MEMEBER - MEMBER_ROLE
+ 		> configuration de nos propres tables table 
   -->
- 			 <sec:authentication-manager>
- <sec:authentication-provider>
- 	<sec:password-encoder hash="bcrypt"/>	
- 	<sec:jdbc-user-service data-source-ref="dataSourceBean"
- 							users-by-username-query="SELECT id_personne, mot_de_passe FROM personnes WHERE id_personne=?"
- 							authorities-by-username-query="SELECT p.id_personne
- 															FROM personnes p
- 															WHERE p.id_personne=?"/>
- </sec:authentication-provider>
- </sec:authentication-manager>
+
+  	  		
+  	
+	  <sec:authentication-manager>
+		 <sec:authentication-provider>
+		 	<sec:password-encoder hash="bcrypt"/>	 
+		 	<sec:jdbc-user-service data-source-ref="dataSourceBean"
+		 							users-by-username-query="SELECT email, mot_de_passe, 1 FROM personnes WHERE email=?"
+		 							authorities-by-username-query="SELECT email, role
+		 															FROM personnes p
+		 															WHERE email=?"/>
+		 </sec:authentication-provider>
+	 </sec:authentication-manager>
+	  
+ 
 </beans>

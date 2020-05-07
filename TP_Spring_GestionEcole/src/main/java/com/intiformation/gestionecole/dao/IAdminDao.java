@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.intiformation.gestionecole.domain.Administrateur;
 
-public interface IAdminDao extends IGeneralDao<Administrateur> {
+public interface IAdminDao {
 	
 	/*	 Administrateur : les employés de l’administration peuvent, après authentification, gérer :
 	 les personnes (administrateurs, enseignants, étudiants).

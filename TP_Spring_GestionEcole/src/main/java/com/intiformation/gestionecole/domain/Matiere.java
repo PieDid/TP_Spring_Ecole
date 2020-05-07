@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,7 +21,7 @@ public class Matiere  implements Serializable{
 	@Column(name="libelle")
 	private String libelle;
 	
-	@OneToMany(mappedBy="matiere", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy="matiere", cascade= CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Enseigne> enseigne;
 	
 	@OneToMany(mappedBy="matiere", cascade= CascadeType.ALL)

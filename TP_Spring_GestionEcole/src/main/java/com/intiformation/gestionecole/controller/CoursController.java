@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,19 +23,38 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.CoursDao;
 import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.dao.ICoursDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
+import com.intiformation.gestionecole.dao.IMatiereDao;
+import com.intiformation.gestionecole.dao.IPromotionDao;
+import com.intiformation.gestionecole.dao.MatiereDao;
+import com.intiformation.gestionecole.dao.PromotionDao;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Cours;
+import com.intiformation.gestionecole.domain.Matiere;
+import com.intiformation.gestionecole.domain.Promotion;
 import com.intiformation.gestionecole.validator.CoursValidator;
 
-@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
+//@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
 @Controller
 public class CoursController {
 
 	// Couche Dao
-	//@Autowired
-	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
-	//private ICoursDao coursDao = new CoursDao();
+	@Autowired
+	private ICoursDao coursDao;
+//	private IGenericDao<Cours> coursDao = new GenericDao<Cours>(Cours.class);
+//	private GenericDao<Cours> coursDao;
+	
+	@Autowired
+	private IPromotionDao promoDao;
+	
+	@Autowired
+	private IMatiereDao matiereDao;
+	
+	@Autowired
+	private IAideDao aideDao;
+	
 	
 	// Validateur
 	@Autowired
@@ -44,8 +63,8 @@ public class CoursController {
 	
 	// Setters pour injection Spring
 
-	public void setCoursDao(GenericDao<Cours> coursDao) {
-//	//public void setCoursDao(CoursDao coursDao) {
+//	public void setCoursDao(GenericDao<Cours> coursDao) {
+	public void setCoursDao(CoursDao coursDao) {
 		this.coursDao = coursDao;
 	}
 
@@ -53,18 +72,41 @@ public class CoursController {
 		this.coursValid = coursValid;
 	}
 	
+	public void setPromoDao(PromotionDao promoDao) {
+		this.promoDao =  promoDao;
+	}
+	
+	public void setMatiereDao(MatiereDao matiereDao) {
+		this.matiereDao =  matiereDao;
+	}
+
+	
 	
 	/* Méthodes gestionnaires du Cours Controller */
 	
 	
 	// Récupération de la liste des cours et affichage 
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU)")
-	@RequestMapping(value="/coursList*" , method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
+	@RequestMapping(value="/coursList" , method = RequestMethod.GET)
 	public String generateCoursList(Model model) {
 		
 		List<Cours> listeCours = java.util.Collections.emptyList();
 		listeCours = coursDao.getAll();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeCours", listeCours);
 		
@@ -83,6 +125,20 @@ public class CoursController {
 
 		List<Cours> listeCours = coursDao.getAll();
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeCours", listeCours);
 		
 		return "coursList";
@@ -92,24 +148,64 @@ public class CoursController {
 	
 	// Modification d'un cours
 	// Formulaire
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/coursUpdate/{idCours}", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateCours(@RequestParam("idCours") int pIdCours) {
+	public ModelAndView afficherFormulaireUpdateCours(@PathVariable("idCours") int pIdCours) {
 		
 		Cours coursUpdate = coursDao.getById(pIdCours);
 		
-		return new ModelAndView("coursUpdate", "coursUpdateCommand", coursUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("coursUpdate", "coursUpdateCommand", coursUpdate);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 		
 	}
 	
 	// Méthode Update 
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="coursUpdate-meth", method=RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
+	@RequestMapping(value="/coursUpdate-meth", method=RequestMethod.POST)
 	public String updateCours(@ModelAttribute("coursUpdateCommand") Cours pCours, ModelMap model) {
 		
-		coursDao.update(pCours);
-//		coursDao.updateCours(pCours);
+		String promo = pCours.getPromotion().getLibelle();
+		if (promoDao.getByLibelle(promo) == null)
+			promoDao.addPromotion(new Promotion(promo) );
+		String matiere = pCours.getMatiere().getLibelle();
+		if (matiereDao.getByLibelle(matiere) == null)
+			matiereDao.addMatiere(new Matiere(matiere) );
+		
+//		coursDao.update(pCours);
+		coursDao.updateCours(pCours);
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listeCours", coursDao.getAll());
 		
@@ -120,25 +216,41 @@ public class CoursController {
 	
 	// Ajout d'un nouveau cours
 	// Formulaire
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/coursAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddCours() {
 		
 		Cours cours = new Cours();
 		
-		String objetCommandeCours = "coursAddCommand";
-		
 		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandeCours, cours);
+		data.put("coursAddCommand", cours);
 		
-		String viewName = "coursAdd";
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("coursAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		return new ModelAndView(viewName, data);
+		ModelAndView mov = new ModelAndView("coursAdd", data);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		
+		return mov;
 		
 	}
 	
 	// Méthode Add 
-	@org.springframework.transaction.annotation.Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
+	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
 	@RequestMapping(value="/coursAdd-meth", method=RequestMethod.POST)
 	public String addCours (@ModelAttribute("coursAddCommand") @Validated Cours pCours, ModelMap model, BindingResult result) {
@@ -149,8 +261,30 @@ public class CoursController {
 			return "coursAdd";
 			
 		}else {
-			coursDao.add(pCours);
-//			coursDao.addCours(pCours);
+			
+			String promo = pCours.getPromotion().getLibelle();
+			if (promoDao.getByLibelle(promo) == null)
+				promoDao.addPromotion(new Promotion(promo) );
+			String matiere = pCours.getMatiere().getLibelle();
+			if (matiereDao.getByLibelle(matiere) == null)
+				matiereDao.addMatiere(new Matiere(matiere) );
+			
+//			coursDao.add(pCours);
+			coursDao.addCours(pCours);
+			
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("coursList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
 
 			model.addAttribute("attribut_listeCours", coursDao.getAll());
 			

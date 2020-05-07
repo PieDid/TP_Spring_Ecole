@@ -17,15 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.AbsenceDao;
 import com.intiformation.gestionecole.dao.IAbsenceDao;
-import com.intiformation.gestionecole.dao.IGenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Etudiant;
 import com.intiformation.gestionecole.domain.EtudiantCours;
-import com.intiformation.gestionecole.domain.Personne;
 import com.intiformation.gestionecole.validator.AbsenceValidator;
 
 @Controller
@@ -35,6 +34,9 @@ public class AbsenceController {
 	// Couche Dao
 	@Autowired
 	private IAbsenceDao absDao;
+	
+	@Autowired
+	private IAideDao aideDao;
 	
 	// Validateur
 	@Autowired
@@ -58,15 +60,29 @@ public class AbsenceController {
 	// Récupération de la liste des absences et affichage 
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/absList*" , method = RequestMethod.GET)
+	@RequestMapping(value="/etudiantCoursList" , method = RequestMethod.GET)
 	public String generateAbsenceList(Model model) {
 		
 		List<EtudiantCours> listeAbsences = java.util.Collections.emptyList();
 		listeAbsences = absDao.getAll();
 		
-		model.addAttribute("attribut_listeAbsences", listeAbsences);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		return "absList";
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
+		model.addAttribute("attribut_listeEtudiantCours", listeAbsences);
+		
+		return "etudiantCoursList";
 	
 	}//end List
 	
@@ -82,6 +98,20 @@ public class AbsenceController {
 		List<EtudiantCours> listeAbsencesEtu = java.util.Collections.emptyList();
 		listeAbsencesEtu = absDao.getByEtudiant(pEtudiant);
 		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
 		model.addAttribute("attribut_listeAbsences", listeAbsencesEtu);
 		
 		return "etuAbsList";
@@ -93,16 +123,30 @@ public class AbsenceController {
 	// Suppression d'une absence
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value= {"/etudiantCours/delete/{idEtudiantCours}","/etudiantCours/remove/{idEtudiantCours}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/etudiantCoursDelete/{idEtudiantCours}","/etudiantCours/remove/{idEtudiantCours}"}, method=RequestMethod.GET)
 	public String deleteAbsence(@PathVariable("idEtudiantCours") int pIdAbsence, ModelMap model) {
 		
 		absDao.delete(pIdAbsence);
 
 		List<EtudiantCours> listeAbsences = absDao.getAll();
 		
-		model.addAttribute("attribut_listeAbsences", listeAbsences);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("adresseList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		return "absList";
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
+		
+		model.addAttribute("attribut_listeEtudiantCours", listeAbsences);
+		
+		return "etudiantCoursList";
 		
 	}//end delete
 	
@@ -110,26 +154,57 @@ public class AbsenceController {
 	// Modification d'une absence (utile ?)
 	// Formulaire
 	
-	@RequestMapping(value="/absUpdate-form", method=RequestMethod.GET)
-	public ModelAndView afficherFormulaireUpdateAbsence(@RequestParam("idEtudiantCours") int pIdAbsence) {
+	@RequestMapping(value="/etudiantCoursUpdate/{idEtudiantCours}", method=RequestMethod.GET)
+	public ModelAndView afficherFormulaireUpdateAbsence(@PathVariable("idEtudiantCours") int pIdAbsence) {
 		
 		EtudiantCours absUpdate = absDao.getById(pIdAbsence);
 		
-		return new ModelAndView("absUpdate", "absenceUpdateCommand", absUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantCoursUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
+		ModelAndView mov = new ModelAndView ("etudiantCoursUpdate", "etudiantCoursUpdateCommand", absUpdate);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 	}
 	
 	// Méthode Update 
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/etudiantCours/update", method=RequestMethod.POST)
-	public String updateAbsence(@ModelAttribute("absenceUpdateCommand") EtudiantCours pAbsence, ModelMap model) {
-		
+	@RequestMapping(value="/etudiantCoursUpdate-meth", method=RequestMethod.POST)
+	public String updateAbsence(@ModelAttribute("etudiantCoursUpdateCommand") EtudiantCours pAbsence, ModelMap model) {
+		System.out.println("Il entre dans updateAbsence");
 		absDao.update(pAbsence);
+		System.out.println("Il entre a passé update");
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantCoursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		model.addAttribute("attribut_listeAbsences", absDao.getAll());
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
-		return "absList";
+		model.addAttribute("attribut_listeEtudiantCours", absDao.getAll());
+		
+		return "etudiantCoursList";
 	
 	}//end update
 	
@@ -137,39 +212,72 @@ public class AbsenceController {
 	// Ajout d'une absence
 	// Formulaire
 	
-	@RequestMapping(value="/absAdd", method=RequestMethod.GET)
+	@RequestMapping(value="/etudiantCoursAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddAbsence() {
 		
 		EtudiantCours absence = new EtudiantCours();
 		
-		String objetCommandeAbsence = "absenceAddCommand";
+		String objetCommandeAbsence = "etudiantCoursAddCommand";
 		
 		Map<String, Object> data = new HashMap<> ();
 		data.put(objetCommandeAbsence, absence);
 		
-		String viewName = "absAdd";
+		String viewName = "etudiantCoursAdd";
 		
-		return new ModelAndView(viewName, data);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("etudiantCoursList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView(viewName, data);
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		
+		return mov;
 		
 	}
 	
 	// Méthode Add 
 	@Transactional(readOnly = true, propagation=Propagation.NOT_SUPPORTED)
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS')")
-	@RequestMapping(value="/absAdd-meth", method=RequestMethod.POST)
-	public String addAbsence (@ModelAttribute("absenceAddCommand") @Validated EtudiantCours pAbsence, ModelMap model, BindingResult result) {
+	@RequestMapping(value="/etudiantCoursAdd-meth", method=RequestMethod.POST)
+	public String addAbsence (@ModelAttribute("etudiantCoursAddCommand") @Validated EtudiantCours pAbsence, ModelMap model, BindingResult result) {
 		
 		absValid.validate(pAbsence, result);
 		
 		if (result.hasErrors()) {
-			return "absdd";
+			return "etudiantCoursAdd";
 			
 		}else {
 			absDao.add(pAbsence);
-
-			model.addAttribute("attribut_listeAbsences", absDao.getAll());
 			
-			return "absList";
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("etudiantCoursList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
+
+			model.addAttribute("attribut_listeEtudiantCours", absDao.getAll());
+			
+			return "etudiantCoursList";
 			
 		}//end if
 		

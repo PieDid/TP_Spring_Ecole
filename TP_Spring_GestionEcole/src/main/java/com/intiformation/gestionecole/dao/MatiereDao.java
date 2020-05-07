@@ -4,9 +4,13 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.gestionecole.domain.Matiere;
 
+@Transactional
+@Repository
 public class MatiereDao implements IMatiereDao {
 	
 	@Autowired
@@ -21,41 +25,30 @@ public class MatiereDao implements IMatiereDao {
 
 	/* Méthodes */
 	
-	@Override
-	public List<Matiere> getAll() {
-		return sessionFactory.getCurrentSession().createQuery("FROM matiere m").getResultList();
-	}
-
-	@Override
-	public Matiere getById(int id) {
-		return sessionFactory.getCurrentSession().find(Matiere.class, id);
-	}
-
-	@Override
-	public void delete(int id) {
-		sessionFactory.getCurrentSession().remove(getById(id));
-		
-	}
 
 	@Override
 	public void addMatiere(Matiere matiere) {
-		sessionFactory.getCurrentSession().save(matiere);
+		getSessionFactory().getCurrentSession().save(matiere);
 		
 	}
 
 	@Override
 	public void updateMatiere(Matiere matiere) {
-		sessionFactory.getCurrentSession().update(matiere);
+		getSessionFactory().getCurrentSession().update(matiere);
 		
 	}
 	@Override
 	public Matiere getByLibelle(String libelle) {
-		return sessionFactory.getCurrentSession().find(Matiere.class, libelle);
+		return getSessionFactory().getCurrentSession().find(Matiere.class, libelle);
 	}
 	@Override
 	public void deleteMatiere(String libelle) {
-		sessionFactory.getCurrentSession().remove(getByLibelle(libelle));
+		getSessionFactory().getCurrentSession().remove(getByLibelle(libelle));
 		
+	}
+	@Override
+	public List<Matiere> getAllMatiere() {
+		return getSessionFactory().getCurrentSession().createQuery("FROM matiere m").list();
 	}
 
 }//end class

@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.intiformation.gestionecole.dao.GenericDao;
+import com.intiformation.gestionecole.dao.IAideDao;
 import com.intiformation.gestionecole.dao.IGenericDao;
 import com.intiformation.gestionecole.dao.IPromotionDao;
 import com.intiformation.gestionecole.dao.PromotionDao;
+import com.intiformation.gestionecole.domain.Aide;
 import com.intiformation.gestionecole.domain.Matiere;
 import com.intiformation.gestionecole.domain.Personne;
 import com.intiformation.gestionecole.domain.Promotion;
@@ -34,6 +36,9 @@ public class PromotionController {
 	// Couche Dao
 	@Autowired
 	private IPromotionDao promoDao;
+	
+	@Autowired
+	private IAideDao aideDao;
 	
 	// Validateur
 	@Autowired 
@@ -55,12 +60,26 @@ public class PromotionController {
 	
 	// Récupération de la liste des promotions et affichage 
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENS', 'ROLE_ETU')")
 	@RequestMapping(value="/promotionList" , method = RequestMethod.GET)
 	public String generatePromotionList(Model model) {
 		
 		List<Promotion> listePromotion = java.util.Collections.emptyList();
 		listePromotion = promoDao.getAll();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("promotionList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listePromotion", listePromotion);
 		
@@ -72,12 +91,26 @@ public class PromotionController {
 	// Suppression d'une promotion
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= {"/promotionDelete/{libelle}","/promotion/remove/{idAide}"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/promotionDelete/{libelle}","/promotion/remove/{libelle}"}, method=RequestMethod.GET)
 	public String deletePromotion(@PathVariable("libelle") String pLibelle, ModelMap model) {
 		
 		promoDao.deletePromotion(pLibelle);
 
 		List<Promotion> listePromotion = promoDao.getAll();
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("promotionList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listePromotion", listePromotion);
 		
@@ -88,23 +121,55 @@ public class PromotionController {
 	
 	// Modification d'une promotion
 	// Formulaire
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/promotionUpdate/{libelle}", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireUpdatePromotion(@PathVariable("libelle") String pLibelle) {
 		
 		Promotion promoUpdate = promoDao.getByLibelle(pLibelle);
 		
-		return new ModelAndView("promotionUpdate", "promotionUpdateCommand", promoUpdate);
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("promotionUpdate")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		ModelAndView mov = new ModelAndView("promotionUpdate", "promotionUpdateCommand", promoUpdate);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+		
+		return mov;
 		
 	}
 	
 	// Méthode Update 
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/promotionUpdate-meth", method=RequestMethod.POST)
 	public String updatePromotion(@ModelAttribute("promotionUpdateCommand") Promotion pPromotion, ModelMap model) {
 		
 		promoDao.updatePromotion(pPromotion);
+		
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("promotionList")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
+		
+		if (isAide != null) {
+			model.addAttribute("attribut_aide", isAide);
+		} else {
+			model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+		} // end else
 		
 		model.addAttribute("attribut_listePromotion", promoDao.getAll());
 		
@@ -115,20 +180,35 @@ public class PromotionController {
 	
 	// Ajout d'une nouvelle promotion
 	// Formulaire
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value="/promotionAdd", method=RequestMethod.GET)
 	public ModelAndView afficherFormulaireAddPromotion() {
 		
 		Promotion promotion = new Promotion();
 		
-		String objetCommandePromotion = "promotionAddCommand";
-		
 		Map<String, Object> data = new HashMap<> ();
-		data.put(objetCommandePromotion, promotion);
+		data.put("promotionAddCommand", promotion);
 		
-		String viewName = "promotionAdd";
+		List<Aide> listeAide = aideDao.getAll();
+		String isAide = null;
+		for (Aide aide : listeAide) {
+			if (aide.getPage().equals("promotionAdd")){
+				isAide =  aide.getContenu();
+			} // end if
+		} // end for
 		
-		return new ModelAndView(viewName, data);
+		ModelAndView mov = new ModelAndView("promotionAdd", data);
+		
+		
+		if (isAide != null) {
+			mov.addObject("attribut_aide", isAide);
+			System.out.println("Il y a une aide");
+		} else {
+			mov.addObject("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			System.out.println("Il y a pas aide");
+		} // end else
+
+		return mov;
 		
 	}
 	
@@ -145,6 +225,20 @@ public class PromotionController {
 			
 		}else {
 			promoDao.addPromotion(pPromotion);
+			
+			List<Aide> listeAide = aideDao.getAll();
+			String isAide = null;
+			for (Aide aide : listeAide) {
+				if (aide.getPage().equals("promotionList")){
+					isAide =  aide.getContenu();
+				} // end if
+			} // end for
+			
+			if (isAide != null) {
+				model.addAttribute("attribut_aide", isAide);
+			} else {
+				model.addAttribute("attribut_aide", "Il n'y a pas d'aide existante pour cette page.");
+			} // end else
 
 			model.addAttribute("attribut_listePromotion", promoDao.getAll());
 			
