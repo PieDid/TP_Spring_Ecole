@@ -30,7 +30,7 @@
 		<!-- version d'hibernate -->
 		<hibernate.version>5.2.11.Final</hibernate.version>
 		<!-- version du pilote JDBC de MySQL -->
-		<mysql.driver.version>5.1.47</mysql.driver.version>
+		<mysql.driver.version>8.0.28</mysql.driver.version>
 		<!-- version de l'api servlet -->
 		<servlet.version>3.1.0</servlet.version>
 		<!-- version de la taglib JSTL -->
